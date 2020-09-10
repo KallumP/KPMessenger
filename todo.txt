@@ -1,0 +1,66 @@
+Database:
+User:
+ID
+Password
+Username
+
+Message:
+SenderID
+ChatRoomID
+
+ChatRoom:
+ID
+LastMessageTime
+
+Connector:
+UserID
+ChatroomID
+Active
+Connected
+
+
+Friend:
+FriendSendID
+FriendRecievedID:
+
+
+
+
+
+Site:
+Messaged People:
+
+
+
+Friends:
+Button to show friends to message
+
+
+
+Messages:
+Have message text box at the bottom
+Messages come up from the bottom first (going up)
+messages should be accompanied with the time sent
+messages should have a read status (maybe recieved status)
+
+
+
+Make account:
+Need username
+need password
+email for forgotten password
+
+
+
+Searching messages:
+
+
+
+
+Search for people:
+
+
+
+
+Settings:
+Dark mode
