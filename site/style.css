@@ -1,0 +1,89 @@
+header {
+  height: 30px;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.Login {
+  float: right;
+}
+
+.Login a {
+  padding-right: 10px
+}
+
+.Actions a {
+  padding-right: 10px;
+}
+
+.RecentMessages {
+  float: left;
+  width: 30%;
+  height: 100%;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.RecentMessages .MessagePrev {
+  padding-bottom: 10px;
+}
+
+.RecentMessages .MessagePrev h1 {
+  font-size: 1.1em;
+}
+
+.RecentMessages .MessagePrev p {
+  font-size: 0.9em;
+  color: gray;
+}
+
+.ChatRoom {
+  position: fixed;
+  width: 60%;
+  bottom: 10px;
+  left: 35%;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.ChatRoom .Message {
+  padding-bottom: 100px;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.ChatRoom .RecievedMessage h3 {
+  float: left;
+}
+
+.ChatRoom .RecievedMessage p {
+  float: left;
+}
+
+.ChatRoom .SentMessage h3 {
+  float: right;
+}
+
+.ChatRoom .SentMessage p {
+  float: right;
+}
+
+.ChatRoom .Messages {
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.ChatRoom .MessageInput {
+  position: fixed;
+  width: 60%;
+  bottom: 10px;
+  left: 35%;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}

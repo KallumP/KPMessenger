@@ -34,6 +34,9 @@ Messaged People:
 
 Friends:
 Button to show friends to message
+Opens up a new page to see friends, and add friends
+Clicking on a friend lets you either remove friend or message
+CLicking message takes you to the main message screen with a chat room with them open
 
 
 
@@ -42,6 +45,7 @@ Have message text box at the bottom
 Messages come up from the bottom first (going up)
 messages should be accompanied with the time sent
 messages should have a read status (maybe recieved status)
+No message should show (Hmm, there are no messages here, why not send one?)
 
 
 
@@ -64,3 +68,4 @@ Search for people:
 
 Settings:
 Dark mode
+show ids after names
