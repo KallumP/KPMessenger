@@ -17,22 +17,30 @@ include 'includes/dbh.inc.php';
         <?php include("includes/login.inc.php"); ?>
 
         <div class="Actions">
-            <a href="searchFriends.php">Friends</a>
             <a href="index.php">Back to messages</a>
+            <a href="searchFriends.php">Friends</a>
         </div>
 
     </header>
 
-    <form action="searchAllUsers.php" method="POST">
-        <input class="search_txt" type="text" name="search" placeholder="Enter a username or ID to search">
-        <button class="search_btn" type="submit" name="searchSubmit"> Search </button>
-    </form>
+    <div class="SearchContainer">
+        <form action="searchAllUsers.php" method="POST">
+            <?php include("includes/search.inc.php"); ?>
+        </form>
 
-    <?php
-    if (isset($_POST['searchSubmit'])) {
+        <div class="SearchResults">
+            <?php
+            if (isset($_POST['searchSubmit'])) {
 
-        $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
-        echo $searchInput;
-    }
-    ?>
+                $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
+
+                echo "<div class='FriendBox'>";
+                echo "<h2> Username: " . $searchInput . "</h2>";
+                echo "<a href=includes/zChatroomCreate.php?senderID=1&recipientID=2>Create new chat</a>";
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
+
 </body>

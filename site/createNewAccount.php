@@ -26,12 +26,20 @@ include 'includes/dbh.inc.php';
 
     <div class="CreateAccount">
 
+
+        <h1>Create an account</h1>
+
         <form action="includes/zAccountCreate.inc.php" method="POST">
-            
-            <label for="GuruImage">Image path of the Guru's profile</label><br>
-            <input class="username_txt" type="text" name="username" placeholder="Enter username">
-            <input class="password_txt" type="password" name="password" placeholder="Enter password">
-            <input class="password_txt" type="password" name="password-validate" placeholder="Enter password">
+
+            <label for="username">Enter your desired username</label><br>
+            <input class="username_txt" type="text" name="username" placeholder="Enter username"><br><br>
+
+            <label for="username">Enter a password for this account</label><br>
+            <input class="password_txt" type="password" name="password" placeholder="Enter password"><br><br>
+
+            <label for="username">Re-enter the same password</label><br>
+            <input class="password_txt" type="password" name="password-validate" placeholder="Enter password"><br><br><br>
+
             <button class="login_btn" type="submit" name="login"> Submit </button>
 
         </form>

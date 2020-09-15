@@ -1,5 +1,5 @@
 header {
-  height: 30px;
+  padding: 10px 0px;
   border-color: black;
   border-style: solid;
   border-width: 1px;
@@ -15,6 +15,30 @@ header {
 
 .Actions a {
   padding-right: 10px;
+}
+
+.CreateAccount {
+  padding-top: 100px;
+  width: 20%;
+  margin: auto;
+}
+
+.CreateAccount h1 {
+  text-align: center;
+}
+
+.CreateAccount input {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: auto;
+  width: 99%;
+}
+
+.CreateAccount button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: auto;
+  width: 100%;
 }
 
 .RecentMessages {
@@ -58,6 +82,7 @@ header {
 
 .ChatRoom .RecievedMessage h3 {
   float: left;
+  padding-bottom: 5px;
 }
 
 .ChatRoom .RecievedMessage p {
@@ -66,6 +91,7 @@ header {
 
 .ChatRoom .SentMessage h3 {
   float: right;
+  padding-bottom: 5px;
 }
 
 .ChatRoom .SentMessage p {
@@ -81,9 +107,38 @@ header {
 .ChatRoom .MessageInput {
   width: 60%;
   bottom: 10px;
-  padding:10px 0px;
-
+  padding: 10px 0px;
   border-color: black;
   border-style: solid;
   border-width: 1px;
+}
+
+.SearchContainer {
+  padding-top: 50px;
+  width: 50%;
+  margin: auto;
+}
+
+.SearchContainer input {
+  width: 50%;
+}
+
+.SearchContainer button {
+  width: 50%;
+}
+
+.FriendBox {
+  width:50%;
+  padding-top:50px;
+  margin:auto;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.CenterObjects {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }

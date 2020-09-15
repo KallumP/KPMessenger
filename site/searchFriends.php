@@ -23,21 +23,30 @@ include 'includes/dbh.inc.php';
 
     </header>
 
-    <form action="searchAllUsers.php" method="POST">
-        <input class="search_txt" type="text" name="search" placeholder="Enter a username or ID of a friend to search">
-        <button class="search_btn" type="submit" name="searchSubmit"> Search </button>
-    </form>
+    <div class="SearchContainer">
+        <form action="searchFriends.php" method="POST">
+            <?php include("includes/search.inc.php"); ?>
+        </form>
 
-    <?php
-    if (isset($_POST['searchSubmit'])) {
+        <div class="SearchResults">
+            <?php
+            if (isset($_POST['searchSubmit'])) {
 
-        $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
-        echo $searchInput;
-    }
+                $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
 
-    //display all friends if no post
-    //display only search results if post
-    ?>
+                echo "<div class='FriendBox'>";
+                echo "<h2> Username: " . $searchInput . "</h2>";
+                echo "<a href=includes/zChatroomCreate.php?senderID=1&recipientID=2>Create new chat</a>";
+                echo "</div>";
+            } else {
 
+                echo "<div class='FriendBox'>";
+                echo "<h2> Username: Test Friend</h2>";
+                echo "<a href=includes/zChatroomCreate.php?senderID=1&recipientID=2>Create new chat</a>";
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
 
 </body>
