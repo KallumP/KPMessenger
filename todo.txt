@@ -5,6 +5,7 @@ Password
 Username
 
 Message:
+ID
 SenderID
 ChatRoomID
 
@@ -13,6 +14,7 @@ ID
 LastMessageTime
 
 Connector:
+ID
 UserID
 ChatroomID
 Active
@@ -20,6 +22,7 @@ Connected
 
 
 Friend:
+ID
 FriendSendID
 FriendRecievedID:
 
@@ -62,7 +65,9 @@ Searching messages:
 
 
 Search for people:
-
+Search result will return users
+If they are not your friend, it should have a link to add them as a friend
+each result should have a link to message them
 
 
 

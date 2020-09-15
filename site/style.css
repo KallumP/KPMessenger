@@ -79,10 +79,10 @@ header {
 }
 
 .ChatRoom .MessageInput {
-  position: fixed;
   width: 60%;
   bottom: 10px;
-  left: 35%;
+  padding:10px 0px;
+
   border-color: black;
   border-style: solid;
   border-width: 1px;

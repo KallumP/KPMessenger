@@ -14,25 +14,20 @@ include 'includes/dbh.inc.php';
 <body>
   <header>
 
-    <div class="Login">
-      <form action="includes/zLogin.inc.php" method="POST">
-        <a href="NewAccount.php">Create new account</a>
-        <input class="username_txt" type="text" name="username" placeholder="Enter username">
-        <input class="password_txt" type="password" name="password" placeholder="Enter password">
-        <button class="login_btn" type="submit" name="login"> Login </button>
-      </form>
-    </div>
+    <?php include("includes/login.inc.php"); ?>
 
     <div class="Actions">
-      <a href="Friends.php">Friends</a>
-      <a href="AddFriends.php">Add new friends</a>
+      <a href="searchFriends.php">Friends</a>
+      <a href="searchAllUsers.php">Search all Users</a>
     </div>
 
   </header>
 
   <div class="RecentMessages">
+    <h1>Recent Messages</h1>
     <?php
-    for ($i = 0; $i < 10; $i++) {
+    for ($i = 0; $i < 9; $i++) {
+
       echo "<div class='MessagePrev'>";
       echo "<a href=index.php?ChatRoomID=" . $i . ">";
       echo "<h1>" . $i . " Sender</h1>";
@@ -47,36 +42,27 @@ include 'includes/dbh.inc.php';
 
     <div class="Messages">
       <?php
-      echo "<div class='SentMessage Message'>";
 
-      echo "<h3>0 Sent</h3><br>";
-      echo "<p>0 Content</p><br>";
+      for ($i = 0; $i < 5; $i++) {
 
-      echo "</div>";
+        $sent = rand(0, 1);
 
+        if ($sent == 1) {
+          echo "<div class='SentMessage Message'>";
 
-      echo "<div class='RecievedMessage Message'>";
+          echo "<h3>" . $i . " Sent</h3><br>";
+          echo "<p>" . $i . " Content</p>";
 
-      echo "<h3>1 Recieved</h3><br>";
-      echo "<p>1 Content</p><br>";
+          echo "</div>";
+        } else {
+          echo "<div class='RecievedMessage Message'>";
 
-      echo "</div>";
+          echo "<h3>" . $i . " Recieved</h3><br>";
+          echo "<p>" . $i . " Content</p>";
 
-
-      echo "<div class='SentMessage Message'>";
-
-      echo "<h3>2 Sent</h3><br>";
-      echo "<p>2 Content</p><br>";
-
-      echo "</div>";
-
-
-      echo "<div class='SentMessage Message'>";
-
-      echo "<h3>3 Sent</h3><br>";
-      echo "<p>3 Content</p><br>";
-
-      echo "</div>";
+          echo "</div>";
+        }
+      }
       ?>
     </div>
 
