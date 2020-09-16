@@ -142,3 +142,9 @@ header {
   align-items: center;
   flex-wrap: wrap;
 }
+
+.Notes h3 {
+  color: red;
+  text-align:center;
+  font-size: 0.9em;
+}

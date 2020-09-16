@@ -1,3 +1,6 @@
+<?php
+//if (logged out)
+?>
 <div class="Login">
     <form action="includes/zLogin.inc.php" method="POST">
         <a href="createNewAccount.php">Create new account</a>
@@ -6,3 +9,13 @@
         <button class="login_btn" type="submit" name="login"> Login </button>
     </form>
 </div>
+
+
+<?php
+//if (logged in)
+?>
+<!-- 
+<div class="Login">
+    <a href="createNewAccount.php">Create new account</a>
+    <h2>Logged in as User: username || ID: id</h2>
+</div> -->

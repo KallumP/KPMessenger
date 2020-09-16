@@ -24,12 +24,36 @@ include 'includes/dbh.inc.php';
 
     </header>
 
+
+
+
     <div class="CreateAccount">
 
+        <div class="Notes">
+            <?php
+            if (isset($_GET['note'])) {
 
+                $note = mysqli_real_escape_string($conn, $_GET['note']);
+
+                if ($note == "passwordsNotSame") {
+                    echo "<h3>The password fields were not the same</h3>";
+                } else if ($note == "notUniqueUsername") {
+                    echo "<h3>that username was already taken</h3>";
+                } else if ($note == "emptyFields") {
+                    echo "<h3>Please fill out all the fields</h3>";
+                } else if ($note == "noPost") {
+                    echo "<h3>Create an account from here</h3>";
+                }
+            }
+            ?>
+        </div>
+        
         <h1>Create an account</h1>
 
-        <form action="includes/zAccountCreate.inc.php" method="POST">
+        <form action="includes/zAccountCreate.php" method="POST">
+
+            <!-- <label for="email">Enter your email</label><br>
+            <input class="email" type="text" name="email" placeholder="Enter username"><br><br> -->
 
             <label for="username">Enter your desired username</label><br>
             <input class="username_txt" type="text" name="username" placeholder="Enter username"><br><br>

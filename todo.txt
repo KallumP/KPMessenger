@@ -1,51 +1,15 @@
-Database:
-User:
-ID
-Password
-Username
-
-Message:
-ID
-SenderID
-ChatRoomID
-
-ChatRoom:
-ID
-LastMessageTime
-
-Connector:
-ID
-UserID
-ChatroomID
-Active
-Connected
-
-
-Friend:
-ID
-FriendSendID
-FriendRecievedID:
-
-
-
-
-
-Site:
 Messaged People:
 
 
 
 Friends:
-Button to show friends to message
-Opens up a new page to see friends, and add friends
+
 Clicking on a friend lets you either remove friend or message
 CLicking message takes you to the main message screen with a chat room with them open
 
 
 
 Messages:
-Have message text box at the bottom
-Messages come up from the bottom first (going up)
 messages should be accompanied with the time sent
 messages should have a read status (maybe recieved status)
 No message should show (Hmm, there are no messages here, why not send one?)
@@ -53,9 +17,8 @@ No message should show (Hmm, there are no messages here, why not send one?)
 
 
 Make account:
-Need username
-need password
 email for forgotten password
+call the zLogin.inc.php passing in the usename and hashed pass on creation (to login immediatelY)
 
 
 
