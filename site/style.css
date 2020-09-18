@@ -5,11 +5,11 @@ header {
   border-width: 1px;
 }
 
-.Login {
+.LoginOptions {
   float: right;
 }
 
-.Login a {
+.LoginOptions a {
   padding-right: 10px
 }
 
@@ -38,6 +38,26 @@ header {
   padding-top: 10px;
   padding-bottom: 10px;
   margin: auto;
+  width: 100%;
+}
+
+.Login {
+  padding-top: 100px;
+  margin: auto;
+  width: 20%;
+}
+
+.Login h1 {
+  text-align: center;
+}
+
+.Login input {
+  padding: 10px 0;
+  width: 100%;
+}
+
+.Login button {
+  padding: 10px 0;
   width: 100%;
 }
 
@@ -128,9 +148,9 @@ header {
 }
 
 .FriendBox {
-  width:50%;
-  padding-top:50px;
-  margin:auto;
+  width: 50%;
+  padding-top: 50px;
+  margin: auto;
   border-color: black;
   border-style: solid;
   border-width: 1px;
@@ -145,6 +165,6 @@ header {
 
 .Notes h3 {
   color: red;
-  text-align:center;
+  text-align: center;
   font-size: 0.9em;
 }

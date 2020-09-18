@@ -27,6 +27,7 @@ if (isset($_POST['login'])) {
 
             //checks if the two password inputs were the same
             if ($inputPass == $inputPassValidate) {
+
                 //saves a hashed version of the password
                 $hashedPassword = strtoupper(hash('sha256', $inputPass));
 
@@ -39,7 +40,13 @@ if (isset($_POST['login'])) {
                 //queries the database
                 mysqli_query($conn, $tableSQL);
 
-                header("Location: ../index.php?note=accountCreated");
+                //logs the user into the account they just made
+                session_start();
+
+                $_SESSION['userName'] = $inputUserName;
+                $_SESSION['userID'] = $pulledData['userID'];
+                
+                header("Location: ../index.php");
             } else
                 header("Location: ../createNewAccount.php?note=passwordsNotSame");
         } else

@@ -1,5 +1,6 @@
 <?php
 include 'includes/dbh.inc.php';
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +15,7 @@ include 'includes/dbh.inc.php';
 <body>
     <header>
 
-        <?php include("includes/login.inc.php"); ?>
+        <?php include("includes/loginBanner.inc.php"); ?>
 
         <div class="Actions">
             <a href="searchFriends.php">Friends</a>
@@ -24,9 +25,6 @@ include 'includes/dbh.inc.php';
 
     </header>
 
-
-
-
     <div class="CreateAccount">
 
         <div class="Notes">
@@ -35,19 +33,18 @@ include 'includes/dbh.inc.php';
 
                 $note = mysqli_real_escape_string($conn, $_GET['note']);
 
-                if ($note == "passwordsNotSame") {
+                if ($note == "passwordsNotSame")
                     echo "<h3>The password fields were not the same</h3>";
-                } else if ($note == "notUniqueUsername") {
+                else if ($note == "notUniqueUsername")
                     echo "<h3>that username was already taken</h3>";
-                } else if ($note == "emptyFields") {
+                else if ($note == "emptyFields")
                     echo "<h3>Please fill out all the fields</h3>";
-                } else if ($note == "noPost") {
+                else if ($note == "noPost")
                     echo "<h3>Create an account from here</h3>";
-                }
             }
             ?>
         </div>
-        
+
         <h1>Create an account</h1>
 
         <form action="includes/zAccountCreate.php" method="POST">
