@@ -18,12 +18,10 @@ No message should show (Hmm, there are no messages here, why not send one?)
 
 Make account:
 email for forgotten password
-call the zLogin.inc.php passing in the usename and hashed pass on creation (to login immediatelY)
 
 
 
 Searching messages:
-
 
 
 

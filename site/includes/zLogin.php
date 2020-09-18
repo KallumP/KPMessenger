@@ -26,11 +26,11 @@ if (isset($_POST['login'])) {
             "SELECT
                 _user.ID AS 'userID',
                 _user.UserName AS 'userName',
-                _user._PassHash AS 'userPass'
+                _user.PassHash AS 'userPass'
             FROM
                 _user
             WHERE 
-                _user.Username = '$inputUsername';";
+                _user.UserName = '$inputUsername';";
 
         //pulls the data from the database using the query
         $result = mysqli_query($conn, $sql);
@@ -57,12 +57,11 @@ if (isset($_POST['login'])) {
                 header("Location: ../index.php");
             } else {
 
-                header("Location: ../login.php?note=badCredentials");
+                header("Location: ../login.php?note=badPass");
                 exit();
             }
         } else {
-
-            header("Location: ../login.php?note=badCredentials");
+            header("Location: ../login.php?note=badUser");
             exit();
         }
     }

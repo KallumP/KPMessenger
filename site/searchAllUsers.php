@@ -15,7 +15,7 @@ session_start();
 <body>
     <header>
 
-        <?php include("includes/loginBanner.inc.php"); ?>
+        <?php include("includes/accountBanner.inc.php"); ?>
 
         <div class="Actions">
             <a href="index.php">Back to messages</a>

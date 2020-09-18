@@ -22,8 +22,6 @@ session_start();
     } else {
     ?>
 
-
-
         <div class="Login">
 
 
@@ -38,6 +36,10 @@ session_start();
 
                     if ($note == "badCredentials")
                         echo "<h3>Either your username or password was incorrect</h3>";
+                    else if ($note == "badUser")
+                        echo "<h3>That username was wrong";
+                    else if ($note == "badPass")
+                        echo "<h3>That password was wrong";
                     else if ($note == "emtpyFields")
                         echo "<h3>Please fill out both text boxes";
                 }

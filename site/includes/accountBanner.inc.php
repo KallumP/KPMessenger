@@ -10,8 +10,7 @@ include 'includes/dbh.inc.php';
 
     <?php } else { ?>
 
-        <a href="createNewAccount.php">Create new account</a>
-        <a href="login.php">Login</a>
+        <?php header("Location: login.php"); ?>
 
     <?php } ?>
 </div>
