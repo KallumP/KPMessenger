@@ -5,7 +5,7 @@ Messaged People:
 Friends:
 
 Clicking on a friend lets you either remove friend or message
-CLicking message takes you to the main message screen with a chat room with them open
+CLicking message should make a new chat room
 
 
 

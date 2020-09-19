@@ -8,7 +8,7 @@ session_start();
 
 <head>
     <meta charset="utf-8">
-    <title>KPMessager</title>
+    <title>KPMessenger</title>
     <link href="style.css" rel="stylesheet" />
 </head>
 

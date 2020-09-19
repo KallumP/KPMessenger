@@ -4,9 +4,8 @@ include 'includes/dbh.inc.php';
 
 <div class="LoginOptions">
     <?php if (isset($_SESSION['userName'])) { ?>
-
         <a href="includes/zLogout.php">Log out </a>
-        <a href="accountOptions.php">Account options</a>
+        <a href="accountOptions.php">Account options: <?php echo $_SESSION['userName'] ?></a>
 
     <?php } else { ?>
 
