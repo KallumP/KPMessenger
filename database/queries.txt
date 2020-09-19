@@ -1,0 +1,36 @@
+CREATE TABLE _user (
+	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    	PassHash text,
+    	UserName text
+);
+
+CREATE TABLE chatroom (
+	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    	LastMessageTime datetime
+);
+
+CREATE TABLE message (
+	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    	SenderID int(5),
+    	ChatRoomID int(5)
+);
+
+CREATE TABLE connector (
+	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    	UserID int(5),
+    	ChatRoomID int(5),
+	Active tinyint(1),
+	Connected tinyint(1)
+);
+
+CREATE TABLE friend (
+	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    	SenderID int(5),
+    	RecipientID int(5)
+);
+
+CREATE TABLE friendrequest (
+	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    	SenderID int(5),
+    	RecipientID int(5)
+);

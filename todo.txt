@@ -5,6 +5,7 @@ Password
 Username
 
 Message:
+ID
 SenderID
 ChatRoomID
 
@@ -13,6 +14,7 @@ ID
 LastMessageTime
 
 Connector:
+ID
 UserID
 ChatroomID
 Active
@@ -20,6 +22,7 @@ Connected
 
 
 Friend:
+ID
 FriendSendID
 FriendRecievedID:
 
@@ -34,6 +37,9 @@ Messaged People:
 
 Friends:
 Button to show friends to message
+Opens up a new page to see friends, and add friends
+Clicking on a friend lets you either remove friend or message
+CLicking message takes you to the main message screen with a chat room with them open
 
 
 
@@ -42,6 +48,7 @@ Have message text box at the bottom
 Messages come up from the bottom first (going up)
 messages should be accompanied with the time sent
 messages should have a read status (maybe recieved status)
+No message should show (Hmm, there are no messages here, why not send one?)
 
 
 
@@ -58,9 +65,12 @@ Searching messages:
 
 
 Search for people:
-
+Search result will return users
+If they are not your friend, it should have a link to add them as a friend
+each result should have a link to message them
 
 
 
 Settings:
 Dark mode
+show ids after names

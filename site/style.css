@@ -1,0 +1,144 @@
+header {
+  padding: 10px 0px;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.Login {
+  float: right;
+}
+
+.Login a {
+  padding-right: 10px
+}
+
+.Actions a {
+  padding-right: 10px;
+}
+
+.CreateAccount {
+  padding-top: 100px;
+  width: 20%;
+  margin: auto;
+}
+
+.CreateAccount h1 {
+  text-align: center;
+}
+
+.CreateAccount input {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: auto;
+  width: 99%;
+}
+
+.CreateAccount button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: auto;
+  width: 100%;
+}
+
+.RecentMessages {
+  float: left;
+  width: 30%;
+  height: 100%;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.RecentMessages .MessagePrev {
+  padding-bottom: 10px;
+}
+
+.RecentMessages .MessagePrev h1 {
+  font-size: 1.1em;
+}
+
+.RecentMessages .MessagePrev p {
+  font-size: 0.9em;
+  color: gray;
+}
+
+.ChatRoom {
+  position: fixed;
+  width: 60%;
+  bottom: 10px;
+  left: 35%;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.ChatRoom .Message {
+  padding-bottom: 100px;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.ChatRoom .RecievedMessage h3 {
+  float: left;
+  padding-bottom: 5px;
+}
+
+.ChatRoom .RecievedMessage p {
+  float: left;
+}
+
+.ChatRoom .SentMessage h3 {
+  float: right;
+  padding-bottom: 5px;
+}
+
+.ChatRoom .SentMessage p {
+  float: right;
+}
+
+.ChatRoom .Messages {
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.ChatRoom .MessageInput {
+  width: 60%;
+  bottom: 10px;
+  padding: 10px 0px;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.SearchContainer {
+  padding-top: 50px;
+  width: 50%;
+  margin: auto;
+}
+
+.SearchContainer input {
+  width: 50%;
+}
+
+.SearchContainer button {
+  width: 50%;
+}
+
+.FriendBox {
+  width:50%;
+  padding-top:50px;
+  margin:auto;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.CenterObjects {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
