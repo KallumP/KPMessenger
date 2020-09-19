@@ -1,5 +1,6 @@
 <?php
 include 'includes/dbh.inc.php';
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +15,7 @@ include 'includes/dbh.inc.php';
 <body>
     <header>
 
-        <?php include("includes/login.inc.php"); ?>
+        <?php include("includes/accountBanner.inc.php"); ?>
 
         <div class="Actions">
             <a href="index.php">Back to messages</a>
