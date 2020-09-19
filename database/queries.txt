@@ -6,6 +6,7 @@ CREATE TABLE _user (
 
 CREATE TABLE chatroom (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	ChatName text,
     	LastMessageTime datetime
 );
 

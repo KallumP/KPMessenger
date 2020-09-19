@@ -24,7 +24,6 @@ session_start();
 
         <div class="Login">
 
-
             <h1> Log into WebMessenger </h1>
 
             <div class="Notes">
@@ -46,15 +45,14 @@ session_start();
                 ?>
             </div>
 
-
             <form action="includes/zLogin.php" method="POST">
+                <a href="createNewAccount.php">Create new account</a>
                 <input class="username_txt" type="text" name="username" placeholder="Enter username"><br><br>
                 <input class="password_txt" type="password" name="password" placeholder="Enter password"><br><br>
                 <div class="CenterObjects">
                     <button class="login_btn" type="submit" name="login"> Login </button>
                 </div>
             </form>
-
 
         </div>
     <?php
