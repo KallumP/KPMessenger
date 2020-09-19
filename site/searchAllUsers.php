@@ -62,65 +62,15 @@ session_start();
                         //loops through each searched user
                         while ($UserSearchResultRow = mysqli_fetch_assoc($UserSearchResult)) {
 
-
-                            echo "<div class='FriendBox'>";
-                            echo "<h2> Username: " . $UserSearchResultRow['userName'] . "# " . $UserSearchResultRow['userID'] . "</h2>";
-                            echo "<a href=includes/zSendFriendRequest.php?recipientID=" . $UserSearchResultRow['userID'] . ">Send friend request</a>";
-                            echo "<a href=includes/zChatroomCreate.php?recipientID=" . $UserSearchResultRow['userID'] . ">Create new chat</a><br>";
-
                             //saves the current searched user id
                             $currentSearchedUserID = $UserSearchResultRow['userID'];
 
-                            //query to pull all chatrooms that the current searched user is a part of
-                            $sqlChatCheck =
-                                "SELECT     
-                                    chatroom.ID as 'chatID'
-                                FROM
-                                    chatRoom
-                                LEFT JOIN connector ON chatRoom.ID = connector.ChatRoomID
-                                WHERE   
-                                    connector.ID = '$currentSearchedUserID';";
+                            echo "<div class='FriendBox'>";
+                            echo "<h2> Username: " . $UserSearchResultRow['userName'] . "# " . $UserSearchResultRow['userID'] . "</h2>";
+                            echo "<a href=includes/zSendFriendRequest.php?recipientID=" . $UserSearchResultRow['userID'] . ">Send friend request</a><br>";
+                            echo "<a href=includes/zChatroomCreate.php?recipientID=" . $UserSearchResultRow['userID'] . ">Create new chat</a><br>";
 
-                            $ChatResult = mysqli_query($conn, $sqlChatCheck);
-                            $ChatResultCheck = mysqli_num_rows($ChatResult);
-
-                            //checks if there were any chats that the searched user was a part of
-                            if ($ChatResultCheck > 0) {
-
-                                while ($ChatResultRow = mysqli_fetch_assoc($ChatResult)) {
-
-                                    //saves the users's id
-                                    $userID = $_SESSION['userID'];
-
-                                    //saves the current chat id of the current searched user
-                                    $currentSearchedUserCurrentChatID = $ChatResultRow['chatID'];
-
-                                    //query to pull all chatrooms that the current searched user is a part of that the current searched user is also a part of
-                                    $sqlCommonChatCheck =
-                                        "SELECT     
-                                            chatroom.ID as 'chatID',
-                                            chatroom.Name as 'chatName'
-                                        FROM
-                                            chatroom
-                                        LEFT JOIN connector ON chatRoom.ID = connector.ChatRoomID
-                                        WHERE   
-                                            connector.ID = '$userID' AND chatroom.ID = $currentSearchedUserCurrentChatID;";
-
-                                    $CommonChatResult = mysqli_query($conn, $sqlCommonChatCheck);
-                                    $CommonChatResultCheck = mysqli_num_rows($CommonChatResult);
-
-                                    //checks if there were any common chats
-                                    if ($ChatResultCheck > 0) {
-
-                                        //loops through each common chat
-                                        while ($ChatResultRow = mysqli_fetch_assoc($ChatResult)) {
-
-                                            echo "<a href=index.php?chatID=" . $ChatResultRow['chatID'] . ">Join chat: " . $ChatResultRow['chatName'] . "</a><br>";
-                                        }
-                                    }
-                                }
-                            }
-
+                            include("includes/findCommonChats.inc.php");
 
                             echo "</div>";
                         }
