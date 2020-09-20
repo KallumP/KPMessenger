@@ -44,7 +44,7 @@ session_start();
     <div class="Messages">
       <?php
 
-      for ($i = 0; $i < 5; $i++) {
+      for ($i = 0; $i < 1; $i++) {
 
         $sent = rand(0, 1);
 
