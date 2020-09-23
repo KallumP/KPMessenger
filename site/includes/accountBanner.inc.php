@@ -12,6 +12,7 @@ include 'includes/dbh.inc.php';
         //gets all the unanswered friendrequests for this user
         $sqlGetFriendRequests =
             "SELECT
+                friendrequest.ID AS 'requestID',
                 friendrequest.SenderID AS 'senderID'
             FROM 
                 friendrequest
@@ -32,6 +33,7 @@ include 'includes/dbh.inc.php';
                         <?php while ($friendRequestsRow = mysqli_fetch_assoc($getFriendRequestsResult)) {
 
                             $senderID = $friendRequestsRow['senderID'];
+                            $requestID = $friendRequestsRow['requestID'];
 
                             //query to get the name of the friend request sender
                             $sqlGetRequestSenderName =
@@ -47,7 +49,7 @@ include 'includes/dbh.inc.php';
                             $friendRequestsSenderNameRow = mysqli_fetch_assoc($getSenderNameResult);
 
                             //displays the friend request
-                            echo "<li><a href='includes/zAcceptFriendRequest.php?senderID=" . $senderID . "'> Friend request from: " . $friendRequestsSenderNameRow['senderName'] . "</a></li>";
+                            echo "<li><a href='includes/zFriendRequestAccept.php?requestID=" . $requestID . "'> Friend request from: " . $friendRequestsSenderNameRow['senderName'] . "</a></li>";
                         }
 
                         ?>

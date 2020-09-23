@@ -32,20 +32,27 @@ if (isset($_POST['login'])) {
                 $hashedPassword = strtoupper(hash('sha256', $inputPass));
 
                 //a query to insert a new user
-                $tableSQL =
+                $createUserSQL =
                     "INSERT INTO 
-                    _user ( UserName, PassHash)
-                VALUES  ('$inputUserName', '$hashedPassword');";
+                        _user ( UserName, PassHash)
+                    VALUES  ('$inputUserName', '$hashedPassword');";
 
+                //queries and checks if the query worked
+                if ($conn->query($createUserSQL) === TRUE) {
+
+
+                    //gets the id of the database
+                    $userID = $conn->insert_id;
+                }
                 //queries the database
-                mysqli_query($conn, $tableSQL);
+                mysqli_query($conn, $createUserSQL);
 
                 //logs the user into the account they just made
                 session_start();
 
                 $_SESSION['userName'] = $inputUserName;
-                $_SESSION['userID'] = $pulledData['userID'];
-                
+                $_SESSION['userID'] = $userID;
+
                 header("Location: ../index.php");
             } else
                 header("Location: ../createNewAccount.php?note=passwordsNotSame");

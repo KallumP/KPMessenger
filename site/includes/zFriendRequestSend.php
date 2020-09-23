@@ -22,5 +22,6 @@ if (isset($_SESSION['userID'])) {
     header("Location: ../searchAllUsers.php?note=requestSent");
   } else
     header("Location: ../searchAllUsers.php?note=noPost");
-} else
+} else {
   header("Location: ../index.php");
+}

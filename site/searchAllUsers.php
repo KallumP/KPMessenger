@@ -68,7 +68,7 @@ session_start();
 
                             echo "<div class='FriendBox'>";
                             echo "<h2> Username: " . $UserSearchResultRow['userName'] . "# " . $UserSearchResultRow['userID'] . "</h2>";
-                            echo "<a href=includes/zSendFriendRequest.php?recipientID=" . $UserSearchResultRow['userID'] . ">Send friend request</a><br>";
+                            echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $UserSearchResultRow['userID'] . ">Send friend request</a><br>";
                             echo "<a href=includes/zChatroomCreate.php?recipientID=" . $UserSearchResultRow['userID'] . ">Create new chat</a><br>";
 
                             include("includes/findCommonChats.inc.php");
