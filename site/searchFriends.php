@@ -13,20 +13,23 @@ session_start();
 </head>
 
 <body>
+
     <header>
 
         <?php include("includes/accountBanner.inc.php"); ?>
 
         <div class="Actions">
-            <a href="index.php">Back to messages</a>
-            <a href="searchAllUsers.php">Search all Users</a>
+            <ul>
+                <li><a href="index.php">Back to messages</a></li>
+                <li><a href="searchAllUsers.php">Search all Users</a></li>
+            </ul>
         </div>
 
     </header>
 
     <div class="SearchContainer">
 
-    <h1>You can search for your friends here!</h1>
+        <h1>You can search for your friends here!</h1>
 
         <form action="searchFriends.php" method="POST">
             <?php include("includes/search.inc.php"); ?>

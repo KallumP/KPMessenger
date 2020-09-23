@@ -14,6 +14,18 @@ session_start();
 
 <body>
 
+    <header>
+
+        <?php include("includes/accountBanner.inc.php"); ?>
+
+        <div class="Actions">
+            <ul>
+                <li><a href="searchFriends.php">Friends</a></li>
+                <li><a href="searchAllUsers.php">Search all Users</a></li>
+            </ul>
+        </div>
+
+    </header>
 
     <?php if (isset($_SESSION['userName'])) { ?>
 

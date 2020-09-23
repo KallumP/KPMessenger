@@ -1,20 +1,71 @@
+@import url('https://fonts.google.com/specimen/Montserrat');
+* {
+  font-family: 'Monstserrat', sans-serif;
+  color: black;
+}
+
 header {
-  padding: 10px 0px;
+  padding-bottom: 45px;
   border-color: black;
   border-style: solid;
   border-width: 1px;
 }
 
-.LoginOptions {
+.Actions {
+  float: left;
+}
+
+.Actions li {
+  float: left;
+  list-style: none;
+}
+
+.Actions li a {
+  padding-right: 20px;
+  text-decoration: none;
+}
+
+.Actions li a:hover {
+  color: orangered;
+}
+
+.AccountBanner {
   float: right;
 }
 
-.LoginOptions a {
-  padding-right: 10px
+.AccountBanner ul li {
+  float: left;
+  list-style: none;
+  position: relative;
 }
 
-.Actions a {
+.AccountBanner ul li a {
   padding-right: 10px;
+  text-decoration: none;
+  padding-left: 20px;
+}
+
+.AccountBanner ul li a:hover {
+  color: orangered;
+}
+
+.AccountBanner ul li ul {
+  display: none;
+}
+
+.AccountBanner ul li:hover ul {
+  display: block;
+  position: absolute;
+}
+
+.AccountBanner ul li:hover ul li a {
+  float: left;
+  padding-top: 10px;
+  padding-right: 100px;
+}
+
+.AccountBanner ul li:hover ul li a:hover {
+  color: orangered;
 }
 
 .CreateAccount {

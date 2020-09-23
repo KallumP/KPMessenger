@@ -18,8 +18,10 @@ session_start();
     <?php include("includes/accountBanner.inc.php"); ?>
 
     <div class="Actions">
-      <a href="searchFriends.php">Friends</a>
-      <a href="searchAllUsers.php">Search all Users</a>
+      <ul>
+        <li><a href="searchFriends.php">Friends</a></li>
+        <li><a href="searchAllUsers.php">Search all Users</a></li>
+      </ul>
     </div>
 
   </header>

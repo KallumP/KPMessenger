@@ -13,15 +13,16 @@ session_start();
 </head>
 
 <body>
-    <header>
 
+    <header>
         <?php include("includes/accountBanner.inc.php"); ?>
 
         <div class="Actions">
-            <a href="index.php">Back to messages</a>
-            <a href="searchFriends.php">Friends</a>
+            <ul>
+                <li><a href="index.php">Back to messages</a></li>
+                <li><a href="searchFriends.php">Friends</a></li>
+            </ul>
         </div>
-
     </header>
 
     <div class="SearchContainer">

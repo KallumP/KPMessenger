@@ -2,7 +2,7 @@
 include 'includes/dbh.inc.php';
 ?>
 
-<div class="LoginOptions">
+<div class="AccountBanner">
     <?php if (isset($_SESSION['userName'])) { ?>
 
         <?php
@@ -12,7 +12,7 @@ include 'includes/dbh.inc.php';
         //gets all the unanswered friendrequests for this user
         $sqlGetFriendRequests =
             "SELECT
-                friendrequest.ID AS 'senderID'
+                friendrequest.SenderID AS 'senderID'
             FROM 
                 friendrequest
             WHERE
@@ -25,9 +25,8 @@ include 'includes/dbh.inc.php';
         $numberOfNotifications = 0;
         $numberOfNotifications += mysqli_num_rows($getFriendRequestsResult);
         ?>
-
         <ul>
-            <li> <a href="#">Notifications: <?php $numberOfNotifications ?></a>
+            <li> <a href="#">Notifications: <?php echo $numberOfNotifications ?></a>
                 <?php if ($numberOfNotifications > 0) { ?>
                     <ul>
                         <?php while ($friendRequestsRow = mysqli_fetch_assoc($getFriendRequestsResult)) {
@@ -48,16 +47,17 @@ include 'includes/dbh.inc.php';
                             $friendRequestsSenderNameRow = mysqli_fetch_assoc($getSenderNameResult);
 
                             //displays the friend request
-                            echo "<li> Friend request from: " . $friendRequestsSenderNameRow['senderName'] . "</li>";
+                            echo "<li><a href='includes/zAcceptFriendRequest.php?senderID=" . $senderID . "'> Friend request from: " . $friendRequestsSenderNameRow['senderName'] . "</a></li>";
                         }
 
                         ?>
                     </ul>
                 <?php } ?>
             </li>
+
+            <li><a href="accountOptions.php">Account options: <?php echo $_SESSION['userName'] ?></a></li>
+            <li><a href="includes/zLogout.php">Log out </a></li>
         </ul>
-        <a href="includes/zLogout.php">Log out </a>
-        <a href="accountOptions.php">Account options: <?php echo $_SESSION['userName'] ?></a>
 
     <?php } else { ?>
 
