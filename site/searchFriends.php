@@ -36,23 +36,27 @@ session_start();
         </form>
 
         <div class="SearchResults">
+
             <?php
 
             $userID = $_SESSION['userID'];
 
-            //pulls the users friends
+            //pulls the user's friend's ids
             $sqlAllFriends =
                 "SELECT
-                    _user.ID as 'userID'
+                   friend.RecipientID AS 'friendID',
+                   _user.UserName as 'friendName'
                 FROM
-                    _user
-                    LEFT JOIN friend ON _user.ID = friend.ID
+                    friend
+                LEFT JOIN
+                    _user ON friend.RecipientID = _user.ID
                 WHERE
                     friend.SenderID = '$userID';";
 
             $AllFriendsResult = mysqli_query($conn, $sqlAllFriends);
             $AllFriendsResultCheck = mysqli_num_rows($AllFriendsResult);
 
+            //checks if there were any friends
             if ($AllFriendsResultCheck > 0) {
 
                 if (isset($_POST['searchSubmit'])) {
@@ -60,54 +64,38 @@ session_start();
                     //gets the user search input
                     $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
 
-                    //checks if the user id and the username was the same as the input search 
-                    if ($searchInput != $_SESSION['userID'] && $searchInput != $_SESSION['userName']) {
+                    //checks if the user id or the username was the same as the input search 
+                    if ($searchInput != $_SESSION['userID'] || $searchInput != $_SESSION['userName']) {
 
                         while ($friendsRow = mysqli_fetch_assoc($AllFriendsResult)) {
 
-                            $friendID = $friendsRow['userID'];
+                            $friendID = $friendsRow['friendID'];
+                            $friendName = $friendsRow['friendName'];
 
-                            //pulls the users that were searched for
-                            $sqlUserSearch =
-                                "SELECT
-                               _user.UserName as 'userName',
-                               _user.ID as 'userID'
-                           FROM
-                               _user
-                           WHERE
-                               _user.UserName = '$searchInput' OR _user.ID = '$searchInput' AND _user.ID = '$friendID';";
+                            $currentSearchedUserID = $friendID;
 
-                            $UserSearchResult = mysqli_query($conn, $sqlUserSearch);
-                            $UserSearchResultCheck = mysqli_num_rows($UserSearchResult);
+                            echo "<div class='FriendBox'>";
+                            echo "<h2> Username: " . $friendName . "# " . $friendID . "</h2>";
+                            echo "<a href=includes/zChatroomCreate.php?recipientID=" . $friendID . ">Create new chat</a><br>";
 
-                            //checks to see if any users were pulled
-                            if ($UserSearchResultCheck > 0) {
+                            include("includes/findCommonChats.inc.php");
 
-                                //loops through each searched user
-                                while ($UserSearchResultRow = mysqli_fetch_assoc($UserSearchResult)) {
-
-                                    //saves the current searched user id
-                                    $currentSearchedUserID = $UserSearchResultRow['userID'];
-
-                                    echo "<div class='FriendBox'>";
-                                    echo "<h2> Username: " . $UserSearchResultRow['userName'] . "# " . $UserSearchResultRow['userID'] . "</h2>";
-                                    echo "<a href=includes/zChatroomCreate.php?recipientID=" . $UserSearchResultRow['userID'] . ">Create new chat</a><br>";
-
-                                    include("includes/findCommonChats.inc.php");
-
-                                    echo "</div>";
-                                }
-                            }
+                            echo "</div>";
                         }
                     }
                 } else {
 
-
+                    //loops through each of the pulled friends
                     while ($friendsRow = mysqli_fetch_assoc($AllFriendsResult)) {
 
+                        $friendID = $friendsRow['friendID'];
+                        $friendName = $friendsRow['friendName'];
+
+                        $currentSearchedUserID = $friendID;
+                        
                         echo "<div class='FriendBox'>";
-                        echo "<h2> Username: " . $friendsRow['userName'] . "# " . $friendsRow['userID'] . "</h2>";
-                        echo "<a href=includes/zChatroomCreate.php?recipientID=" . $friendsRow['userID'] . ">Create new chat</a><br>";
+                        echo "<h2> Username: " . $friendsRow['friendName'] . "# " . $friendsRow['friendID'] . "</h2>";
+                        echo "<a href=includes/zChatroomCreate.php?recipientID=" . $friendsRow['friendID'] . ">Create new chat</a><br>";
 
                         include("includes/findCommonChats.inc.php");
 

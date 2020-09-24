@@ -40,12 +40,9 @@ if (isset($_POST['login'])) {
                 //queries and checks if the query worked
                 if ($conn->query($createUserSQL) === TRUE) {
 
-
-                    //gets the id of the database
+                    //gets the id of the user
                     $userID = $conn->insert_id;
                 }
-                //queries the database
-                mysqli_query($conn, $createUserSQL);
 
                 //logs the user into the account they just made
                 session_start();

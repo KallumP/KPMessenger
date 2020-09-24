@@ -102,6 +102,17 @@ header {
   text-align: center;
 }
 
+.Login a {
+  text-decoration: none;
+  font: 1em;
+  margin-top:30px;
+  text-align: center;
+}
+
+.Login a:hover {
+  color: orangered;
+}
+
 .Login input {
   padding: 10px 0;
   width: 100%;
@@ -188,6 +199,10 @@ header {
   padding-top: 50px;
   width: 50%;
   margin: auto;
+}
+
+.SearchContainer h1{
+  text-align: center;
 }
 
 .SearchContainer input {

@@ -1,10 +1,15 @@
+Working on:
+show all users without having to search anything
+general styling
+
 General:
-pul all database variables into safe variables
+puls all database variables into safe variables
 
 
 
 Chatroom:
 check if the two users were friends before setting the connecetors to connected
+take the getmaxid from zAccountCreate and use it in zChatroomCreate
 
 
 
