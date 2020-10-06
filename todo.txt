@@ -4,12 +4,15 @@ general styling
 
 General:
 puls all database variables into safe variables
+spa arcitechure
+messages to self
 
 
 
 Chatroom:
 check if the two users were friends before setting the connecetors to connected
 take the getmaxid from zAccountCreate and use it in zChatroomCreate
+move adding connectors and setting id's to inside the check for if the initial statement worked
 
 
 

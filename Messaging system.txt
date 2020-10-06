@@ -1,14 +1,4 @@
-Chatroom will have three attributes
-ID
-ChatName
-Last sent message
-
-Connector will have 
-
-
-
 Creating Chatrooms:
-When adding someone as a friend, it should make a new chat room 
 
 
 Search for messages, will show you all the chatrooms that you are a part of
@@ -29,10 +19,3 @@ One for the sender and one for the recipient
 (settings can change if you automatically want to be connected as a recipient) (accept message request from strangers)
 
 
-
-Think about:
-
-When a user result is shown it should show underneath it
-All the chat rooms that you are they are a part of
-it can still make a chat room when adding a friend 
-but if you want, you can join a chat room too from the search for friends/users page

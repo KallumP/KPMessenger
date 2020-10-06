@@ -45,15 +45,14 @@ if ($ChatResultCheck > 0) {
       //loops through each common chat
       while ($CommonChatResultRow = mysqli_fetch_assoc($CommonChatResult)) {
         $commonchat = true;
-        echo "<a href=index.php?chatID=" . $CommonChatResultRow['chatID'] . ">Open chat: " . $CommonChatResultRow['chatName'] . "</a><br>";
+        echo "<a href=index.php?chatID=" . $CommonChatResultRow['chatID'] . "><p>Open chat: " . $CommonChatResultRow['chatName'] . "</p></a>";
       }
-    } 
+    }
   }
   if (!$commonchat) {
 
     echo "No common chats";
   }
-
 } else {
   echo "This user has no chats";
 }

@@ -74,9 +74,9 @@ session_start();
 
                             $currentSearchedUserID = $friendID;
 
-                            echo "<div class='FriendBox'>";
+                            echo "<div class='UserBox'>";
                             echo "<h2> Username: " . $friendName . "# " . $friendID . "</h2>";
-                            echo "<a href=includes/zChatroomCreate.php?recipientID=" . $friendID . ">Create new chat</a><br>";
+                            echo "<a href=includes/zChatroomCreate.php?recipientID=" . $friendID . "><p>Create new chat</p></a><br>";
 
                             include("includes/findCommonChats.inc.php");
 
@@ -92,10 +92,10 @@ session_start();
                         $friendName = $friendsRow['friendName'];
 
                         $currentSearchedUserID = $friendID;
-                        
-                        echo "<div class='FriendBox'>";
+
+                        echo "<div class='UserBox'>";
                         echo "<h2> Username: " . $friendsRow['friendName'] . "# " . $friendsRow['friendID'] . "</h2>";
-                        echo "<a href=includes/zChatroomCreate.php?recipientID=" . $friendsRow['friendID'] . ">Create new chat</a><br>";
+                        echo "<a href=includes/zChatroomCreate.php?recipientID=" . $friendsRow['friendID'] . "><p>Create new chat</p></a>";
 
                         include("includes/findCommonChats.inc.php");
 

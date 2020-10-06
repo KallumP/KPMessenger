@@ -66,10 +66,10 @@ session_start();
                             //saves the current searched user id
                             $currentSearchedUserID = $UserSearchResultRow['userID'];
 
-                            echo "<div class='FriendBox'>";
+                            echo "<div class='UserBox'>";
                             echo "<h2> Username: " . $UserSearchResultRow['userName'] . "# " . $UserSearchResultRow['userID'] . "</h2>";
-                            echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $UserSearchResultRow['userID'] . ">Send friend request</a><br>";
-                            echo "<a href=includes/zChatroomCreate.php?recipientID=" . $UserSearchResultRow['userID'] . ">Create new chat</a><br>";
+                            echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Send friend request</p></a>";
+                            echo "<a href=includes/zChatroomCreate.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Create new chat</p></a>";
 
                             include("includes/findCommonChats.inc.php");
 
