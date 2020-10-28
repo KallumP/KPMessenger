@@ -13,7 +13,8 @@ CREATE TABLE chatroom (
 CREATE TABLE message (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     	SenderID int(5),
-    	ChatRoomID int(5)
+    	ChatRoomID int(5),
+	Content text
 );
 
 CREATE TABLE connector (
