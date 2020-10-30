@@ -28,10 +28,10 @@ session_start();
 
     </header>
 
-    <div class="RecentMessages">
+    <div class="RecentMessages Border">
       <h1>Recent Messages</h1>
       <?php
-      for ($i = 0; $i < 9; $i++) {
+      for ($i = 1; $i < 9; $i++) {
 
         echo "<div class='MessagePrev'>";
         echo "<a href=index.php?ChatRoomID=" . $i . ">";
@@ -48,13 +48,18 @@ session_start();
       <div class="Messages">
         <?php
 
-        //checks if there was a chatroom that was selected
+        //checks if there was a chatroom that was selected (from the url)
         if (isset($_GET['ChatRoomID'])) {
 
 
           $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
 
-          //pulls the user's friend's ids
+
+          //check if the user has access to this chatroom
+
+
+
+          //pulls the messages from this chatroom
           $sqlAllMessages =
             "SELECT
               message.Content AS 'MessageContent',
@@ -62,7 +67,9 @@ session_start();
             FROM
               message
             WHERE
-              message.ChatRoomID = '$ChatroomID';";
+              message.ChatRoomID = '$ChatroomID'
+            ORDER BY
+              message.ID;";
 
           $AllMessagesResult = mysqli_query($conn, $sqlAllMessages);
           $AllMessagesResultCheck = mysqli_num_rows($AllMessagesResult);
@@ -81,13 +88,12 @@ session_start();
               //checks if the current message was yours
               if ($senderID == $_SESSION['userID']) {
 
-                echo "<div class='SentMessage Message'>";
+                echo "<div class='SentMessage Message Border'>";
 
-                echo "<h3> Sent by you</h3><br>";
                 echo "<p>" .  $messageRow['MessageContent'] . "</p>";
+                echo "<h3> Sent by you</h3>";
 
                 echo "</div>";
-
               } else {
 
 
@@ -111,23 +117,34 @@ session_start();
                   $senderName = "Unknown User";
 
 
-                echo "<div class='RecievedMessage Message'>";
+                echo "<div class='RecievedMessage Message Border'>";
 
-                echo "<h3>Sent by " . $senderName . "</h3><br>";
                 echo "<p>" .  $messageRow['MessageContent'] . "</p>";
+                echo "<h3>Sent by " . $senderName . "</h3>";
 
                 echo "</div>";
               }
             }
+          } else {
+
+            //there were no messages in the chat
+
+            echo "<h2>Looks like there are no messages in this chat.<br>Why not initiate and send one yourself</h3><br><br>";
           }
         }
         ?>
       </div>
 
-      <div class="MessageInput">
-        <form action="index.php" method="POST">
-          <input class="messageEntry" type="text" name="messageEntry" placeholder="Type your message here">
-          <button class="messageSend" type="submit" name="messageSend"> Send </button>
+      <div class="MessageInput Border">
+
+        <?php
+        //generates the url to send the message with
+        $SendMessageTo = "includes/zSendMessage.php?chatRoomID=" . mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
+        echo "<form action='$SendMessageTo'  method='POST'>"
+        ?>
+
+        <input class="messageEntry" type="text" name="messageEntry" placeholder="Type your message here">
+        <button class="messageSend" type="submit" name="messageSend"> Send </button>
         </form>
       </div>
 
