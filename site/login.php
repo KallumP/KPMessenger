@@ -8,7 +8,7 @@ session_start();
 
 <head>
     <meta charset="utf-8">
-    <title>KPMessager</title>
+    <title>KPMessenger</title>
     <link href="style.css" rel="stylesheet" />
 </head>
 
@@ -24,8 +24,7 @@ session_start();
 
         <div class="Login">
 
-
-            <h1> Log into WebMessenger </h1>
+            <h1> Log into KPMessenger </h1>
 
             <div class="Notes">
                 <?php
@@ -46,15 +45,15 @@ session_start();
                 ?>
             </div>
 
-
             <form action="includes/zLogin.php" method="POST">
+
                 <input class="username_txt" type="text" name="username" placeholder="Enter username"><br><br>
                 <input class="password_txt" type="password" name="password" placeholder="Enter password"><br><br>
                 <div class="CenterObjects">
                     <button class="login_btn" type="submit" name="login"> Login </button>
+                    <a href="createNewAccount.php">Create new account</a>
                 </div>
             </form>
-
 
         </div>
     <?php

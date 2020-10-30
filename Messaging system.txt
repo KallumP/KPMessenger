@@ -1,0 +1,21 @@
+Creating Chatrooms:
+
+
+Search for messages, will show you all the chatrooms that you are a part of
+
+Search for friends, will let you make a new chatroom with a chosen friend
+
+Search for all users will let you add friends, or to make a new chat room with that user
+
+
+
+
+When making a new chatroom:
+It will take the sender and recipient
+It will create a new chatroom and give it a name (recipient username " & " sender username by default)
+
+It will create two connectors
+One for the sender and one for the recipient
+(settings can change if you automatically want to be connected as a recipient) (accept message request from strangers)
+
+

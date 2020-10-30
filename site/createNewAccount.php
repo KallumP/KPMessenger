@@ -8,22 +8,11 @@ session_start();
 
 <head>
     <meta charset="utf-8">
-    <title>KPMessager</title>
+    <title>KPMessenger</title>
     <link href="style.css" rel="stylesheet" />
 </head>
 
 <body>
-    <header>
-
-        <?php include("includes/accountBanner.inc.php"); ?>
-
-        <div class="Actions">
-            <a href="searchFriends.php">Friends</a>
-            <a href="searchAllUsers.php">Search all Users</a>
-            <a href="index.php">Back to messages</a>
-        </div>
-
-    </header>
 
     <div class="CreateAccount">
 

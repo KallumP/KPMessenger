@@ -6,19 +6,21 @@ CREATE TABLE _user (
 
 CREATE TABLE chatroom (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	Name text,
     	LastMessageTime datetime
 );
 
 CREATE TABLE message (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     	SenderID int(5),
-    	ChatRoomID int(5)
+    	ChatRoomID int(5),
+	Content text
 );
 
 CREATE TABLE connector (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     	UserID int(5),
-    	ChatRoomID int(5),
+    	ChatroomID int(5),
 	Active tinyint(1),
 	Connected tinyint(1)
 );
@@ -34,3 +36,54 @@ CREATE TABLE friendrequest (
     	SenderID int(5),
     	RecipientID int(5)
 );
+
+ALTER TABLE `connector` 
+ADD CONSTRAINT `ConnToChat` 
+FOREIGN KEY (`ChatroomID`) 
+REFERENCES `chatroom`(`ID`) 
+ON DELETE CASCADE ON UPDATE RESTRICT;
+
+ALTER TABLE `connector` 
+ADD CONSTRAINT `ConnToUser` 
+FOREIGN KEY (`UserID`) 
+REFERENCES `_user`(`ID`) 
+ON DELETE CASCADE ON UPDATE RESTRICT;
+
+ALTER TABLE `friend` 
+ADD CONSTRAINT `FriendSendToUser` 
+FOREIGN KEY (`SenderID`) 
+REFERENCES `_user`(`ID`) 
+ON DELETE CASCADE ON UPDATE RESTRICT;
+
+ALTER TABLE `friend` 
+ADD CONSTRAINT `FriendRecieveToUser` 
+FOREIGN KEY (`RecipientID`) 
+REFERENCES `_user`(`ID`) 
+ON DELETE CASCADE ON UPDATE RESTRICT;
+
+ALTER TABLE `friendrequest` 
+ADD CONSTRAINT `FriendReqSendToUser` 
+FOREIGN KEY (`SenderID`) 
+REFERENCES `_user`(`ID`) 
+ON DELETE CASCADE ON UPDATE RESTRICT;
+
+ALTER TABLE `friendrequest` 
+ADD CONSTRAINT `FriendReqRecieveToUser` 
+FOREIGN KEY (`RecipientID`) 
+REFERENCES `_user`(`ID`) 
+ON DELETE CASCADE ON UPDATE RESTRICT;
+
+ALTER TABLE `message` 
+ADD CONSTRAINT `MessageToUser` 
+FOREIGN KEY (`SenderID`) 
+REFERENCES `_user`(`ID`) 
+ON DELETE CASCADE ON UPDATE RESTRICT;
+
+ALTER TABLE `message` 
+ADD CONSTRAINT `MessageToChat` 
+FOREIGN KEY (`ChatRoomID`) 
+REFERENCES `chatroom`(`ID`) 
+ON DELETE CASCADE ON UPDATE RESTRICT;
+
+
+

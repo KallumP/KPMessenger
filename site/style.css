@@ -1,20 +1,83 @@
-header {
-  padding: 10px 0px;
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
+@import url('https://fonts.google.com/specimen/Montserrat');
+:root {
+  --backColor: black;
+  --fontColor: grey;
+  --linkHoverColor: orangered;
+  --noteColor: red;
+  --borderColor: white;
 }
 
-.LoginOptions {
+* {
+  font-family: 'Monstserrat', sans-serif;
+  color: var(--fontColor);
+}
+
+html {
+  background-color: var(--backColor);
+}
+
+a:hover {
+  color: var(--linkHoverColor);
+}
+
+.Container {
+  width: 100%;
+}
+
+header {
+  padding-bottom: 45px;
+  border-color: var(--borderColor);
+  border-style: solid;
+  border-width: 1px;
+  border-top-style: none;
+  border-right-style: none;
+  border-left-style: none;
+  border-bottom-style: dotted;
+}
+
+.Actions {
+  float: left;
+}
+
+.Actions li {
+  float: left;
+  list-style: none;
+}
+
+.Actions li a {
+  padding-right: 20px;
+  text-decoration: none;
+}
+
+.AccountBanner {
   float: right;
 }
 
-.LoginOptions a {
-  padding-right: 10px
+.AccountBanner ul li {
+  float: left;
+  list-style: none;
+  position: relative;
 }
 
-.Actions a {
+.AccountBanner ul li a {
   padding-right: 10px;
+  text-decoration: none;
+  padding-left: 20px;
+}
+
+.AccountBanner ul li ul {
+  display: none;
+}
+
+.AccountBanner ul li:hover ul {
+  display: block;
+  position: absolute;
+}
+
+.AccountBanner ul li:hover ul li a {
+  float: left;
+  padding-top: 10px;
+  padding-right: 100px;
 }
 
 .CreateAccount {
@@ -51,6 +114,13 @@ header {
   text-align: center;
 }
 
+.Login a {
+  text-decoration: none;
+  font: 1em;
+  margin-top: 30px;
+  text-align: center;
+}
+
 .Login input {
   padding: 10px 0;
   width: 100%;
@@ -63,9 +133,10 @@ header {
 
 .RecentMessages {
   float: left;
-  width: 30%;
+  width: 40%;
   height: 100%;
-  border-color: black;
+  max-width: 400px;
+  border-color: var(--fontColor);
   border-style: solid;
   border-width: 1px;
 }
@@ -80,7 +151,7 @@ header {
 
 .RecentMessages .MessagePrev p {
   font-size: 0.9em;
-  color: gray;
+  color: var(--fontColor);
 }
 
 .ChatRoom {
@@ -88,21 +159,40 @@ header {
   width: 60%;
   bottom: 10px;
   left: 35%;
-  border-color: black;
+  border-color: var(--fontColor);
+  border-style: solid;
+  border-width: 1px;
+}
+
+
+
+.ChatRoom .Messages {
+  border-color: var(--fontColor);
   border-style: solid;
   border-width: 1px;
 }
 
 .ChatRoom .Message {
   padding-bottom: 100px;
-  border-color: black;
+  border-color: var(--fontColor);
   border-style: solid;
   border-width: 1px;
 }
 
+.Chatroom .Message h3 {
+  padding-top: 30px;
+  padding-bottom: 10px;
+  size: 3em;
+}
+
+.Chatroom .Message p {
+  padding-top: 30px;
+  padding-bottom: 10px;
+  size: 3em;
+}
+
 .ChatRoom .RecievedMessage h3 {
   float: left;
-  padding-bottom: 5px;
 }
 
 .ChatRoom .RecievedMessage p {
@@ -111,24 +201,17 @@ header {
 
 .ChatRoom .SentMessage h3 {
   float: right;
-  padding-bottom: 5px;
 }
 
 .ChatRoom .SentMessage p {
   float: right;
 }
 
-.ChatRoom .Messages {
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
-}
-
 .ChatRoom .MessageInput {
   width: 60%;
   bottom: 10px;
   padding: 10px 0px;
-  border-color: black;
+  border-color: var(--fontColor);
   border-style: solid;
   border-width: 1px;
 }
@@ -139,21 +222,51 @@ header {
   margin: auto;
 }
 
-.SearchContainer input {
-  width: 50%;
+.SearchContainer h1 {
+  text-align: center;
 }
 
-.SearchContainer button {
-  width: 50%;
+.SearchBar {
+  margin-bottom: 50px;
 }
 
-.FriendBox {
+.SearchContainer .SearchBar input {
   width: 50%;
-  padding-top: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: transparent;
+  border-radius: 5px;
+  border-color: var(--fontColor);
+  border-style: solid;
+  border-width: 3px;
+}
+
+.SearchContainer .SearchBar button {
+  width: 70px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: transparent;
+}
+
+.UserBox {
+  width: 50%;
+  padding-bottom: 20px;
   margin: auto;
-  border-color: black;
+  border-color: var(--fontColor);
   border-style: solid;
   border-width: 1px;
+}
+
+.UserBox h2 {
+  text-align: center;
+  font-style: none;
+  font-size: 1.2em;
+}
+
+.UserBox a p {
+  text-decoration: none;
+  font-style: none;
+  text-align: center;
 }
 
 .CenterObjects {
@@ -164,7 +277,7 @@ header {
 }
 
 .Notes h3 {
-  color: red;
+  color: var(--noteColor);
   text-align: center;
   font-size: 0.9em;
 }
