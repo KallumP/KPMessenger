@@ -39,6 +39,20 @@ if (isset($_POST['messageSend'])) {
 
             mysqli_query($conn, $sqlInsertMessage);
 
+            //gets the time this message was sent
+            $sendTime = date("Y-m-d H:i:s");
+
+            //updates the chatroom with the message send time
+            $sqlUpdateChatroomTime =
+                "UPDATE
+                    chatroom
+                SET
+                    LastMessageTime = '$sendTime'
+                WHERE
+                    chatroom.ID = '$ChatroomID';";
+
+            mysqli_query($conn, $sqlUpdateChatroomTime);
+
             header("Location: ../index.php?ChatRoomID=" . $ChatroomID);
         }
     }
