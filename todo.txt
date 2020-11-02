@@ -14,6 +14,12 @@ check if the two users were friends before setting the connecetors to connected
 take the getmaxid from zAccountCreate and use it in zChatroomCreate
 move adding connectors and setting id's to inside the check for if the initial statement worked
 
+adding more people to chats {
+Connectors have an admin right attribute
+the person who made the chat will get admin rights (both in the case of a new chat from friend accept)
+admins can promote others to admin, and can add new users to the chat
+}
+
 
 
 Friends:
@@ -25,6 +31,14 @@ Messages:
 messages should be accompanied with the time sent
 
 messages should have a read status (maybe recieved status)
+
+unread messages{
+Connectors should have a "read" attribute
+Sending a message, should set the read attribute to false
+Notifications tab pulls all unread chats as notifications
+unread chats have a different color in recetn messages box
+}
+
 
 
 

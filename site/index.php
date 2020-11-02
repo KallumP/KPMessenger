@@ -10,6 +10,28 @@ session_start();
   <meta charset="utf-8">
   <title>KPMessenger</title>
   <link href="style.css" rel="stylesheet" />
+
+  <style>
+    /* width */
+    ::-webkit-scrollbar {
+      width: 2px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #ffffff;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555555;
+    }
+  </style>
 </head>
 
 <body>
@@ -47,48 +69,69 @@ session_start();
 
       $RecentMessagesResult = mysqli_query($conn, $sqlGetRecentMessages);
 
+      //checks if there was any chatrooms found with recent messages
       if (mysqli_num_rows($RecentMessagesResult) > 0) {
 
+        //loops through each recent message
         while ($recentMessageRow = mysqli_fetch_assoc($RecentMessagesResult)) {
+
+          $currentChat = $recentMessageRow['ChatID'];
+          $lastMessageID = "";
+          $lastMessage = "";
+          $messagePreview = "";
 
           //gets the ID of the last sent message in this chat
           $sqlGetLastMessageID =
             "SELECT
               MAX(ID) as ID
             FROM
-              message;";
+              message
+            WHERE
+              message.ChatRoomID = '$currentChat';";
 
           $lastMessageIDResult = mysqli_query($conn, $sqlGetLastMessageID);
 
+          //checks if an id was found
           if (mysqli_num_rows($lastMessageIDResult) > 0) {
+
             $lastMessageIDRow = mysqli_fetch_assoc($lastMessageIDResult);
 
             //saves the id
             $lastMessageID = $lastMessageIDRow['ID'];
+
+            //gets the last sent message using the id
+            $sqlGetLastMessage =
+              "SELECT 
+                message.Content AS 'Content'
+              FROM
+                message
+              WHERE
+                message.ID = '$lastMessageID';";
+
+            $lastMessageResult = mysqli_query($conn, $sqlGetLastMessage);
+
+            //checks if there was a message found with that id
+            if (mysqli_num_rows($lastMessageResult) > 0) {
+
+              $lastMessageRow = mysqli_fetch_assoc($lastMessageResult);
+              $lastMessage = $lastMessageRow['Content'];
+
+              //checks if there 
+              if ($lastMessage != "") {
+
+
+                //checks if the message was more than 20 characters long and then saves the preview
+                if (strlen($lastMessage) > 20)
+                  $messagePreview = substr($lastMessage, 0, 20);
+                else
+                  $messagePreview = $lastMessage;
+              } else {
+                $messagePreview = "No messages yet";
+              }
+            }
           }
 
-          //gets the last sent message using the id
-          $sqlGetLastMessage =
-            "SELECT 
-              message.Content AS 'Content'
-            FROM
-              message
-            WHERE
-              message.ID = $lastMessageID;";
 
-          $lastMessageResult = mysqli_query($conn, $sqlGetLastMessage);
-
-          if (mysqli_num_rows($lastMessageResult) > 0) {
-
-            $lastMessageRow = mysqli_fetch_assoc($lastMessageResult);
-            $lastMessage = $lastMessageRow['Content'];
-
-            //checks if the message was more than 20 characters long
-            if (strlen($lastMessage) > 20)
-              $messagePreview = substr($lastMessage, 0, 20);
-            else
-              $messagePreview = $lastMessage;
-          }
 
           //outputs the 
           echo "<div class='MessagePrev'>";
@@ -154,13 +197,15 @@ session_start();
 
                 $senderID = $messageRow['SenderID'];
 
+                $message = wordwrap($messageRow['MessageContent'], 70, "<br>");
+
 
                 //checks if the current message was yours
                 if ($senderID == $_SESSION['userID']) {
 
-                  echo "<div class='SentMessage Message Border'>";
+                  echo "<div class='SentMessage Message'>";
 
-                  echo "<p>" .  $messageRow['MessageContent'] . "</p>";
+                  echo "<p>" .  $message . "</p>";
                   echo "<h3> Sent by you</h3>";
 
                   echo "</div>";
@@ -187,9 +232,9 @@ session_start();
                     $senderName = "Unknown User";
 
 
-                  echo "<div class='RecievedMessage Message Border'>";
+                  echo "<div class='RecievedMessage Message'>";
 
-                  echo "<p>" .  $messageRow['MessageContent'] . "</p>";
+                  echo "<p>" .  $message . "</p>";
                   echo "<h3>Sent by " . $senderName . "</h3>";
 
                   echo "</div>";
@@ -206,7 +251,7 @@ session_start();
           }
 
         ?>
-          <div class="MessageInput Border">
+          <!-- <div class="MessageInput">
 
             <?php
             //generates the url to send the message with
@@ -217,12 +262,24 @@ session_start();
             <input class="messageEntry BorderInputs" type="text" name="messageEntry" placeholder="Type your message here">
             <button class="messageSend BorderInputs" type="submit" name="messageSend"> Send </button>
             </form>
-          </div>
+          </div> -->
         <?php
         }
         ?>
       </div>
 
+      <div class="MessageInput">
+
+        <?php
+        //generates the url to send the message with
+        $SendMessageTo = "includes/zSendMessage.php?chatRoomID=" . mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
+        echo "<form action='$SendMessageTo'  method='POST'>"
+        ?>
+
+        <input class="messageEntry BorderInputs" type="text" name="messageEntry" placeholder="Type your message here">
+        <button class="messageSend BorderInputs" type="submit" name="messageSend"> Send </button>
+        </form>
+      </div>
 
 
     </div>
