@@ -6,6 +6,7 @@ General:
 pulls all database data into sql safe variables
 spa arcitechure
 messages to self
+should not say sent by a person more than once in a row (when outputting message, store who the last sent message was from)
 
 
 

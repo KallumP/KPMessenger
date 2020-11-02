@@ -133,7 +133,7 @@ session_start();
 
 
 
-          //outputs the 
+          //outputs the  chatroom
           echo "<div class='MessagePrev'>";
           echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
           echo "<h2>" . $recentMessageRow['ChatName'] . "</h2>";
@@ -271,14 +271,18 @@ session_start();
       <div class="MessageInput">
 
         <?php
-        //generates the url to send the message with
-        $SendMessageTo = "includes/zSendMessage.php?chatRoomID=" . mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
-        echo "<form action='$SendMessageTo'  method='POST'>"
+        if (isset($_GET['ChatRoomID'])) {
+          //generates the url to send the message with
+          $SendMessageTo = "includes/zSendMessage.php?chatRoomID=" . mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
+          echo "<form action='$SendMessageTo'  method='POST'>"
         ?>
 
-        <input class="messageEntry BorderInputs" type="text" name="messageEntry" placeholder="Type your message here">
-        <button class="messageSend BorderInputs" type="submit" name="messageSend"> Send </button>
-        </form>
+          <input class="messageEntry BorderInputs" type="text" name="messageEntry" placeholder="Type your message here">
+          <button class="messageSend BorderInputs" type="submit" name="messageSend"> Send </button>
+          </form>
+        <?php
+        }
+        ?>
       </div>
 
 

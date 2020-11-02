@@ -211,11 +211,12 @@ header {
 
 .ChatRoom .Message {
   width: 100%;
+  padding-bottom: 20px;
 }
 
 .ChatRoom .Message p {
   font-size: 1.2em;
-  padding-bottom: 10px;
+  padding-bottom: 1px;
 }
 
 .ChatRoom .Message h3 {
