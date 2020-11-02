@@ -31,15 +31,76 @@ session_start();
     <div class="RecentMessages Border">
       <h1>Recent Messages</h1>
       <?php
-      for ($i = 1; $i < 9; $i++) {
 
-        echo "<div class='MessagePrev'>";
-        echo "<a href=index.php?ChatRoomID=" . $i . ">";
-        echo "<h1>" . $i . " Sender</h1>";
-        echo "<p>" . $i . " Preview</p>";
-        echo "</a>";
-        echo "</div>";
+      $UserID = $_SESSION['userID'];
+
+      //gets all the chatroom id's and names that the user is a part of
+      $sqlGetRecentMessages =
+        "SELECT 
+            chatroom.Name AS 'ChatName',
+            chatroom.ID AS 'ChatID'
+          FROM
+            chatroom
+          LEFT JOIN connector ON chatroom.ID = connector.ChatroomID
+          WHERE 
+            connector.UserID = '$UserID';";
+
+      $RecentMessagesResult = mysqli_query($conn, $sqlGetRecentMessages);
+
+      if (mysqli_num_rows($RecentMessagesResult) > 0) {
+
+        while ($recentMessageRow = mysqli_fetch_assoc($RecentMessagesResult)) {
+
+          //gets the ID of the last sent message in this chat
+          $sqlGetLastMessageID =
+            "SELECT
+              MAX(ID) as ID
+            FROM
+              message;";
+
+          $lastMessageIDResult = mysqli_query($conn, $sqlGetLastMessageID);
+
+          if (mysqli_num_rows($lastMessageIDResult) > 0) {
+            $lastMessageIDRow = mysqli_fetch_assoc($lastMessageIDResult);
+
+            //saves the id
+            $lastMessageID = $lastMessageIDRow['ID'];
+          }
+
+          //gets the last sent message using the id
+          $sqlGetLastMessage =
+            "SELECT 
+              message.Content AS 'Content'
+            FROM
+              message
+            WHERE
+              message.ID = $lastMessageID;";
+
+          $lastMessageResult = mysqli_query($conn, $sqlGetLastMessage);
+
+          if (mysqli_num_rows($lastMessageResult) > 0) {
+
+            $lastMessageRow = mysqli_fetch_assoc($lastMessageResult);
+            $lastMessage = $lastMessageRow['Content'];
+
+            //checks if the message was more than 20 characters long
+            if (strlen($lastMessage) > 20)
+              $messagePreview = substr($lastMessage, 0, 20);
+            else
+              $messagePreview = $lastMessage;
+          }
+
+          //outputs the 
+          echo "<div class='MessagePrev'>";
+          echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
+          echo "<h2>" . $recentMessageRow['ChatName'] . "</h2>";
+          echo "<p>" . $messagePreview . "</p>";
+          echo "</a>";
+          echo "</div>";
+        }
       }
+
+
       ?>
     </div>
 
