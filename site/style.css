@@ -162,9 +162,8 @@ header {
 
 .RecentMessages {
   float: left;
-  width: 40%;
+  width: 20%;
   height: 100%;
-  max-width: 400px;
 }
 
 .RecentMessages .MessagePrev {
@@ -192,21 +191,25 @@ header {
 }
 
 .ChatRoom {
-  /* height: 100%;
-  float: right;
-  padding-right: 20px;
-  width: 75%; */
   position: fixed;
-  width: 70%;
+  width: 79%;
   bottom: 10px;
-  left: 25%;
+  left: 21%;
+  z-index: -1;
+}
+
+.ChatRoom .ChatName {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  z-index: -1;
 }
 
 .ChatRoom .Messages {
   z-index: -1;
-  overflow-y: auto; 
+  overflow-y: auto;
   overflow-x: hidden;
-  height: 800px;
+  max-height: 750px;
 }
 
 .ChatRoom .Message {
@@ -270,13 +273,13 @@ header {
 
 .ChatRoom .MessageInput input {
   width: 90%;
-  padding-top:5px;
+  padding-top: 5px;
   padding-bottom: 5px;
 }
 
 .ChatRoom .MessageInput button {
   width: 8%;
-  padding-top:5px;
+  padding-top: 5px;
   padding-bottom: 5px;
 }
 
@@ -328,4 +331,24 @@ header {
   text-decoration: none;
   font-style: none;
   text-align: center;
+}
+
+/* Different screensizes */
+
+@media only screen and (max-height: 900px) {
+  .ChatRoom .Messages {
+    max-height: 650px;
+  }
+}
+
+@media only screen and (max-height: 830px) {
+  .ChatRoom .Messages {
+    max-height: 500px;
+  }
+}
+
+@media only screen and (max-height: 680px) {
+  .ChatRoom .Messages {
+    max-height: 380px;
+  }
 }

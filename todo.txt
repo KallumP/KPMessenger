@@ -7,6 +7,7 @@ pulls all database data into sql safe variables
 spa arcitechure
 messages to self
 should not say sent by a person more than once in a row (when outputting message, store who the last sent message was from)
+make the chatroom size a bit more defined (put more screensize changes in css)
 
 
 
@@ -14,12 +15,15 @@ Chatroom:
 check if the two users were friends before setting the connecetors to connected
 take the getmaxid from zAccountCreate and use it in zChatroomCreate
 move adding connectors and setting id's to inside the check for if the initial statement worked
-
-adding more people to chats {
-Connectors have an admin right attribute
-the person who made the chat will get admin rights (both in the case of a new chat from friend accept)
-admins can promote others to admin, and can add new users to the chat
+shouldn't be able to make a new chat with a friend (or maybe leave this in)
+should be able to make a new chat on your own (so that you can add people to it afterwards)
+Chat settings{
+Rename chat
+add/remove members
+edit admin rights
+passwords
 }
+chat name should be the people in the chat's names by default
 
 
 
@@ -40,6 +44,14 @@ Notifications tab pulls all unread chats as notifications
 unread chats have a different color in recetn messages box
 }
 
+
+
+Connectors:
+adding more people to chats {
+Connectors have an admin right attribute
+the person who made the chat will get admin rights (both in the case of a new chat from friend accept)
+admins can promote others to admin, and can add new users to the chat
+}
 
 
 
