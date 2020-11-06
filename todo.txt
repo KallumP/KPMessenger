@@ -42,6 +42,8 @@ Connectors should have a "read" attribute
 Sending a message, should set the read attribute to false
 Notifications tab pulls all unread chats as notifications
 unread chats have a different color in recetn messages box
+When sending a message it should set all connectors from that chat to unread
+Loading the chat will set your connector to read (this will happen on long polling too)
 }
 
 
@@ -73,5 +75,5 @@ should show the accept friend request if the user has a friend request from them
 
 
 Settings:
-Dark mode
+Dark mode/ themes, use php to load the correct css file depending on the user settings
 show ids after names

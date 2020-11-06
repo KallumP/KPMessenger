@@ -205,6 +205,16 @@ header {
   z-index: -1;
 }
 
+.ChatRoom .RefreshMessage {
+  position: fixed;
+  top: 60px;
+  left: 60%;
+  padding:10px;
+  margin-top:15px;
+  color: black;
+  z-index: -1;
+}
+
 .ChatRoom .Messages {
   z-index: -1;
   overflow-y: auto;
