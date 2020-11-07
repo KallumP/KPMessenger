@@ -35,17 +35,21 @@ session_start();
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script>
-    $(document).ready(function() {
 
-      $("#RefreshChat").click(function() {
+    //the timer to pull new messages (short polling every 4 seconds)
+    setInterval(function() {
 
-        $("#Messages").load("includes/zLoadMessages.php", {
+      $("#Messages").load("includes/zLoadMessages.php", {
 
-          ChatroomID: <?php echo $_GET['ChatRoomID'] ?>,
-          UserID: <?php echo $_SESSION['userID'] ?>
-        });
+        ChatroomID: <?php echo $_GET['ChatRoomID'] ?>,
+        UserID: <?php echo $_SESSION['userID'] ?>
       });
-    });
+
+      $("#RecentMessages").load("includes/zLoadRecents.php", {
+
+        UserID: <?php echo $_SESSION['userID'] ?>
+      });
+    }, 4000);
   </script>
 </head>
 
@@ -65,7 +69,7 @@ session_start();
 
     </header>
 
-    <div class="RecentMessages Border">
+    <div id="RecentMessages" class="RecentMessages Border">
       <h1>Recent Messages</h1>
       <?php
 
@@ -164,8 +168,6 @@ session_start();
 
 
     <div class="ChatRoom">
-
-      <button id='RefreshChat' class='RefreshMessage'> Refresh </button>
 
       <div id='Messages' class='Messages'>
 
