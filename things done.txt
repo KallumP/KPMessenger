@@ -1,0 +1,12 @@
+
+
+
+
+2020/11/08
+Read status added to all chats
+trying to get status working {
+	check if read status is false
+		if so call zLoadMessages.php
+		scroll to the bottom
+			To test this
+			output the status near the title (to check if it is actually 0)

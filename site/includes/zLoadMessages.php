@@ -1,20 +1,27 @@
 <?php
-
-// echo "ajax loads <br>";
-
 include 'dbh.inc.php';
 session_start();
-// echo "databse and session started<br>";
 
+// echo $_POST['ReadStatus'];
 
 //checks if there was a chatroom and a user posted from the ajax
-if (isset($_POST['ChatroomID']) && isset($_POST['UserID'])) {
-
-    // echo "post verified<br>";
+if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
+// } else {
 
     $ChatroomID = $_POST['ChatroomID'];
-    //  mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
-    $UserID = $_POST['UserID'];
+    $UserID = $_SESSION['userID'];
+
+    //query to set all connected users' read status to false
+    $sqlUpdateConnectorReadStatus =
+        "UPDATE
+            connector
+        SET
+            _Read = 1
+        WHERE
+            connector.UserID = '$UserID' AND
+            connector.ChatRoomID = '$ChatroomID';";
+
+    mysqli_query($conn, $sqlUpdateConnectorReadStatus);
 
     //check if the user has access to this chatroom
     $sqlUserConnector =
@@ -41,7 +48,7 @@ if (isset($_POST['ChatroomID']) && isset($_POST['UserID'])) {
         //checks if there were any messages
         if (mysqli_num_rows($ChatNameResult) > 0) {
             $chatname = mysqli_fetch_assoc($ChatNameResult)['Name'];
-            echo "<h1 class='ChatName'>" . $chatname .  "</h1>";
+            echo "<h1 id='ChatName' class='ChatName'>" . $chatname .  "</h1>";
         }
 
         //pulls the last 10 messages from this chatroom
@@ -55,7 +62,9 @@ if (isset($_POST['ChatroomID']) && isset($_POST['UserID'])) {
               message.ChatRoomID = '$ChatroomID'
             ORDER BY
               message.ID
-            DESC;";
+            DESC
+            LIMIT
+              10;";
 
         $AllMessagesResult = mysqli_query($conn, $sqlAllMessages);
         $AllMessagesResultCheck = mysqli_num_rows($AllMessagesResult);
@@ -63,7 +72,6 @@ if (isset($_POST['ChatroomID']) && isset($_POST['UserID'])) {
         //checks if there were any messages
         if ($AllMessagesResultCheck > 0) {
 
-            //---------
             //stores all the messages in an array
             while ($messageRow = mysqli_fetch_assoc($AllMessagesResult))
                 $messages[] = $messageRow;
@@ -72,7 +80,7 @@ if (isset($_POST['ChatroomID']) && isset($_POST['UserID'])) {
             $messages = array_reverse($messages, true);
 
             foreach ($messages as $messageRow) {
-                //---------end
+
 
                 $senderID = $messageRow['SenderID'];
                 $message = wordwrap($messageRow['MessageContent'], 70, "<br>");
@@ -124,6 +132,4 @@ if (isset($_POST['ChatroomID']) && isset($_POST['UserID'])) {
     } else {
         echo "<h2>You don't have access to this chat</h3>";
     }
-} else {
-    echo "post not working";
 }

@@ -35,20 +35,65 @@ session_start();
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script>
+    //scrolls to the bottom of the message box on page load
+    $(document).ready(function() {
+
+      let scroll = document.getElementById('Messages');
+      scroll.scrollTop = scroll.scrollHeight;
+    });
+
 
     //the timer to pull new messages (short polling every 4 seconds)
     setInterval(function() {
 
-      $("#Messages").load("includes/zLoadMessages.php", {
+      <?php
 
-        ChatroomID: <?php echo $_GET['ChatRoomID'] ?>,
-        UserID: <?php echo $_SESSION['userID'] ?>
-      });
+      //below was meant to be used to check the read status but its not working as expected or im doing something wrong
+      // $userID = $_SESSION['userID'];
+      // $chatID = $_GET['ChatRoomID'];
 
+      // //gets the user's read status for the current chat
+      // $sqlGetReadStatus =
+      //   "SELECT
+      //     connector._Read AS 'Status'
+      //   FROM 
+      //     connector
+      //   WHERE
+      //     connector.UserID = '$userID' AND
+      //     connector.ChatRoomID = '$chatID';";
+
+      // $readStatusResult = "";
+      // $readStatusResult = mysqli_query($conn, $sqlGetReadStatus);
+
+      // //checks if there was any results for that query
+      // if (mysqli_num_rows($readStatusResult) > 0) {
+
+      //   //takes the result
+      //   $readStatusRow = mysqli_fetch_assoc($readStatusResult);
+
+      //   //checks if the read status was false
+      //   if ($readStatusRow['Status'] != 1) {
+
+      echo  "$('#Messages').load('includes/zLoadMessages.php', {";
+
+      echo    "ChatroomID:" . $_GET['ChatRoomID'] . ",";
+      //echo    "ReadStatus:" .  $readStatusRow['Status'];
+      echo  "});";
+
+      ?>
       $("#RecentMessages").load("includes/zLoadRecents.php", {
 
-        UserID: <?php echo $_SESSION['userID'] ?>
       });
+
+
+      let scroll = document.getElementById('Messages');
+      // if (scroll.scrollTop > scroll.scrollHeight - 300)
+      scroll.scrollTop = scroll.scrollHeight;
+      <?php
+      // }
+      // }
+      ?>
+
     }, 4000);
   </script>
 </head>
@@ -178,6 +223,19 @@ session_start();
           $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
           $UserID = $_SESSION['userID'];
 
+
+          //query to set all connected users' read status to false
+          $sqlUpdateConnectorReadStatus =
+            "UPDATE
+                connector
+            SET
+                _Read = 1
+            WHERE
+                connector.UserID = '$UserID' AND
+                connector.ChatRoomID = '$ChatroomID';";
+
+          mysqli_query($conn, $sqlUpdateConnectorReadStatus);
+
           //check if the user has access to this chatroom
           $sqlUserConnector =
             "SELECT 
@@ -203,7 +261,7 @@ session_start();
             //checks if there were any messages
             if (mysqli_num_rows($ChatNameResult) > 0) {
               $chatname = mysqli_fetch_assoc($ChatNameResult)['Name'];
-              echo "<h1 class='ChatName'>" . $chatname .  "</h1>";
+              echo "<h1 id='ChatName' class='ChatName'>" . $chatname .  "</h1>";
             }
 
             //pulls the last 10 messages from this chatroom
@@ -227,7 +285,6 @@ session_start();
             //checks if there were any messages
             if ($AllMessagesResultCheck > 0) {
 
-              //---------
               //stores all the messages in an array
               while ($messageRow = mysqli_fetch_assoc($AllMessagesResult))
                 $messages[] = $messageRow;
@@ -236,7 +293,6 @@ session_start();
               $messages = array_reverse($messages, true);
 
               foreach ($messages as $messageRow) {
-                //---------end
 
                 $senderID = $messageRow['SenderID'];
                 $message = wordwrap($messageRow['MessageContent'], 70, "<br>");

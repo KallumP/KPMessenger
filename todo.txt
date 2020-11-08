@@ -8,6 +8,7 @@ spa arcitechure
 messages to self
 should not say sent by a person more than once in a row (when outputting message, store who the last sent message was from)
 make the chatroom size a bit more defined (put more screensize changes in css)
+move all database connections after checking if the .php file was opene correctly (after checking for posts or session ids)
 
 
 
@@ -45,6 +46,15 @@ unread chats have a different color in recetn messages box
 When sending a message it should set all connectors from that chat to unread
 Loading the chat will set your connector to read (this will happen on long polling too)
 }
+
+There should be no get messages code in index.php
+On document ready it should call loadmessages
+and then scroll to the bottom
+On a timer it should call loadmessages and but don't scroll unless there was a new message
+
+the js should have some php to check the connector if the read status was false
+zLoadMessages.php should only be called if the above was true. js should scroll to the bottom if the above was true
+Maybe if the read status is detected as false, the name can be updated with a button to allow the user to scroll to the bottom
 
 
 

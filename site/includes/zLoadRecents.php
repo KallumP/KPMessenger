@@ -5,7 +5,7 @@ session_start();
 <h1>Recent Messages</h1>
 
 <?php
-$UserID = $_POST['UserID'];
+$UserID = $_SESSION['userID'];
 
 //gets all the chatroom id's and names that the user is a part of
 $sqlGetRecentMessages =
