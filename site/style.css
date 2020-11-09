@@ -160,6 +160,10 @@ header {
   width: 100%;
 }
 
+.Unread {
+  color: rgb(173, 120, 173);
+}
+
 .RecentMessages {
   float: left;
   width: 20%;

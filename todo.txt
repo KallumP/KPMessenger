@@ -39,22 +39,16 @@ messages should be accompanied with the time sent
 messages should have a read status (maybe recieved status)
 
 unread messages{
-Connectors should have a "read" attribute
-Sending a message, should set the read attribute to false
 Notifications tab pulls all unread chats as notifications
-unread chats have a different color in recetn messages box
-When sending a message it should set all connectors from that chat to unread
-Loading the chat will set your connector to read (this will happen on long polling too)
+unread chats have a different color in recent messages box
 }
 
-There should be no get messages code in index.php
-On document ready it should call loadmessages
-and then scroll to the bottom
-On a timer it should call loadmessages and but don't scroll unless there was a new message
+Scroll to bottom on page load
+It should check if the div was scrolled up a bit before scrolling down
 
-the js should have some php to check the connector if the read status was false
-zLoadMessages.php should only be called if the above was true. js should scroll to the bottom if the above was true
-Maybe if the read status is detected as false, the name can be updated with a button to allow the user to scroll to the bottom
+could I check if read was false using just javascript?
+
+
 
 
 

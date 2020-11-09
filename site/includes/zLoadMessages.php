@@ -2,11 +2,8 @@
 include 'dbh.inc.php';
 session_start();
 
-// echo $_POST['ReadStatus'];
-
 //checks if there was a chatroom and a user posted from the ajax
 if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
-// } else {
 
     $ChatroomID = $_POST['ChatroomID'];
     $UserID = $_SESSION['userID'];
@@ -88,6 +85,7 @@ if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
                 //checks if the current message was yours
                 if ($senderID == $_SESSION['userID']) {
 
+                    //outputs the message
                     echo "<div class='SentMessage Message'>";
 
                     echo "<p>" .  $message . "</p>";
@@ -96,7 +94,7 @@ if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
                     echo "</div>";
                 } else {
 
-
+                    //gets the user name of the sender
                     $sqlGetSender =
                         "SELECT
                             _user.Username AS 'SenderName'
@@ -109,12 +107,13 @@ if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
                     $GetSenderResultCheck = mysqli_num_rows($GetSenderResult);
 
                     $senderName = "";
+
                     if ($GetSenderResultCheck > 0)
                         $senderName = mysqli_fetch_assoc($GetSenderResult)['SenderName'];
-
                     else
                         $senderName = "Unknown User";
 
+                    //outputs the message
                     echo "<div class='RecievedMessage Message'>";
 
                     echo "<p>" .  $message . "</p>";
@@ -126,10 +125,11 @@ if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
         } else {
 
             //there were no messages in the chat
-
             echo "<h2>Looks like there are no messages in this chat.<br>Why not initiate and send one yourself</h3><br><br>";
         }
     } else {
+
+        //user had no access
         echo "<h2>You don't have access to this chat</h3>";
     }
 }
