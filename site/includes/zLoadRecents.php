@@ -74,7 +74,7 @@ if (mysqli_num_rows($RecentMessagesResult) > 0) {
 
           //checks if the message was more than 20 characters long and then saves the preview
           if (strlen($lastMessage) > 20)
-            $messagePreview = substr($lastMessage, 0, 20);
+            $messagePreview = substr($lastMessage, 0, 40);
           else
             $messagePreview = $lastMessage;
         } else {
@@ -83,13 +83,46 @@ if (mysqli_num_rows($RecentMessagesResult) > 0) {
       }
     }
 
-    //outputs the  chatroom
-    echo "<div class='MessagePrev'>";
-    echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
-    echo "<h2>" . $recentMessageRow['ChatName'] . "</h2>";
-    echo "<p>" . $messagePreview . "</p>";
-    echo "</a>";
-    echo "</div>";
+    $ChatroomID = $recentMessageRow['ChatID'];
+
+
+    //gets the read status of the chat
+    $sqlReadStatus =
+    "SELECT
+        connector._Read AS 'Status'
+    FROM
+        connector
+    WHERE
+        connector.UserID = '$UserID' AND
+        connector.ChatRoomID = '$ChatroomID';";
+
+    $readStatusResult = mysqli_query($conn, $sqlReadStatus);
+
+    //checks if there was a status pulled (there always should be)
+    if (mysqli_num_rows($readStatusResult)){
+      $readRow = mysqli_fetch_assoc($readStatusResult);
+
+      //checks if the chat was not read
+      if ($readRow['Status'] == 0){
+            //outputs the  chatroom
+            echo "<div class='MessagePrev Unread'>";
+            echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
+            echo "<h2>" . $recentMessageRow['ChatName'] . " (Unread)</h2>";
+            echo "<p>" . $messagePreview . "</p>";
+            echo "</a>";
+            echo "</div>";
+      } else {
+        
+            //outputs the  chatroom
+            echo "<div class='MessagePrev'>";
+            echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
+            echo "<h2>" . $recentMessageRow['ChatName'] . "</h2>";
+            echo "<p>" . $messagePreview . "</p>";
+            echo "</a>";
+            echo "</div>";
+
+      }
+    }
   }
 }
 ?>

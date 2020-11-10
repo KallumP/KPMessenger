@@ -8,7 +8,7 @@ spa arcitechure
 messages to self
 should not say sent by a person more than once in a row (when outputting message, store who the last sent message was from)
 make the chatroom size a bit more defined (put more screensize changes in css)
-move all database connections after checking if the .php file was opene correctly (after checking for posts or session ids)
+move all database connections after checking if the .php file was opened correctly (after checking for posts or session ids)
 
 
 
@@ -36,18 +36,17 @@ Clicking on a friend lets you either remove friend
 Messages:
 messages should be accompanied with the time sent
 
-messages should have a read status (maybe recieved status)
+unread chats should come up in notifications
 
 unread messages{
 Notifications tab pulls all unread chats as notifications
 unread chats have a different color in recent messages box
 }
 
-Scroll to bottom on page load
+Scroll to bottom of chat{
 It should check if the div was scrolled up a bit before scrolling down
-
-could I check if read was false using just javascript?
-
+}
+scroll to bottom doens't work on page load
 
 
 
