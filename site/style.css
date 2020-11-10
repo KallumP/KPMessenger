@@ -160,6 +160,10 @@ header {
   width: 100%;
 }
 
+.Unread {
+  color: rgb(173, 120, 173);
+}
+
 .RecentMessages {
   float: left;
   width: 20%;
@@ -202,6 +206,16 @@ header {
   position: fixed;
   top: 60px;
   left: 50%;
+  z-index: -1;
+}
+
+.ChatRoom .RefreshMessage {
+  position: fixed;
+  top: 60px;
+  left: 60%;
+  padding:10px;
+  margin-top:15px;
+  color: black;
   z-index: -1;
 }
 
