@@ -45,7 +45,7 @@ if ($ChatResultCheck > 0) {
       //loops through each common chat
       while ($CommonChatResultRow = mysqli_fetch_assoc($CommonChatResult)) {
         $commonchat = true;
-        echo "<a href=index.php?chatID=" . $CommonChatResultRow['chatID'] . "><p>Open chat: " . $CommonChatResultRow['chatName'] . "</p></a>";
+        echo "<a href=index.php?ChatRoomID=" . $CommonChatResultRow['chatID'] . "><p>Open chat: " . $CommonChatResultRow['chatName'] . "</p></a>";
       }
     }
   }

@@ -3,9 +3,11 @@ show all users without having to search anything
 general styling
 
 General:
-puls all database variables into safe variables
+pulls all database data into sql safe variables
 spa arcitechure
 messages to self
+should not say sent by a person more than once in a row (when outputting message, store who the last sent message was from)
+make the chatroom size a bit more defined (put more screensize changes in css)
 
 
 
@@ -13,6 +15,15 @@ Chatroom:
 check if the two users were friends before setting the connecetors to connected
 take the getmaxid from zAccountCreate and use it in zChatroomCreate
 move adding connectors and setting id's to inside the check for if the initial statement worked
+shouldn't be able to make a new chat with a friend (or maybe leave this in)
+should be able to make a new chat on your own (so that you can add people to it afterwards)
+Chat settings{
+Rename chat
+add/remove members
+edit admin rights
+passwords
+}
+chat name should be the people in the chat's names by default
 
 
 
@@ -26,12 +37,27 @@ messages should be accompanied with the time sent
 
 messages should have a read status (maybe recieved status)
 
-No message should show (Hmm, there are no messages here, why not send one?)
+unread messages{
+Connectors should have a "read" attribute
+Sending a message, should set the read attribute to false
+Notifications tab pulls all unread chats as notifications
+unread chats have a different color in recetn messages box
+}
+
+
+
+Connectors:
+adding more people to chats {
+Connectors have an admin right attribute
+the person who made the chat will get admin rights (both in the case of a new chat from friend accept)
+admins can promote others to admin, and can add new users to the chat
+}
 
 
 
 Make account:
 email for forgotten password
+so a user should have to enter an email address when signing up
 
 
 
