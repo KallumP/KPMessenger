@@ -9,3 +9,7 @@ Read status added to all chats
 2020/11/10
 Read status now working
 Unread chats come up in purple in the recent messages box
+
+2020/11/11
+Notifications now pull using ajax
+Notifications now has unread color if there are notifications available

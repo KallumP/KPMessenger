@@ -40,7 +40,6 @@ unread chats should come up in notifications
 
 unread messages{
 Notifications tab pulls all unread chats as notifications
-unread chats have a different color in recent messages box
 }
 
 Scroll to bottom of chat{

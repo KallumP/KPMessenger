@@ -35,15 +35,23 @@ session_start();
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script>
-
-    let LoadMessages = function() {
+    let GetMessages = function() {
 
       $('#Messages').load('includes/zLoadMessages.php', {
         ChatroomID: <?php echo $_GET['ChatRoomID'] ?>,
       });
 
+    }
+
+    let GetRecentMessages = function() {
 
       $("#RecentMessages").load("includes/zLoadRecents.php", {
+
+      });
+    }
+
+    let GetNotes = function() {
+      $("#Banner").load("includes/zLoadNotes.php", {
 
       });
     }
@@ -51,7 +59,9 @@ session_start();
     //scrolls to the bottom of the message box on page load
     $(document).ready(function() {
 
-      LoadMessages()
+      GetMessages();
+      GetRecentMessages();
+      GetNotes();
 
       let scroll = document.getElementById('Messages');
       scroll.scrollTop = scroll.scrollHeight;
@@ -60,13 +70,14 @@ session_start();
     //the timer to pull new messages (short polling every 4 seconds)
     setInterval(function() {
 
-      LoadMessages()
+      GetMessages();
+      GetRecentMessages();
+      GetNotes();
 
       let scroll = document.getElementById('Messages');
       scroll.scrollTop = scroll.scrollHeight;
 
     }, 4000);
-    
   </script>
 </head>
 
@@ -75,7 +86,9 @@ session_start();
   <div class=Container>
     <header>
 
-      <?php include("includes/accountBanner.inc.php"); ?>
+      <div id="Banner" class="AccountBanner">
+
+      </div>
 
       <div class="Actions">
         <ul>

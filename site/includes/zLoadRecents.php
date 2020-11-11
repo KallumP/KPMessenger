@@ -107,7 +107,7 @@ if (mysqli_num_rows($RecentMessagesResult) > 0) {
             //outputs the  chatroom
             echo "<div class='MessagePrev Unread'>";
             echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
-            echo "<h2>" . $recentMessageRow['ChatName'] . " (Unread)</h2>";
+            echo "<h2>" . $recentMessageRow['ChatName'] . "</h2>";
             echo "<p>" . $messagePreview . "</p>";
             echo "</a>";
             echo "</div>";

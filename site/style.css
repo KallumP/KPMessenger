@@ -12,7 +12,6 @@
 * {
   font-family: 'Monstserrat', sans-serif;
   color: var(--fontColor);
-  /* color: var(--unreadFontColor); */
 }
 
 html {
@@ -44,6 +43,10 @@ html {
   color: var(--noteColor);
   text-align: center;
   font-size: 0.9em;
+}
+
+.Unread{
+  color: var(--unreadFontColor)
 }
 
 a:hover {
@@ -92,24 +95,27 @@ header {
 }
 
 .AccountBanner ul li a {
-  padding-right: 10px;
+  display: block;
   text-decoration: none;
+  padding-right: 10px;
   padding-left: 20px;
 }
 
 .AccountBanner ul li ul {
   display: none;
+  position: absolute;
 }
 
 .AccountBanner ul li:hover ul {
   display: block;
-  position: absolute;
+  padding-top: 30px;
+  padding-bottom: 15px;
+  left: -40px;
 }
 
-.AccountBanner ul li:hover ul li a {
-  float: left;
-  padding-top: 10px;
-  padding-right: 100px;
+.AccountBanner ul li ul li {
+  padding: 0;
+  width: 220px;
 }
 
 .CreateAccount {
@@ -164,6 +170,7 @@ header {
 }
 
 /* Recent messages */
+
 .RecentMessages {
   float: left;
   width: 20%;
