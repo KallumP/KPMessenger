@@ -2,6 +2,9 @@
 include 'dbh.inc.php';
 session_start();
 
+if (!isset($_SESSION['userID']))
+    header("Location: login.php");
+
 //checks if there was a chatroom and a user posted from the ajax
 if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
 

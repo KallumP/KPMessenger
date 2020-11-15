@@ -2,6 +2,8 @@
 include_once 'dbh.inc.php';
 session_start();
 
+if (!isset($_SESSION['userID']))
+    header("Location: login.php");
 
 //checks if the send message was pressed
 if (isset($_POST['messageSend'])) {

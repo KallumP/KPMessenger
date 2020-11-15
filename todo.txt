@@ -48,6 +48,13 @@ It should check if the div was scrolled up a bit before scrolling down
 scroll to bottom doens't work on page load
 
 
+If there was a new message (read was false during the load messages sequence)
+output the following script using php 
+https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_audio_play
+(replace the sound with a ping sound) 
+(and call the play function rather than have it on click)
+
+
 
 
 Connectors:

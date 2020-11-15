@@ -1,6 +1,9 @@
 <?php
 include 'dbh.inc.php';
 session_start();
+if (!isset($_SESSION['userID']))
+  header("Location: login.php");
+  
 ?>
 <h1>Recent Messages</h1>
 
@@ -88,7 +91,7 @@ if (mysqli_num_rows($RecentMessagesResult) > 0) {
 
     //gets the read status of the chat
     $sqlReadStatus =
-    "SELECT
+      "SELECT
         connector._Read AS 'Status'
     FROM
         connector
@@ -99,28 +102,27 @@ if (mysqli_num_rows($RecentMessagesResult) > 0) {
     $readStatusResult = mysqli_query($conn, $sqlReadStatus);
 
     //checks if there was a status pulled (there always should be)
-    if (mysqli_num_rows($readStatusResult)){
+    if (mysqli_num_rows($readStatusResult)) {
       $readRow = mysqli_fetch_assoc($readStatusResult);
 
       //checks if the chat was not read
-      if ($readRow['Status'] == 0){
-            //outputs the  chatroom
-            echo "<div class='MessagePrev Unread'>";
-            echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
-            echo "<h2>" . $recentMessageRow['ChatName'] . "</h2>";
-            echo "<p>" . $messagePreview . "</p>";
-            echo "</a>";
-            echo "</div>";
+      if ($readRow['Status'] == 0) {
+        //outputs the  chatroom
+        echo "<div class='MessagePrev Unread'>";
+        echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
+        echo "<h2>" . $recentMessageRow['ChatName'] . "</h2>";
+        echo "<p>" . $messagePreview . "</p>";
+        echo "</a>";
+        echo "</div>";
       } else {
-        
-            //outputs the  chatroom
-            echo "<div class='MessagePrev'>";
-            echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
-            echo "<h2>" . $recentMessageRow['ChatName'] . "</h2>";
-            echo "<p>" . $messagePreview . "</p>";
-            echo "</a>";
-            echo "</div>";
 
+        //outputs the  chatroom
+        echo "<div class='MessagePrev'>";
+        echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
+        echo "<h2>" . $recentMessageRow['ChatName'] . "</h2>";
+        echo "<p>" . $messagePreview . "</p>";
+        echo "</a>";
+        echo "</div>";
       }
     }
   }

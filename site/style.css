@@ -45,7 +45,7 @@ html {
   font-size: 0.9em;
 }
 
-.Unread{
+.Unread {
   color: var(--unreadFontColor)
 }
 
@@ -316,12 +316,22 @@ header {
   width: 90%;
   padding-top: 5px;
   padding-bottom: 5px;
+  margin:0;
+  font-size: 1em;
+  resize: none;
+}
+
+@-moz-document url-prefix() {
+  .SingleLine {
+    height: 1em;
+  }
 }
 
 .ChatRoom .MessageInput button {
   width: 8%;
   padding-top: 5px;
   padding-bottom: 5px;
+  font-size: 1em;
 }
 
 .SearchContainer {
