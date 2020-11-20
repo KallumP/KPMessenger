@@ -1,3 +1,5 @@
+2020/11/20
+Database changes, project management changes
 
 2020/11/18
 Can now change chat name
