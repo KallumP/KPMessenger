@@ -1,5 +1,8 @@
+
+
 2020/11/20
 Database changes, project management changes
+ChatSettings-Chat members are now shown
 
 2020/11/18
 Can now change chat name

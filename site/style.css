@@ -388,7 +388,8 @@ header {
 
 .ChatSettings {
   padding-top: 100px;
-  width: 50%;
+  width: 40%;
+  min-width: 630px;
   margin: auto;
 }
 
@@ -397,23 +398,35 @@ header {
   padding-bottom: 50px;
 }
 
-.ChatSettings .ChatName {
-  width: 95%;
-  margin: auto;
-}
-
-.ChatSettings .ChatName input {
-  width: 80%;
+.ChatSettings input {
+  width: 78%;
   padding-top: 5px;
   padding-bottom: 5px;
+  padding-left: 5px;
   font-size: 1em;
 }
 
-.ChatSettings .ChatName button {
+.ChatSettings button {
+  float: right;
   width: 18%;
   padding-top: 5px;
   padding-bottom: 5px;
   font-size: 1em;
+}
+
+.ChatSettings .ChatMembers {
+  padding-top: 30px;
+  width: 50%;
+  margin: auto;
+}
+
+.ChatSettings .ChatMembers h2 {
+  text-align: center;
+}
+
+.ChatSettings .ChatMembers a {
+  float: right;
+  padding-left: 30px;
 }
 
 /* Different screensizes */

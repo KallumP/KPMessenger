@@ -44,10 +44,29 @@ if (!isset($_SESSION['userID']))
             });
         }
 
+        let GetMembers = function() {
+            $("#ChatMembers").load("includes/zLoadMembers.php", {
+
+            });
+        }
+
+
         //calls the initial ajax (to load up the dynamic parts of the page)
         $(document).ready(function() {
 
             GetNotes();
+
+            //sets up the event listner for the add member button
+            $("#AddMember").click(function(e) {
+                $.ajax({
+                    type: "POST",
+                    url: "includes/zAddMembers",
+                    data: {
+                        ChatRoomID: <?php echo $_GET['ChatRoomID'] ?>,
+                        UserToAdd: document.getElementById("MemberToAdd").innerHTML
+                    }
+                });
+            });
 
         });
 
@@ -70,7 +89,7 @@ if (!isset($_SESSION['userID']))
 
             //check if the current user has access to this chat
 
-            $ChatID = mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
+            $ChatRoomID = mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
 
             $sqlGetChatName =
                 "SELECT
@@ -78,7 +97,7 @@ if (!isset($_SESSION['userID']))
                 FROM
                     chatroom
                 WHERE 
-                    chatroom.ID = $ChatID;";
+                    chatroom.ID = $ChatRoomID;";
 
             $ChatNameResult = mysqli_query($conn, $sqlGetChatName);
 
@@ -88,16 +107,30 @@ if (!isset($_SESSION['userID']))
                 //saves the row of data
                 $ChatNameRow = mysqli_fetch_assoc($ChatNameResult);
 
-                echo "<a href='index.php?ChatRoomID=" . $ChatID . "'> Back </a>";
-                echo "<h1>These are the chat settings for " . $ChatNameRow['ChatName'] . " </h1>";
+                echo "<a href='index.php?ChatRoomID=" . $ChatRoomID . "'> Back </a>";
+                echo "<h1>Settings for " . $ChatNameRow['ChatName'] . " </h1>";
 
-                echo "<form action='includes/zUpdateChatName.php?ChatRoomID=" . $ChatID . "' method='POST' class='ChatName'>";
+                echo "<form action='includes/zUpdateChatName.php?ChatRoomID=" . $ChatRoomID . "' method='POST' class='ChatName'>";
 
                 echo "<label for='ChatName'>Chat name:</label><br>";
-                echo "<input class='ChatNameInput BorderInputs' type='text' name='ChatName' value=' " . $ChatNameRow['ChatName'] . "'> </input>";
+                echo "<input class='ChatNameInput BorderInputs' type='text' name='ChatName' value='" . $ChatNameRow['ChatName'] . "'> </input>";
                 echo "<button id='UpdateChatName' class='Send BorderInputs' type='submit' name='submit'> Update </button>";
 
                 echo "</form>";
+
+                echo "<br><br><br>";
+
+                //(only show the add members part if current user is admin)
+                echo "<label for='MemberToAdd'>Add new members to this chat (use their unique code (found after the #)):</label><br>";
+                echo "<input id='MemberToAdd' class='ChatNameInput BorderInputs' type='text' name='MemberToAdd'> </input>";
+                echo "<button id='AddMember' class='Send BorderInputs' type='submit' name='submit'> Add </button>";
+
+
+                echo "<div id='ChatMembers' class='ChatMembers'>";
+
+                include "includes/zLoadMembers.php";
+
+                echo "</div>";
             }
         }
 
