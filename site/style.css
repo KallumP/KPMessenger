@@ -5,6 +5,8 @@
   --linkHoverColor: orangered;
   --noteColor: red;
   --borderColor: grey;
+  --readFontColor: white;
+  --unreadFontColor: rgb(66, 120, 219);
 }
 
 * {
@@ -43,7 +45,19 @@ html {
   font-size: 0.9em;
 }
 
+.Unread {
+  color: var(--unreadFontColor)
+}
+
 a:hover {
+  color: var(--linkHoverColor);
+}
+
+a:hover h1 {
+  color: var(--linkHoverColor);
+}
+
+button:hover {
   color: var(--linkHoverColor);
 }
 
@@ -89,24 +103,27 @@ header {
 }
 
 .AccountBanner ul li a {
-  padding-right: 10px;
+  display: block;
   text-decoration: none;
+  padding-right: 10px;
   padding-left: 20px;
 }
 
 .AccountBanner ul li ul {
   display: none;
+  position: absolute;
 }
 
 .AccountBanner ul li:hover ul {
   display: block;
-  position: absolute;
+  padding-top: 30px;
+  padding-bottom: 15px;
+  left: -40px;
 }
 
-.AccountBanner ul li:hover ul li a {
-  float: left;
-  padding-top: 10px;
-  padding-right: 100px;
+.AccountBanner ul li ul li {
+  padding: 0;
+  width: 220px;
 }
 
 .CreateAccount {
@@ -160,9 +177,7 @@ header {
   width: 100%;
 }
 
-.Unread {
-  color: rgb(173, 120, 173);
-}
+/* Recent messages */
 
 .RecentMessages {
   float: left;
@@ -171,11 +186,19 @@ header {
 }
 
 .RecentMessages .MessagePrev {
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 }
 
 .RecentMessages .MessagePrev a {
   text-decoration: none;
+}
+
+.RecentMessages .MessagePrev a p {
+  color: var(--readFontColor);
+}
+
+.RecentMessages .MessagePrev a h2 {
+  color: var(--readFontColor);
 }
 
 .RecentMessages .MessagePrev a:hover h2 {
@@ -186,12 +209,24 @@ header {
   color: var(--linkHoverColor)
 }
 
-.RecentMessages .MessagePrev h1 {
-  font-size: 1.1em;
+.RecentMessages .MessagePrev h2 {
+  font-size: 1.4em;
 }
 
 .RecentMessages .MessagePrev p {
   font-size: 0.9em;
+}
+
+.RecentMessages .Unread a {
+  text-decoration: none;
+}
+
+.RecentMessages .Unread a p {
+  color: var(--unreadFontColor);
+}
+
+.RecentMessages .Unread a h2 {
+  color: var(--unreadFontColor);
 }
 
 .ChatRoom {
@@ -213,8 +248,8 @@ header {
   position: fixed;
   top: 60px;
   left: 60%;
-  padding:10px;
-  margin-top:15px;
+  padding: 10px;
+  margin-top: 15px;
   color: black;
   z-index: -1;
 }
@@ -289,12 +324,16 @@ header {
   width: 90%;
   padding-top: 5px;
   padding-bottom: 5px;
+  margin: 0;
+  font-size: 1em;
+  resize: none;
 }
 
 .ChatRoom .MessageInput button {
   width: 8%;
   padding-top: 5px;
   padding-bottom: 5px;
+  font-size: 1em;
 }
 
 .SearchContainer {
@@ -345,6 +384,36 @@ header {
   text-decoration: none;
   font-style: none;
   text-align: center;
+}
+
+.ChatSettings {
+  padding-top: 100px;
+  width: 50%;
+  margin: auto;
+}
+
+.ChatSettings h1 {
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.ChatSettings .ChatName {
+  width: 95%;
+  margin: auto;
+}
+
+.ChatSettings .ChatName input {
+  width: 80%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 1em;
+}
+
+.ChatSettings .ChatName button {
+  width: 18%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 1em;
 }
 
 /* Different screensizes */

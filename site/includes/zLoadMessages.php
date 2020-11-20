@@ -2,6 +2,9 @@
 include 'dbh.inc.php';
 session_start();
 
+if (!isset($_SESSION['userID']))
+    header("Location: login.php");
+
 //checks if there was a chatroom and a user posted from the ajax
 if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
 
@@ -45,7 +48,7 @@ if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
         //checks if there were any messages
         if (mysqli_num_rows($ChatNameResult) > 0) {
             $chatname = mysqli_fetch_assoc($ChatNameResult)['Name'];
-            echo "<h1 id='ChatName' class='ChatName'>" . $chatname .  "</h1>";
+            echo "<a href='chatSettings.php?ChatRoomID=" . $ChatroomID . "'><h1 id='ChatName' class='ChatName'>" . $chatname .  "</h1></a>";
         }
 
         //pulls the last 10 messages from this chatroom

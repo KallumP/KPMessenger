@@ -1,6 +1,9 @@
 <?php
 include 'includes/dbh.inc.php';
 session_start();
+
+if (!isset($_SESSION['userID']))
+  header("Location: login.php");
 ?>
 
 <!DOCTYPE html>
@@ -35,23 +38,34 @@ session_start();
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script>
+    let GetMessages = function() {
 
-    let LoadMessages = function() {
+      <?php if (isset($_GET['ChatRoomID'])) { ?>
+        $('#Messages').load('includes/zLoadMessages.php', {
+          ChatroomID: <?php echo $_GET['ChatRoomID'] ?>,
+        });
+      <?php } ?>
+    }
 
-      $('#Messages').load('includes/zLoadMessages.php', {
-        ChatroomID: <?php echo $_GET['ChatRoomID'] ?>,
-      });
-
+    let GetRecentMessages = function() {
 
       $("#RecentMessages").load("includes/zLoadRecents.php", {
 
       });
     }
 
-    //scrolls to the bottom of the message box on page load
+    let GetNotes = function() {
+      $("#Banner").load("includes/zLoadNotes.php", {
+
+      });
+    }
+
+    //calls the initial ajax (to load up the dynamic parts of the page)
     $(document).ready(function() {
 
-      LoadMessages()
+      GetMessages();
+      GetRecentMessages();
+      GetNotes();
 
       let scroll = document.getElementById('Messages');
       scroll.scrollTop = scroll.scrollHeight;
@@ -60,13 +74,14 @@ session_start();
     //the timer to pull new messages (short polling every 4 seconds)
     setInterval(function() {
 
-      LoadMessages()
+      GetMessages();
+      GetRecentMessages();
+      GetNotes();
 
       let scroll = document.getElementById('Messages');
       scroll.scrollTop = scroll.scrollHeight;
 
     }, 4000);
-    
   </script>
 </head>
 
@@ -75,7 +90,9 @@ session_start();
   <div class=Container>
     <header>
 
-      <?php include("includes/accountBanner.inc.php"); ?>
+      <div id="Banner" class="AccountBanner">
+
+      </div>
 
       <div class="Actions">
         <ul>
@@ -87,7 +104,7 @@ session_start();
     </header>
 
 
-    <div id="RecentMessages" class="RecentMessages Border">
+    <div id="RecentMessages" class="RecentMessages">
 
     </div>
 
@@ -105,12 +122,13 @@ session_start();
         if (isset($_GET['ChatRoomID'])) {
           //generates the url to send the message with
           $SendMessageTo = "includes/zSendMessage.php?chatRoomID=" . mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
-          echo "<form action='$SendMessageTo'  method='POST'>"
+          echo "<form action='$SendMessageTo'  method='POST' autocomplete='off'>"
         ?>
 
-          <input class="messageEntry BorderInputs" type="text" name="messageEntry" placeholder="Type your message here">
+          <input class="messageEntry BorderInputs" type="text" name="messageEntry" placeholder="Type your message here" rows="1" autofocus></textarea>
           <button class="messageSend BorderInputs" type="submit" name="messageSend"> Send </button>
           </form>
+
         <?php
         }
         ?>
