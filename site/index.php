@@ -104,7 +104,7 @@ if (!isset($_SESSION['userID']))
     </header>
 
 
-    <div id="RecentMessages" class="RecentMessages Border">
+    <div id="RecentMessages" class="RecentMessages">
 
     </div>
 
@@ -116,7 +116,7 @@ if (!isset($_SESSION['userID']))
       </div>
 
 
-      <div class="MessageInput Border">
+      <div class="MessageInput">
 
         <?php
         if (isset($_GET['ChatRoomID'])) {

@@ -53,6 +53,14 @@ a:hover {
   color: var(--linkHoverColor);
 }
 
+a:hover h1 {
+  color: var(--linkHoverColor);
+}
+
+button:hover {
+  color: var(--linkHoverColor);
+}
+
 .Container {
   width: 100%;
   min-width: 1000px;
@@ -316,15 +324,9 @@ header {
   width: 90%;
   padding-top: 5px;
   padding-bottom: 5px;
-  margin:0;
+  margin: 0;
   font-size: 1em;
   resize: none;
-}
-
-@-moz-document url-prefix() {
-  .SingleLine {
-    height: 1em;
-  }
 }
 
 .ChatRoom .MessageInput button {
@@ -382,6 +384,36 @@ header {
   text-decoration: none;
   font-style: none;
   text-align: center;
+}
+
+.ChatSettings {
+  padding-top: 100px;
+  width: 50%;
+  margin: auto;
+}
+
+.ChatSettings h1 {
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.ChatSettings .ChatName {
+  width: 95%;
+  margin: auto;
+}
+
+.ChatSettings .ChatName input {
+  width: 80%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 1em;
+}
+
+.ChatSettings .ChatName button {
+  width: 18%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 1em;
 }
 
 /* Different screensizes */

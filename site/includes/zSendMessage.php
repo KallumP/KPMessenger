@@ -20,12 +20,12 @@ if (isset($_POST['messageSend'])) {
         //statement to get the connector between this user and the chatroom the message is being sent to
         $sqlVerifyChatroomConnector =
             "SELECT
-            connector.ID
-        FROM
-            connector
-        WHERE
-            connector.UserID = '$UserID' AND 
-            connector.ChatroomID = '$ChatroomID';";
+                connector.ID
+            FROM
+                connector
+            WHERE
+                connector.UserID = '$UserID' AND 
+                connector.ChatroomID = '$ChatroomID';";
 
 
         //checks if there was a connector found
@@ -34,9 +34,9 @@ if (isset($_POST['messageSend'])) {
             //query to insert the new message
             $sqlInsertMessage =
                 "INSERT INTO
-                message (SenderID, ChatroomID, Content)
-            VALUES
-                ('$UserID', '$ChatroomID', '$messageContent');";
+                    message (SenderID, ChatroomID, Content)
+                VALUES
+                    ('$UserID', '$ChatroomID', '$messageContent');";
 
             mysqli_query($conn, $sqlInsertMessage);
 

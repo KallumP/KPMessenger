@@ -1,9 +1,14 @@
 Working on:
 show all users without having to search anything
 general styling
+Consistant naming {
+	ChatID - has been called ChatRoomID (maybe use the long variable (that is what it is in the database))
 
 General:
-pulls all database data into sql safe variables
+pulls all database data into sql safe variables {
+	mysqli_real_escape_string($conn, variable)
+	search for any thing with $_GET, $_POST and any messages that are pulled (chatroom, chat preview, notes)
+}
 spa arcitechure
 messages to self
 should not say sent by a person more than once in a row (when outputting message, store who the last sent message was from)
