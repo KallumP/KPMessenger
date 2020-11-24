@@ -39,6 +39,14 @@ edit admin rights
 passwords
 }
 
+adding more people to chats {
+Connectors have an admin right attribute
+the person who made the chat will get admin rights (both in the case of a new chat from friend accept)
+admins can promote others to admin, and can add new users to the chat
+}
+
+change the pulling of chat members to not be ajax
+
 chat name should be the people in the chat's names by default
 
 
@@ -84,15 +92,6 @@ https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_audio_play
 
 
 
-Connectors:
-adding more people to chats {
-Connectors have an admin right attribute
-the person who made the chat will get admin rights (both in the case of a new chat from friend accept)
-admins can promote others to admin, and can add new users to the chat
-}
-
-
-
 Make account:
 email for forgotten password
 so a user should have to enter an email address when signing up
@@ -117,7 +116,16 @@ Security {
 	User must be logged in and has must have the right connector to access pulling/pushing from/to the database
 }
 
+
+
 Settings:
 Dark mode/ themes, use php to load the correct css file depending on the user settings
 
 show ids after names
+
+
+
+FeedBack:
+Feeback entry in the database should take the user id and a viewed value
+If there is more than 3 feedback items from the current user that are unviewed, don't let them make another
+Message: "You have submitted 3 feedback tickets that still have not been viewed by a developer, please come back at a later date (or contact the developer yourself if you know him)"

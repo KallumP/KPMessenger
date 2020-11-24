@@ -42,7 +42,7 @@ if (!isset($_SESSION['userID']))
 
       <?php if (isset($_GET['ChatRoomID'])) { ?>
         $('#Messages').load('includes/zLoadMessages.php', {
-          ChatroomID: <?php echo $_GET['ChatRoomID'] ?>,
+          ChatroomID: <?php echo $_GET['ChatRoomID'] ?>
         });
       <?php } ?>
     }
