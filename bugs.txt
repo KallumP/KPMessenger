@@ -25,3 +25,16 @@ Potential Fix
 To scroll to the bottom of the chat box on page load maybe think about setting a timeout JavaScript for Loop for a few milliseconds after the page load.
 
 
+
+Summary
+Users are able to see chats that they are not a part of (maybe as a result of the adding new members to chatrooms)
+
+Reason
+The code that writes out the messages doesn't check if the user is a memeber of the chat
+
+Potential fix
+Check if the user has access to the chatroom in the ajax call
+
+Fixed
+The check for if the user is a member just checked if the user had a connector with their id
+It should have checked for a connector with their id AND the current chatroom id

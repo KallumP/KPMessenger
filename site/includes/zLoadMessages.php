@@ -30,7 +30,8 @@ if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
         FROM  
             connector
         WHERE
-            connector.UserID = '$UserID';";
+            connector.UserID = '$UserID' AND 
+            connector.ChatroomID = '$ChatroomID';";
 
     //if the user has access to this chat (the query returned a connector)
     if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector))) {
