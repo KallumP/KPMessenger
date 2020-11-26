@@ -1,6 +1,9 @@
 <?php
 include 'includes/dbh.inc.php';
 session_start();
+
+if (!isset($_SESSION['userID']))
+    header("Location: login.php");
 ?>
 
 <!DOCTYPE html>
@@ -10,12 +13,38 @@ session_start();
     <meta charset="utf-8">
     <title>KPMessenger</title>
     <link href="style.css" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script>
+        let GetNotes = function() {
+            $("#Banner").load("includes/zLoadNotes.php", {
+
+            });
+        }
+
+        //calls the initial ajax (to load up the dynamic parts of the page)
+        $(document).ready(function() {
+
+            GetNotes();
+
+        });
+
+        //the timer to pull new messages (short polling every 4 seconds)
+        setInterval(function() {
+
+            GetNotes();
+
+        }, 4000);
+    </script>
 </head>
 
 <body>
 
     <header>
-        <?php include("includes/accountBanner.inc.php"); ?>
+
+        <div id="Banner" class="AccountBanner">
+
+        </div>
 
         <div class="Actions">
             <ul>
@@ -23,6 +52,7 @@ session_start();
                 <li><a href="searchFriends.php">Friends</a></li>
             </ul>
         </div>
+
     </header>
 
     <div class="SearchContainer">

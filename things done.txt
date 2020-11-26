@@ -4,9 +4,16 @@
 
 2020/11/08
 Read status added to all chats
-trying to get status working {
-	check if read status is false
-		if so call zLoadMessages.php
-		scroll to the bottom
-			To test this
-			output the status near the title (to check if it is actually 0)
+
+
+2020/11/10
+Read status now working
+Unread chats come up in purple in the recent messages box
+
+2020/11/11
+Notifications now pull using ajax
+Notifications now has unread color if there are notifications available
+
+2020/11/15
+Message input area does not have the auto complete part
+Can't use site without logging in (on the usable pages for now)
