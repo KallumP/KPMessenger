@@ -16,6 +16,7 @@
 
 html {
   background-color: var(--backColor);
+  height: 100%;
 }
 
 .Border {
@@ -258,7 +259,7 @@ header {
   z-index: -1;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 750px;
+  height: auto;
 }
 
 .ChatRoom .Message {
@@ -427,24 +428,4 @@ header {
 .ChatSettings .ChatMembers a {
   float: right;
   padding-left: 30px;
-}
-
-/* Different screensizes */
-
-@media only screen and (max-height: 900px) {
-  .ChatRoom .Messages {
-    max-height: 650px;
-  }
-}
-
-@media only screen and (max-height: 830px) {
-  .ChatRoom .Messages {
-    max-height: 500px;
-  }
-}
-
-@media only screen and (max-height: 680px) {
-  .ChatRoom .Messages {
-    max-height: 380px;
-  }
 }

@@ -16,8 +16,6 @@ messages to self
 
 should not say sent by a person more than once in a row (when outputting message, store who the last sent message was from)
 
-use dv rather than % to get use a percent of the screen height for the chatbox
-
 move all database connections after checking if the .php file was opened correctly (after checking for posts or session ids)
 
 

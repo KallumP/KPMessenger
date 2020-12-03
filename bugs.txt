@@ -1,6 +1,5 @@
 
 Problem
-Use search shows
 User search result should not have a link to add friends if you already have a friend request sent to them
 
 Reason
@@ -26,6 +25,9 @@ To scroll to the bottom of the chat box on page load maybe think about setting a
 
 
 
+
+
+
 Summary
 Users are able to see chats that they are not a part of (maybe as a result of the adding new members to chatrooms)
 
@@ -36,5 +38,6 @@ Potential fix
 Check if the user has access to the chatroom in the ajax call
 
 Fixed
-The check for if the user is a member just checked if the user had a connector with their id
-It should have checked for a connector with their id AND the current chatroom id
+The check for if the user is a member only checked "if the user had a connector with their id"
+It should have checked "if there was a connector with their id AND the current chatroom id"
+Any user was able to access any chat providing they had at least one connector
