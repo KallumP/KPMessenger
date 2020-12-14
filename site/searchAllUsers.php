@@ -48,8 +48,9 @@ if (!isset($_SESSION['userID']))
 
         <div class="Actions">
             <ul>
-                <li><a href="index.php">Back to messages</a></li>
+                <li><a href="index.php">Messages</a></li>
                 <li><a href="searchFriends.php">Friends</a></li>
+                <li><a class="Current">Search all Users</a></li>
             </ul>
         </div>
 

@@ -63,6 +63,7 @@ if (!isset($_SESSION['userID']))
     let SetChatBoxHeight = function() {
 
       //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
+
       //in px
       let bannerHeight = 210;
 
@@ -113,6 +114,7 @@ if (!isset($_SESSION['userID']))
 
       <div class="Actions">
         <ul>
+          <li><a class="Current">Messages</a></li>
           <li><a href="searchFriends.php">Friends</a></li>
           <li><a href="searchAllUsers.php">Search all Users</a></li>
         </ul>
