@@ -30,7 +30,8 @@ if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
         FROM  
             connector
         WHERE
-            connector.UserID = '$UserID';";
+            connector.UserID = '$UserID' AND 
+            connector.ChatroomID = '$ChatroomID';";
 
     //if the user has access to this chat (the query returned a connector)
     if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector))) {
@@ -48,7 +49,7 @@ if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
         //checks if there were any messages
         if (mysqli_num_rows($ChatNameResult) > 0) {
             $chatname = mysqli_fetch_assoc($ChatNameResult)['Name'];
-            echo "<h1 id='ChatName' class='ChatName'>" . $chatname .  "</h1>";
+            echo "<a href='chatSettings.php?ChatRoomID=" . $ChatroomID . "'><h1 id='ChatName' class='ChatName'>" . $chatname .  "</h1></a>";
         }
 
         //pulls the last 10 messages from this chatroom

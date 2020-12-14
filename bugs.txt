@@ -1,0 +1,43 @@
+
+Problem
+User search result should not have a link to add friends if you already have a friend request sent to them
+
+Reason
+The user search does not check if a friend connection exists, it just outputs the same result format regardless
+
+Fix
+Check if a friend connection exists between the user doing the search and the search result and output the results accordingly
+
+
+
+
+
+
+Summary
+On page load, if there are enough messages to create a scroll bar, the messages don't scroll to the bottom once the messages are loaded
+
+Reason
+I think the page doesn't scroll down immediately because JavaScript is asynchronous and Ajax doesn't wait to do next line of code.
+the chat box was scrolled to the bottom before all the messages are processed
+
+Potential Fix
+To scroll to the bottom of the chat box on page load maybe think about setting a timeout JavaScript for Loop for a few milliseconds after the page load.
+
+
+
+
+
+
+Summary
+Users are able to see chats that they are not a part of (maybe as a result of the adding new members to chatrooms)
+
+Reason
+The code that writes out the messages doesn't check if the user is a memeber of the chat
+
+Potential fix
+Check if the user has access to the chatroom in the ajax call
+
+Fixed
+The check for if the user is a member only checked "if the user had a connector with their id"
+It should have checked "if there was a connector with their id AND the current chatroom id"
+Any user was able to access any chat providing they had at least one connector

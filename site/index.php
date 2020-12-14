@@ -42,7 +42,7 @@ if (!isset($_SESSION['userID']))
 
       <?php if (isset($_GET['ChatRoomID'])) { ?>
         $('#Messages').load('includes/zLoadMessages.php', {
-          ChatroomID: <?php echo $_GET['ChatRoomID'] ?>,
+          ChatroomID: <?php echo $_GET['ChatRoomID'] ?>
         });
       <?php } ?>
     }
@@ -60,8 +60,21 @@ if (!isset($_SESSION['userID']))
       });
     }
 
+    let SetChatBoxHeight = function() {
+
+      //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
+      //in px
+      let bannerHeight = 210;
+
+      $('#Messages').css({
+        'max-height': ($(window).height() - bannerHeight) + 'px'
+      });
+    }
+
     //calls the initial ajax (to load up the dynamic parts of the page)
     $(document).ready(function() {
+
+      SetChatBoxHeight();
 
       GetMessages();
       GetRecentMessages();
@@ -69,6 +82,10 @@ if (!isset($_SESSION['userID']))
 
       let scroll = document.getElementById('Messages');
       scroll.scrollTop = scroll.scrollHeight;
+    });
+
+    $(window).resize(function() { // On resize
+      SetChatBoxHeight();
     });
 
     //the timer to pull new messages (short polling every 4 seconds)
@@ -104,19 +121,19 @@ if (!isset($_SESSION['userID']))
     </header>
 
 
-    <div id="RecentMessages" class="RecentMessages Border">
+    <div id="RecentMessages" class="RecentMessages">
 
     </div>
 
 
     <div class="ChatRoom">
 
-      <div id='Messages' class='Messages'>
+      <div id='Messages' class='Messages Border'>
 
       </div>
 
 
-      <div class="MessageInput Border">
+      <div class="MessageInput">
 
         <?php
         if (isset($_GET['ChatRoomID'])) {

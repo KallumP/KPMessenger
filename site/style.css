@@ -16,6 +16,7 @@
 
 html {
   background-color: var(--backColor);
+  height: 100%;
 }
 
 .Border {
@@ -50,6 +51,14 @@ html {
 }
 
 a:hover {
+  color: var(--linkHoverColor);
+}
+
+a:hover h1 {
+  color: var(--linkHoverColor);
+}
+
+button:hover {
   color: var(--linkHoverColor);
 }
 
@@ -250,7 +259,7 @@ header {
   z-index: -1;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 750px;
+  height: auto;
 }
 
 .ChatRoom .Message {
@@ -316,15 +325,9 @@ header {
   width: 90%;
   padding-top: 5px;
   padding-bottom: 5px;
-  margin:0;
+  margin: 0;
   font-size: 1em;
   resize: none;
-}
-
-@-moz-document url-prefix() {
-  .SingleLine {
-    height: 1em;
-  }
 }
 
 .ChatRoom .MessageInput button {
@@ -384,22 +387,45 @@ header {
   text-align: center;
 }
 
-/* Different screensizes */
-
-@media only screen and (max-height: 900px) {
-  .ChatRoom .Messages {
-    max-height: 650px;
-  }
+.ChatSettings {
+  padding-top: 100px;
+  width: 40%;
+  min-width: 630px;
+  margin: auto;
 }
 
-@media only screen and (max-height: 830px) {
-  .ChatRoom .Messages {
-    max-height: 500px;
-  }
+.ChatSettings h1 {
+  text-align: center;
+  padding-bottom: 50px;
 }
 
-@media only screen and (max-height: 680px) {
-  .ChatRoom .Messages {
-    max-height: 380px;
-  }
+.ChatSettings input {
+  width: 78%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  font-size: 1em;
+}
+
+.ChatSettings button {
+  float: right;
+  width: 18%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 1em;
+}
+
+.ChatSettings .ChatMembers {
+  padding-top: 30px;
+  width: 50%;
+  margin: auto;
+}
+
+.ChatSettings .ChatMembers h2 {
+  text-align: center;
+}
+
+.ChatSettings .ChatMembers a {
+  float: right;
+  padding-left: 30px;
 }
