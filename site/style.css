@@ -93,6 +93,14 @@ header {
   text-decoration: none;
 }
 
+.Current {
+  color: gray;
+}
+
+.Current:hover {
+  color: gray;
+}
+
 .AccountBanner {
   float: right;
 }

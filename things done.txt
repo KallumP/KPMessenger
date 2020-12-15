@@ -1,3 +1,7 @@
+2020/12/14
+All banner links are visible at all times
+SPA started
+
 2020/12/03
 Chatbox now resizes dynamically with the browser size (using javascript to set the max height)
 
