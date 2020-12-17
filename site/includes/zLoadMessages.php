@@ -6,7 +6,7 @@ if (!isset($_SESSION['userID']))
     header("Location: login.php");
 
 //checks if there was a chatroom and a user posted from the ajax
-if (isset($_POST['ChatroomID']) && isset($_SESSION['userID'])) {
+if (isset($_POST['ChatroomID'])) {
 
     $ChatroomID = $_POST['ChatroomID'];
     $UserID = $_SESSION['userID'];

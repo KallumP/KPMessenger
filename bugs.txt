@@ -1,5 +1,4 @@
-
-Problem
+Summary
 User search result should not have a link to add friends if you already have a friend request sent to them
 
 Reason
@@ -41,3 +40,17 @@ Fixed
 The check for if the user is a member only checked "if the user had a connector with their id"
 It should have checked "if there was a connector with their id AND the current chatroom id"
 Any user was able to access any chat providing they had at least one connector
+
+
+
+
+Summary
+If the user does not have "ChatRoomID" in their url, recent messages and some of the banner does not show up
+
+Reason
+Page checks if chatroom is in the url before doing ajax calls
+
+Potential Fix
+Only check for the ChatRoomID for the "getmessages" ajax call
+For the recent messages call, if there isn't a chatroomid then set a variable to -1 and pass that through (that way none of the recent chats will come up grey)
+

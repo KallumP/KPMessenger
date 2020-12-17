@@ -218,6 +218,22 @@ header {
   color: var(--linkHoverColor)
 }
 
+.RecentMessages .MessagePrev .Current h2 {
+  color: gray;
+}
+
+.RecentMessages .MessagePrev .Current p {
+  color: gray;
+}
+
+.RecentMessages .MessagePrev .Current:hover h2 {
+  color: gray;
+}
+
+.RecentMessages .MessagePrev .Current:hover p {
+  color: gray;
+}
+
 .RecentMessages .MessagePrev h2 {
   font-size: 1.4em;
 }

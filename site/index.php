@@ -50,7 +50,7 @@ if (!isset($_SESSION['userID']))
     let GetRecentMessages = function() {
 
       $("#RecentMessages").load("includes/zLoadRecents.php", {
-
+        ChatroomID: <?php echo $_GET['ChatRoomID'] ?>
       });
     }
 
