@@ -1,18 +1,18 @@
-Summary
-User search result should not have a link to add friends if you already have a friend request sent to them
+P1
+Summary -Pre 2020 Dec (4)
+If the user does not have "ChatRoomID" in their url, recent messages and some of the banner does not show up
 
 Reason
-The user search does not check if a friend connection exists, it just outputs the same result format regardless
+Page checks if chatroom is in the url before doing ajax calls
 
-Fix
-Check if a friend connection exists between the user doing the search and the search result and output the results accordingly
-
-
-
+Potential Fix
+Only check for the ChatRoomID for the "getmessages" ajax call
+For the recent messages call, if there isn't a chatroomid then set a variable to -1 and pass that through (that way none of the recent chats will come up grey)
 
 
 
-Summary
+P3 -Pre 2020 Dec (2)
+Summary 
 On page load, if there are enough messages to create a scroll bar, the messages don't scroll to the bottom once the messages are loaded
 
 Reason
@@ -26,8 +26,20 @@ To scroll to the bottom of the chat box on page load maybe think about setting a
 
 
 
+Fixed
 
-Summary
+Summary -Pre 2020 Dec 1
+User search result should not have a link to add friends if you already have a friend request sent to them
+
+Reason
+The user search does not check if a friend connection exists, it just outputs the same result format regardless
+
+Fix
+Check if a friend connection exists between the user doing the search and the search result and output the results accordingly
+
+
+
+Summary -Pre 2020 Dec 3
 Users are able to see chats that they are not a part of (maybe as a result of the adding new members to chatrooms)
 
 Reason
@@ -36,21 +48,7 @@ The code that writes out the messages doesn't check if the user is a memeber of 
 Potential fix
 Check if the user has access to the chatroom in the ajax call
 
-Fixed
+Fix
 The check for if the user is a member only checked "if the user had a connector with their id"
 It should have checked "if there was a connector with their id AND the current chatroom id"
 Any user was able to access any chat providing they had at least one connector
-
-
-
-
-Summary
-If the user does not have "ChatRoomID" in their url, recent messages and some of the banner does not show up
-
-Reason
-Page checks if chatroom is in the url before doing ajax calls
-
-Potential Fix
-Only check for the ChatRoomID for the "getmessages" ajax call
-For the recent messages call, if there isn't a chatroomid then set a variable to -1 and pass that through (that way none of the recent chats will come up grey)
-
