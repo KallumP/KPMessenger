@@ -211,11 +211,11 @@ header {
 }
 
 .RecentMessages .MessagePrev a:hover h2 {
-  color: var(--linkHoverColor)
+  color: var(--linkHoverColor);
 }
 
 .RecentMessages .MessagePrev a:hover p {
-  color: var(--linkHoverColor)
+  color: var(--linkHoverColor);
 }
 
 .RecentMessages .MessagePrev .Current h2 {
@@ -252,6 +252,22 @@ header {
 
 .RecentMessages .Unread a h2 {
   color: var(--unreadFontColor);
+}
+
+.RecentMessages .Unread .Current h2 {
+  color: var(--unreadFontColor);
+}
+
+.RecentMessages .Unread .Current p {
+  color: var(--unreadFontColor);
+}
+
+.RecentMessages .Unread .Current:hover h2 {
+  color: var(--linkHoverColor);
+}
+
+.RecentMessages .Unread .Current:hover p {
+  color: var(--linkHoverColor);
 }
 
 .ChatRoom {

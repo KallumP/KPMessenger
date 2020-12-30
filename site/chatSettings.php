@@ -44,6 +44,13 @@ if (!isset($_SESSION['userID']))
             });
         }
 
+        let GetRecentMessages = function() {
+
+            $("#RecentMessages").load("includes/zLoadRecents.php", {
+                ChatroomID: <?php echo $_GET['ChatRoomID'] ?>
+            });
+        }
+
         let GetMembers = function() {
 
             <?php if (isset($_GET['ChatRoomID'])) { ?>
@@ -57,6 +64,7 @@ if (!isset($_SESSION['userID']))
         //calls the initial ajax (to load up the dynamic parts of the page)
         $(document).ready(function() {
             GetNotes();
+            GetRecentMessages();
             GetMembers();
         });
 
@@ -65,12 +73,34 @@ if (!isset($_SESSION['userID']))
         setInterval(function() {
 
             GetNotes();
+            GetRecentMessages();
 
         }, 4000);
     </script>
 </head>
 
 <body>
+
+    <header>
+
+        <div id="Banner" class="AccountBanner">
+
+        </div>
+
+        <div class="Actions">
+            <ul>
+                <li><a class="Current">Messages</a></li>
+                <li><a href="searchFriends.php">Friends</a></li>
+                <li><a href="searchAllUsers.php">Search all Users</a></li>
+            </ul>
+        </div>
+
+    </header>
+
+    <div id="RecentMessages" class="RecentMessages">
+
+    </div>
+
     <div class="ChatSettings">
 
         <?php

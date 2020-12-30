@@ -85,9 +85,7 @@ if (!isset($_SESSION['userID']))
       scroll.scrollTop = scroll.scrollHeight;
     });
 
-    $(window).resize(function() { // On resize
-      SetChatBoxHeight();
-    });
+
 
     //the timer to pull new messages (short polling every 4 seconds)
     setInterval(function() {
@@ -100,6 +98,10 @@ if (!isset($_SESSION['userID']))
       scroll.scrollTop = scroll.scrollHeight;
 
     }, 4000);
+
+    $(window).resize(function() { // On resize
+      SetChatBoxHeight();
+    });
   </script>
 </head>
 

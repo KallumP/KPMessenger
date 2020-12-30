@@ -13,8 +13,6 @@ show users in the users results box without having to search
 spa arcitechure
 For spa to work, the recent chats should always be visible
 The place where the chatbox is, is where things like chat settings, search friends, search users, account details should go
-Banner links should not change no matter what page the user is on
-The color of the current page's linke should change
 
 messages to self
 
@@ -22,6 +20,8 @@ should not say sent by a person more than once in a row (when outputting message
 
 move all database connections after checking if the .php file was opened correctly (after checking for posts or session ids)
 
+When calling the ajax recent messages, check if there is a chatID variable in the url
+if there is pass that through, if there isn't then set a variable to -1 and pass that through
 
 
 Chatroom:

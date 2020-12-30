@@ -116,7 +116,7 @@ if (isset($_POST['ChatroomID'])) {
 
           //checks if this recent chat is the same as the currently opened chat
           if ($_POST['ChatroomID'] ==  $recentMessageRow['ChatID'])
-            echo "<a class='Current'>";
+            echo "<a class='Current' href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
           else
             echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
 
