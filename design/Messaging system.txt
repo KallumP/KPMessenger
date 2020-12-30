@@ -1,7 +1,7 @@
 Creating Chatrooms:
 
 
-Search for messages, will show you all the chatrooms that you are a part of
+Search for chats, will show you all the chatrooms that you are a part of
 
 Search for friends, will let you make a new chatroom with a chosen friend
 
@@ -19,3 +19,13 @@ One for the sender and one for the recipient
 (settings can change if you automatically want to be connected as a recipient) (accept message request from strangers)
 
 
+
+
+Search for friends will only show you all your friends (these are shown before a search term is submited)
+
+Search for users will show you any user (non are shown before the search term is submitted)
+
+When adding a sending a friend request, only a friend request is settings
+
+When accepting a friend request, two friend connectors are made (one for each person) and a chat room is created
+The 
