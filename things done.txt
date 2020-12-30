@@ -1,3 +1,12 @@
+2020/12/17
+New messages in the current chat (while settigns are open) will come up blue (rather than the grey it used to be)
+Recent messsages still shows when opening a chat's settings window
+
+
+2020/12/14
+All banner links are visible at all times
+SPA started
+
 2020/12/03
 Chatbox now resizes dynamically with the browser size (using javascript to set the max height)
 

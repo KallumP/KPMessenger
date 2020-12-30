@@ -50,7 +50,7 @@ if (!isset($_SESSION['userID']))
     let GetRecentMessages = function() {
 
       $("#RecentMessages").load("includes/zLoadRecents.php", {
-
+        ChatroomID: <?php echo $_GET['ChatRoomID'] ?>
       });
     }
 
@@ -63,6 +63,7 @@ if (!isset($_SESSION['userID']))
     let SetChatBoxHeight = function() {
 
       //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
+
       //in px
       let bannerHeight = 210;
 
@@ -84,9 +85,7 @@ if (!isset($_SESSION['userID']))
       scroll.scrollTop = scroll.scrollHeight;
     });
 
-    $(window).resize(function() { // On resize
-      SetChatBoxHeight();
-    });
+
 
     //the timer to pull new messages (short polling every 4 seconds)
     setInterval(function() {
@@ -99,6 +98,10 @@ if (!isset($_SESSION['userID']))
       scroll.scrollTop = scroll.scrollHeight;
 
     }, 4000);
+
+    $(window).resize(function() { // On resize
+      SetChatBoxHeight();
+    });
   </script>
 </head>
 
@@ -113,6 +116,7 @@ if (!isset($_SESSION['userID']))
 
       <div class="Actions">
         <ul>
+          <li><a class="Current">Messages</a></li>
           <li><a href="searchFriends.php">Friends</a></li>
           <li><a href="searchAllUsers.php">Search all Users</a></li>
         </ul>

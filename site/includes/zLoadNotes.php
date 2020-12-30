@@ -59,6 +59,10 @@ $numberOfNotifications += mysqli_num_rows($getFriendRequestsResult);
 
         </li>
 
-        <li><a href="accountOptions.php">Account options: <?php echo $_SESSION['userName'] ?></a></li>
+        <?php if (isset($_POST["AccountOptions"])) { ?>
+            <li><a class="Current">Account options: <?php echo $_SESSION['userName'] ?></a></li>
+        <?php } else { ?>
+            <li><a href="accountOptions.php">Account options: <?php echo $_SESSION['userName'] ?></a></li>
+        <?php } ?>
         <li><a href="includes/zLogout.php">Log out </a></li>
 </ul>

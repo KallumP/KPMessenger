@@ -93,6 +93,14 @@ header {
   text-decoration: none;
 }
 
+.Current {
+  color: gray;
+}
+
+.Current:hover {
+  color: gray;
+}
+
 .AccountBanner {
   float: right;
 }
@@ -203,11 +211,27 @@ header {
 }
 
 .RecentMessages .MessagePrev a:hover h2 {
-  color: var(--linkHoverColor)
+  color: var(--linkHoverColor);
 }
 
 .RecentMessages .MessagePrev a:hover p {
-  color: var(--linkHoverColor)
+  color: var(--linkHoverColor);
+}
+
+.RecentMessages .MessagePrev .Current h2 {
+  color: gray;
+}
+
+.RecentMessages .MessagePrev .Current p {
+  color: gray;
+}
+
+.RecentMessages .MessagePrev .Current:hover h2 {
+  color: gray;
+}
+
+.RecentMessages .MessagePrev .Current:hover p {
+  color: gray;
 }
 
 .RecentMessages .MessagePrev h2 {
@@ -228,6 +252,22 @@ header {
 
 .RecentMessages .Unread a h2 {
   color: var(--unreadFontColor);
+}
+
+.RecentMessages .Unread .Current h2 {
+  color: var(--unreadFontColor);
+}
+
+.RecentMessages .Unread .Current p {
+  color: var(--unreadFontColor);
+}
+
+.RecentMessages .Unread .Current:hover h2 {
+  color: var(--linkHoverColor);
+}
+
+.RecentMessages .Unread .Current:hover p {
+  color: var(--linkHoverColor);
 }
 
 .ChatRoom {

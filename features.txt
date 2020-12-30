@@ -11,6 +11,8 @@ show users in the users results box without having to search
 (maybe mutuals (check friend's connections and save how many times each friend show up and output most common first))
 
 spa arcitechure
+For spa to work, the recent chats should always be visible
+The place where the chatbox is, is where things like chat settings, search friends, search users, account details should go
 
 messages to self
 
@@ -18,10 +20,17 @@ should not say sent by a person more than once in a row (when outputting message
 
 move all database connections after checking if the .php file was opened correctly (after checking for posts or session ids)
 
+When calling the ajax recent messages, check if there is a chatID variable in the url
+if there is pass that through, if there isn't then set a variable to -1 and pass that through
 
 
 Chatroom:
-check if the two users were friends before setting the connecetors to connected
+check if the two users were friends before setting the connecetors
+this would require creating a new database table with messagerequest
+the sender would get a connector to the new chat
+the reciever would get a message request with his id and the new chatid
+clicking accept would create a connector to the new chat
+the chat settings should show "pending" members
 
 take the getmaxid function from zAccountCreate and use it in zChatroomCreate
 
