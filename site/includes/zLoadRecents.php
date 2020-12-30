@@ -62,11 +62,11 @@ if (isset($_POST['ChatroomID'])) {
         //gets the last sent message using the id
         $sqlGetLastMessage =
           "SELECT 
-          message.Content AS 'Content'
-        FROM
-          message
-        WHERE
-          message.ID = '$lastMessageID';";
+            message.Content AS 'Content'
+          FROM
+            message
+          WHERE
+            message.ID = '$lastMessageID';";
 
         $lastMessageResult = mysqli_query($conn, $sqlGetLastMessage);
 
@@ -96,12 +96,12 @@ if (isset($_POST['ChatroomID'])) {
       //gets the read status of the chat
       $sqlReadStatus =
         "SELECT
-        connector._Read AS 'Status'
-    FROM
-        connector
-    WHERE
-        connector.UserID = '$UserID' AND
-        connector.ChatRoomID = '$ChatroomID';";
+            connector._Read AS 'Status'
+        FROM
+            connector
+        WHERE
+            connector.UserID = '$UserID' AND
+            connector.ChatRoomID = '$ChatroomID';";
 
       $readStatusResult = mysqli_query($conn, $sqlReadStatus);
 
