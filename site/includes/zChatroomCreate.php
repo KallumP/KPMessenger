@@ -8,7 +8,7 @@ if (isset($_SESSION['userID'])) {
   //checks if the sender was 
   if (isset($_GET['recipientID'])) {
 
-    //creates the recipients friend relation
+    //creates the chatroom
     $sqlCreateChat =
       "INSERT INTO 
         chatroom (Name)

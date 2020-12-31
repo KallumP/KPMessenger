@@ -5,13 +5,13 @@ session_start();
 //checks to see if the user has logged in
 if (isset($_SESSION['userID'])) {
 
-  //checks if a friend request was sent
+  //checks if a friend request id was in the url
   if (isset($_GET['requestID'])) {
 
     $requestID = $_GET['requestID'];
     $userID = $_SESSION['userID'];
 
-    //query to get the sender and recipient
+    //query to get the senderid
     //(makes sure that the current user is who is accepting the request)
     $sqlFriendRequest =
       "SELECT
@@ -49,8 +49,8 @@ if (isset($_SESSION['userID'])) {
       mysqli_query($conn, $sqlFriendRelation2);
 
 
-      //goes to the page that creates the chatroom and sends across the friend request sender's id
-      header("Location: zChatroomCreate.php?recipientID=$senderID&friendRequestID=$requestID");
+      //loads the page that creates the chatroom and sends across the friend request sender's id
+      header("Location: zChatroomCreate.php?recipientID=$userID&friendRequestID=$requestID");
     } else {
       header("Location: ../index.php");
       exit();
