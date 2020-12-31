@@ -21,12 +21,12 @@ if (isset($_SESSION['userID'])) {
       WHERE
         friendrequest.ID = '$requestID' AND friendrequest.RecipientID = '$userID';";
 
-    $result = mysqli_query($conn, $sqlFriendRequest);
+    $friendRequestresult = mysqli_query($conn, $sqlFriendRequest);
 
     //checks if there were any results
-    if (mysqli_num_rows($result) > 0) {
+    if (mysqli_num_rows($friendRequestresult) > 0) {
 
-      $friendRequstRow = mysqli_fetch_assoc($result);
+      $friendRequstRow = mysqli_fetch_assoc($friendRequestresult);
 
       $senderID = $friendRequstRow['senderID'];
 
@@ -49,8 +49,73 @@ if (isset($_SESSION['userID'])) {
       mysqli_query($conn, $sqlFriendRelation2);
 
 
-      //loads the page that creates the chatroom and sends across the friend request sender's id
-      header("Location: zChatroomCreate.php?recipientID=$userID&friendRequestID=$requestID");
+      //creates the chatroom
+      $sqlCreateChat =
+        "INSERT INTO 
+          chatroom (Name)
+        VALUES
+          ('temp');";
+
+      //queries and checks if the query worked
+      if ($conn->query($sqlCreateChat) === TRUE)
+
+        //gets the id of the chat
+        $chatID = $conn->insert_id;
+
+      //creates the connector for this user
+      $sqlConnector1 =
+        "INSERT INTO 
+          connector (UserID, ChatroomID, Admin)
+        VALUES
+          ('$userID', '$chatID', '1');";
+      mysqli_query($conn, $sqlConnector1);
+
+      //creates the connector for the user who sent the friend request
+      $sqlConnector2 =
+        "INSERT INTO 
+          connector (UserID, ChatroomID, Admin)
+        VALUES
+          ('$senderID', '$chatID', '1');";
+      mysqli_query($conn, $sqlConnector2);
+
+
+      //gets the sender's user name
+      $sqlGetSenderName =
+        "SELECT
+          _user.UserName as 'senderName'
+        FROM
+          _user
+        WHERE
+          _user.ID = '$senderID';";
+      $senderNameResult = mysqli_query($conn, $sqlGetSenderName);
+      $sendernameResultRow = mysqli_fetch_assoc($senderNameResult);
+
+      //creates the new chat name
+      $userName = $_SESSION['userName'];
+      $senderName = $sendernameResultRow['senderName'];
+      $newChatName = $senderName . ", " . $userName;
+
+      //updates the chatroom name
+      $sqlChatroomNameUpdate =
+        "UPDATE 
+          chatroom
+        SET 
+          chatroom.Name = '$newChatName'
+        WHERE
+          chatroom.ID = '$chatID';";
+      mysqli_query($conn, $sqlChatroomNameUpdate);
+
+
+      //deletes the friend request
+      $sqlDeleteFriendRequest =
+        "DELETE FROM
+          friendrequest
+        WHERE
+          friendrequest.ID='$requestID';";
+      mysqli_query($conn, $sqlDeleteFriendRequest);
+
+      header("Location: ../index.php");
+      exit();
     } else {
       header("Location: ../index.php");
       exit();

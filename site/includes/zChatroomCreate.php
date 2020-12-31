@@ -5,7 +5,7 @@ session_start();
 //checks if the user has logged in
 if (isset($_SESSION['userID'])) {
 
-  //checks if the sender was 
+  //checks if the recipientID was in the url (the id of the user who will be include in this chat)
   if (isset($_GET['recipientID'])) {
 
     //creates the chatroom
@@ -14,7 +14,6 @@ if (isset($_SESSION['userID'])) {
         chatroom (Name)
       VALUES
         ('temp');";
-
 
     //queries and checks if the query worked
     if ($conn->query($sqlCreateChat) === TRUE)
@@ -25,46 +24,50 @@ if (isset($_SESSION['userID'])) {
     $userID = $_SESSION['userID'];
     $recipientID = $_GET['recipientID'];
 
-    //creates the connector for user 1
+
+    //creates the connector for this user (adnim)
     $sqlConnector1 =
       "INSERT INTO 
-        connector (UserID, ChatroomID)
+        connector (UserID, ChatroomID, Admin)
       VALUES
-        ('$userID', '$chatID' );";
+        ('$userID', '$chatID', '1');";
     mysqli_query($conn, $sqlConnector1);
 
-    //creates the connector for user 2
+    //creates the connector for other user (not adnim)
     $sqlConnector2 =
       "INSERT INTO 
         connector (UserID, ChatroomID)
       VALUES
-        ('$recipientID', '$chatID' );";
+        ('$recipientID', '$chatID');";
     mysqli_query($conn, $sqlConnector2);
 
-    //creates the connector for user 2
+
+    //gets the other user's user name
+    $sqlGetRecipientName =
+      "SELECT
+        _user.UserName as 'senderName'
+      FROM
+        _user
+      WHERE
+        _user.ID = '$recipientID';";
+    $recipientNameResult = mysqli_query($conn, $sqlGetRecipientName);
+    $recipientnameResultRow = mysqli_fetch_assoc($recipientNameResult);
+
+    //creates the new chat name
+    $userName = $_SESSION['userName'];
+    $recipientName = $recipientnameResultRow['senderName'];
+    $newChatName = $userName . ", " . $recipientName;
+
+    //updates the chatroom name
     $sqlChatroomNameUpdate =
       "UPDATE 
         chatroom
       SET 
-        chatroom.Name = '$chatID'
+        chatroom.Name = '$newChatName'
       WHERE
         chatroom.ID = '$chatID';";
     mysqli_query($conn, $sqlChatroomNameUpdate);
 
-    //checks if a friend request id was passed
-    if (isset($_GET['friendRequestID'])) {
-      $requstID = $_GET['friendRequestID'];
-
-      //deletes the friend request
-      $sqlDeleteFriendRequest =
-        "DELETE FROM
-          friendrequest
-        WHERE
-          friendrequest.ID='$requstID';";
-
-      mysqli_query($conn, $sqlDeleteFriendRequest);
-    }
-    //alter the chatroom name to the chatid
 
     header("Location: ../index.php");
     exit();

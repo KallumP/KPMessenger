@@ -1,31 +1,10 @@
-Creating Chatrooms:
-
-
-Search for chats, will show you all the chatrooms that you are a part of
-
-Search for friends, will let you make a new chatroom with a chosen friend
-
-Search for all users will let you add friends, or to make a new chat room with that user
-
-
-
-
-When making a new chatroom:
-It will take the sender and recipient
-It will create a new chatroom and give it a name (recipient username " & " sender username by default)
-
-It will create two connectors
-One for the sender and one for the recipient
-(settings can change if you automatically want to be connected as a recipient) (accept message request from strangers)
-
-
-
-
 Search for friends will only show you all your friends (these are shown before a search term is submited)
 
 Search for users will show you any user (non are shown before the search term is submitted)
 
-When adding a sending a friend request, only a friend request is settings
+When adding a sending a friend request to a user, only a friend request is created in the database
 
-When accepting a friend request, two friend connectors are made (one for each person) and a chat room is created
-The 
+When accepting a friend request, a chatroom and two friend connectors are made (one for each person) in the database
+Because this is a chatroom made by a friendrequest acceptance. Both users will be admins.
+
+When creating a new chat (not made through accepting a friend request) the person making the chat will be admin, the other user won't be admin
