@@ -11,18 +11,6 @@ if (isset($_POST['ChatroomID'])) {
     $ChatroomID = $_POST['ChatroomID'];
     $UserID = $_SESSION['userID'];
 
-    //query to set all connected users' read status to false
-    $sqlUpdateConnectorReadStatus =
-        "UPDATE
-            connector
-        SET
-            _Read = 1
-        WHERE
-            connector.UserID = '$UserID' AND
-            connector.ChatRoomID = '$ChatroomID';";
-
-    mysqli_query($conn, $sqlUpdateConnectorReadStatus);
-
     //check if the user has access to this chatroom
     $sqlUserConnector =
         "SELECT 
@@ -35,6 +23,18 @@ if (isset($_POST['ChatroomID'])) {
 
     //if the user has access to this chat (the query returned a connector)
     if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector))) {
+
+        //query to set this user's read status to true
+        $sqlUpdateConnectorReadStatus =
+            "UPDATE
+                connector
+            SET
+                _Read = 1
+            WHERE
+                connector.UserID = '$UserID' AND
+                connector.ChatRoomID = '$ChatroomID';";
+
+        mysqli_query($conn, $sqlUpdateConnectorReadStatus);
 
         $sqlChatName =
             "SELECT
