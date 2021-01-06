@@ -19,7 +19,7 @@ if (isset($_GET['ChatroomID'])) {
         $ChatroomID = $_GET['ChatroomID'];
         $ToAdd = $_POST['UserToAdd'];
 
-        //statement to get the connector between this user and the chatroom the new user is being added to
+        //statement to get the connector between this user and the chatroom the new user is being added to (only if the user is admin)
         $sqlVerifyChatroomConnector =
             "SELECT
                 connector.ID
@@ -27,6 +27,7 @@ if (isset($_GET['ChatroomID'])) {
                 connector
             WHERE
                 connector.UserID = '$UserID' AND 
+                connector.Admin = '1' AND
                 connector.ChatroomID = '$ChatroomID';";
 
         //checks if there was a connector found
