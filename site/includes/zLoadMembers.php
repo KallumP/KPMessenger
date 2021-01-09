@@ -10,7 +10,7 @@ if (isset($_GET['ChatRoomID'])) {
     echo "<h2>Memers of this chat: </h2>";
 
 
-    $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
+    $ChatRoomID = mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
 
     //gets all the chatroom id's and names that the user is a part of
     $sqlGetMembers =
@@ -48,7 +48,7 @@ if (isset($_GET['ChatRoomID'])) {
 
                 //checks if the user is admin
                 if ($adminStatus == 1)
-                    echo "<p>" . $UserName . "#" . $UserID . "<a href='includes/zRemoveUser.php?UserToRemoveID=" . $UserID . "&ChatroomID=" . $ChatroomID . "'>Remove User</a><a href='#'>Make Admin</a></p>";
+                    echo "<p>" . $UserName . "#" . $UserID . "<a href='includes/zRemoveUser.php?UserToRemoveID=" . $UserID . "&ChatRoomID=" . $ChatRoomID . "'>Remove User</a><a href='includes/zMakeAdmin.php?UserToMakeAdmin=" . $UserID . "&ChatRoomID=" . $ChatRoomID . "'>Make Admin</a></p>";
                 else
                     echo "<p>" . $UserName . "#" . $UserID . "</p>";
             }
