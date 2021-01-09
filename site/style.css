@@ -7,6 +7,7 @@
   --borderColor: grey;
   --readFontColor: white;
   --unreadFontColor: rgb(66, 120, 219);
+  --adminIndicator: rgb(91, 226, 86);
 }
 
 * {
@@ -457,7 +458,7 @@ header {
 
 .ChatSettings .ChatMembers {
   padding-top: 30px;
-  width: 50%;
+  width: 60%;
   margin: auto;
 }
 
@@ -468,4 +469,13 @@ header {
 .ChatSettings .ChatMembers a {
   float: right;
   padding-left: 30px;
+}
+
+.ChatSettings .AlreadyAdmin {
+  color: var(--adminIndicator);
+  text-decoration: none;
+}
+
+.ChatSettings .AlreadyAdmin:hover {
+  color: var(--adminIndicator);
 }

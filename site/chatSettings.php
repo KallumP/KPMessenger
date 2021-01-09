@@ -61,21 +61,21 @@ if (!isset($_SESSION['userID']))
             });
         }
 
-        let GetMembers = function() {
+        // let GetMembers = function() {
 
-            <?php if (isset($_GET['ChatRoomID'])) { ?>
-                $('#ChatMembers').load('includes/zLoadMembers.php', {
-                    ChatroomID: <?php echo $_GET['ChatRoomID'] ?>
-                });
-            <?php } ?>
-        }
+        //     <?php if (isset($_GET['ChatRoomID'])) { ?>
+        //         $('#ChatMembers').load('includes/zLoadMembers.php', {
+        //             ChatroomID: <?php echo $_GET['ChatRoomID'] ?>
+        //         });
+        //     <?php } ?>
+        // }
 
 
         //calls the initial ajax (to load up the dynamic parts of the page)
         $(document).ready(function() {
             GetNotes();
             GetRecentMessages();
-            GetMembers();
+            //GetMembers();
         });
 
 
@@ -210,6 +210,7 @@ if (!isset($_SESSION['userID']))
 
                         //all the members of the chat
                         echo "<div id='ChatMembers' class='ChatMembers'>";
+                        include("includes/zLoadMembers.php");
                         echo "</div>";
                     }
                 } else {
