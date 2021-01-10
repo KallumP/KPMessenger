@@ -8,6 +8,7 @@
   --readFontColor: white;
   --unreadFontColor: rgb(66, 120, 219);
   --adminIndicator: rgb(91, 226, 86);
+  --highRiskLink: rgb(211, 96, 96);
 }
 
 * {
@@ -66,6 +67,16 @@ button:hover {
 .Container {
   width: 100%;
   min-width: 1000px;
+}
+
+.highRiskLink {
+  color: var(--highRiskLink);
+  text-decoration: none;
+}
+
+.highRiskLink:hover {
+  color: var(--linkHoverColor);
+  text-decoration: none;
 }
 
 header {
@@ -422,7 +433,17 @@ header {
   font-size: 1.2em;
 }
 
-.UserBox a p {
+.UserBox a {
+  text-decoration: none;
+  font-style: none;
+  text-align: center;
+}
+
+.UserBox a:hover p {
+  color: var(--linkHoverColor);
+}
+
+.UserBox p {
   text-decoration: none;
   font-style: none;
   text-align: center;
@@ -469,6 +490,7 @@ header {
 .ChatSettings .ChatMembers a {
   float: right;
   padding-left: 30px;
+  text-decoration: none;
 }
 
 .ChatSettings .AlreadyAdmin {
@@ -478,4 +500,9 @@ header {
 
 .ChatSettings .AlreadyAdmin:hover {
   color: var(--adminIndicator);
+}
+
+.ChatSettings .LeaveChat {
+  margin: auto;
+  padding-top: 100px;
 }
