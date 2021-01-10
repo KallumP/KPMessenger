@@ -142,7 +142,7 @@ if (!isset($_SESSION['userID']))
 
     <div class="ChatRoom">
 
-      <div id='Messages' class='Messages Border'>
+      <div id='Messages' class='Messages'>
 
       </div>
 

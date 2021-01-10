@@ -61,21 +61,12 @@ if (!isset($_SESSION['userID']))
             });
         }
 
-        let GetMembers = function() {
-
-            <?php if (isset($_GET['ChatRoomID'])) { ?>
-                $('#ChatMembers').load('includes/zLoadMembers.php', {
-                    ChatroomID: <?php echo $_GET['ChatRoomID'] ?>
-                });
-            <?php } ?>
-        }
-
-
         //calls the initial ajax (to load up the dynamic parts of the page)
         $(document).ready(function() {
+
             GetNotes();
             GetRecentMessages();
-            GetMembers();
+
         });
 
 
@@ -124,73 +115,101 @@ if (!isset($_SESSION['userID']))
                 //check if the current user has access to this chat
 
                 $ChatRoomID = mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
+                $UserID = $_SESSION['userID'];
 
-                $sqlGetChatName =
-                    "SELECT
-                    chatroom.name AS 'ChatName'
-                FROM
-                    chatroom
-                WHERE 
-                    chatroom.ID = $ChatRoomID;";
+                //check if the user has access to this chatroom and gets the admin status at the same time
+                $sqlUserConnector =
+                    "SELECT 
+                        connector.Admin as 'AdminStatus'
+                    FROM  
+                        connector
+                    WHERE
+                        connector.UserID = '$UserID' AND 
+                        connector.ChatroomID = '$ChatRoomID';";
 
-                $ChatNameResult = mysqli_query($conn, $sqlGetChatName);
+                //turns result into an array of results
+                $userConnectorResult = mysqli_query($conn, $sqlUserConnector);
 
-                //checks if there was a result
-                if (mysqli_num_rows($ChatNameResult) > 0) {
+                //if the user has access to this chat (the query returned a connector)
+                if (mysqli_num_rows($userConnectorResult)) {
 
-                    //saves the row of data
-                    $ChatNameRow = mysqli_fetch_assoc($ChatNameResult);
+                    //gets the admin status from the array of results
+                    $adminStatus = mysqli_fetch_assoc($userConnectorResult)['AdminStatus'];
 
-                    echo "<a href='index.php?ChatRoomID=" . $ChatRoomID . "'> Back </a>";
-                    echo "<h1>Settings for " . $ChatNameRow['ChatName'] . " </h1>";
+                    $sqlGetChatName =
+                        "SELECT
+                            chatroom.name AS 'ChatName'
+                        FROM
+                            chatroom
+                        WHERE 
+                            chatroom.ID = $ChatRoomID;";
 
-                    echo "<form action='includes/zUpdateChatName.php?ChatRoomID=" . $ChatRoomID . "' method='POST' class='ChatName'>";
+                    $ChatNameResult = mysqli_query($conn, $sqlGetChatName);
 
-                    echo "<label for='ChatName'>Chat name:</label><br>";
-                    echo "<input class='ChatNameInput BorderInputs' type='text' name='ChatName' value='" . $ChatNameRow['ChatName'] . "'> </input>";
-                    echo "<button id='UpdateChatName' class='Send BorderInputs' type='submit' name='submit'> Update </button>";
+                    //checks if there was a result
+                    if (mysqli_num_rows($ChatNameResult) > 0) {
 
-                    echo "</form>";
-                    echo "<br><br><br>";
+                        //saves the row of data
+                        $ChatNameRow = mysqli_fetch_assoc($ChatNameResult);
 
-                    echo "<form action='includes/zAddMember.php?ChatroomID=" . $ChatRoomID . "' method='POST' id='AddMemberForm' class='ChatName'>";
+                        //the name of the chat
+                        echo "<a href='index.php?ChatRoomID=" . $ChatRoomID . "'> Back </a>";
+                        echo "<h1>Settings for " . $ChatNameRow['ChatName'] . " </h1>";
 
-                    echo "<label for='UserToAdd'>Add new members to this chat (use their unique code (found after the #)):</label><br>";
-                    echo "<input id='UserToAdd' class='ChatNameInput BorderInputs' type='text' name='UserToAdd'> </input>";
-                    echo "<button id='AddMember' class='Send BorderInputs' type='submit' name='submit'> Add </button>";
+                        if ($adminStatus == 1) {
+                            //the input to change the chat name
+                            echo "<form action='includes/zUpdateChatName.php?ChatRoomID=" . $ChatRoomID . "' method='POST' class='ChatName'>";
+                            echo "<label for='ChatName'>Chat name:</label><br>";
+                            echo "<input class='ChatNameInput BorderInputs' type='text' name='ChatName' value='" . $ChatNameRow['ChatName'] . "'> </input>";
+                            echo "<button id='UpdateChatName' class='Send BorderInputs' type='submit' name='submit'> Update </button>";
+                            echo "</form>";
+                            echo "<br><br><br>";
+                        }
 
-                    echo "</form>";
+                        if ($adminStatus == 1) {
+                            //the input to add new members
+                            echo "<form action='includes/zAddMember.php?ChatroomID=" . $ChatRoomID . "' method='POST' id='AddMemberForm' class='ChatName'>";
+                            echo "<label for='UserToAdd'>Add new members to this chat (use their unique code (found after the #)):</label><br>";
+                            echo "<input id='UserToAdd' class='ChatNameInput BorderInputs' type='text' name='UserToAdd'> </input>";
+                            echo "<button id='AddMember' class='Send BorderInputs' type='submit' name='submit'> Add </button>";
+                            echo "</form>";
+                        }
 
+                        //checks if there was an error message
+                        if (isset($_GET['Note'])) {
+                            $note = $_GET['Note'];
 
-                    //checks if there was an error message
-                    if (isset($_GET['Note'])) {
-                        $note = $_GET['Note'];
+                            echo "<div class='Notes'>";
+                            if ($note == "UserAdded")
+                                echo "<h3>User added successfully</h3>";
+                            else if ($note == "UserRemoved")
+                                echo "<h3>User removed successfully</h3>";
+                            else if ($note == "NotAMember")
+                                echo "<h3>That user is not a member of this chat</h3>";
+                            else if ($note == "AlreadyAMember")
+                                echo "<h3>That user was already a member of this chat</h3>";
+                            else if ($note == "NotAUser")
+                                echo "<h3>No users in our database had that id</h3>";
+                            else if ($note == "EmptyInput")
+                                echo "<h3>Your input was empty</h3>";
+                            else if ($note == "NoChatAccess")
+                                echo "<h3>You don't have access to this chat</h3>";
+                            else if ($note == "BadFileAccess")
+                                echo "<h3>You need to add members using the interfaces on this page</h3>";
+                            echo "</div>";
+                        }
 
-                        echo "<div class='Notes'>";
-                        if ($note == "UserAdded")
-                            echo "<h3>User added successfully</h3>";
-                        else if ($note == "UserRemoved")
-                            echo "<h3>User removed successfully</h3>";
-                        else if ($note == "NotAMember")
-                            echo "<h3>That user is not a member of this chat</h3>";
-                        else if ($note == "AlreadyAMember")
-                            echo "<h3>That user was already a member of this chat</h3>";
-                        else if ($note == "NotAUser")
-                            echo "<h3>No users in our database had that id</h3>";
-                        else if ($note == "EmptyInput")
-                            echo "<h3>Your input was empty</h3>";
-                        else if ($note == "NoChatAccess")
-                            echo "<h3>You don't have access to this chat</h3>";
-                        else if ($note == "BadFileAccess")
-                            echo "<h3>You need to add members using the interfaces on this page</h3>";
+                        //all the members of the chat
+                        echo "<div class='ChatMembers'>";
+                        include("includes/zLoadMembers.php");
+                        echo "</div>";
+
+                        //all the members of the chat
+                        echo "<div class='LeaveChat CenterObjects'>";
+                        echo "<a class='highRiskLink' href='includes/zLeaveChat.php?ChatRoomID=" . $ChatRoomID . "'>Leave Chat</a>";
                         echo "</div>";
                     }
-
-
-                    echo "<div id='ChatMembers' class='ChatMembers'>";
-
-                    echo "</div>";
-                }
+                } else header("Location: index.php");
             } else header("Location: index.php");
         } else header("Location: index.php");
 

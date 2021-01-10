@@ -51,7 +51,7 @@ if ($ChatResultCheck > 0) {
   }
   if (!$commonchat) {
 
-    echo "No common chats";
+    echo "<p>No common chats</p>";
   }
 } else {
   echo "This user has no chats";

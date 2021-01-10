@@ -23,7 +23,8 @@ CREATE TABLE connector (
     	ChatroomID int(5),
 	Active tinyint(1),
 	Connected tinyint(1),
-	_Read tinyint(1)
+	_Read tinyint(1),
+	Admin tinyint(1)
 );
 
 CREATE TABLE friend (
