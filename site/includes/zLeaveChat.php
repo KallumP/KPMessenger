@@ -3,8 +3,7 @@ include 'dbh.inc.php';
 session_start();
 
 if (!isset($_SESSION['userID']))
-    echo "ball";
-//header("Location: ../login.php");
+    header("Location: ../login.php");
 
 if (isset($_GET['ChatRoomID'])) {
 

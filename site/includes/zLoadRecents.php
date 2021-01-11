@@ -1,9 +1,9 @@
 <?php
 include 'dbh.inc.php';
 session_start();
+
 if (!isset($_SESSION['userID']))
   header("Location: login.php");
-
 ?>
 <h1>Recent Messages</h1>
 
@@ -17,15 +17,15 @@ if (isset($_POST['ChatroomID'])) {
   //gets all the chatroom id's and names that the user is a part of
   $sqlGetRecentMessages =
     "SELECT 
-    chatroom.Name AS 'ChatName',
-    chatroom.ID AS 'ChatID'
-  FROM
-    chatroom
-  LEFT JOIN connector ON chatroom.ID = connector.ChatroomID
-  WHERE 
-    connector.UserID = '$UserID'
-  ORDER BY 
-    chatroom.LastMessageTime DESC;";
+      chatroom.Name AS 'ChatName',
+      chatroom.ID AS 'ChatID'
+    FROM
+      chatroom
+    LEFT JOIN connector ON chatroom.ID = connector.ChatroomID
+    WHERE 
+      connector.UserID = '$UserID'
+    ORDER BY 
+      chatroom.LastMessageTime DESC;";
 
   $RecentMessagesResult = mysqli_query($conn, $sqlGetRecentMessages);
 
@@ -43,11 +43,11 @@ if (isset($_POST['ChatroomID'])) {
       //gets the ID of the last sent message in this chat
       $sqlGetLastMessageID =
         "SELECT
-        MAX(ID) as ID
-      FROM
-        message
-      WHERE
-        message.ChatRoomID = '$currentChat';";
+          MAX(ID) as ID
+        FROM
+          message
+        WHERE
+          message.ChatRoomID = '$currentChat';";
 
       $lastMessageIDResult = mysqli_query($conn, $sqlGetLastMessageID);
 
@@ -96,12 +96,12 @@ if (isset($_POST['ChatroomID'])) {
       //gets the read status of the chat
       $sqlReadStatus =
         "SELECT
-            connector._Read AS 'Status'
+          connector._Read AS 'Status'
         FROM
-            connector
+          connector
         WHERE
-            connector.UserID = '$UserID' AND
-            connector.ChatRoomID = '$ChatroomID';";
+          connector.UserID = '$UserID' AND
+          connector.ChatRoomID = '$ChatroomID';";
 
       $readStatusResult = mysqli_query($conn, $sqlReadStatus);
 

@@ -2,6 +2,9 @@
 include 'dbh.inc.php';
 session_start();
 
+if (!isset($_SESSION['userID']))
+    header("Location: login.php");
+
 $userID = $_SESSION['userID'];
 
 //gets all the unanswered friendrequests for this user

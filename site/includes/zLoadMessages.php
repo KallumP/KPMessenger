@@ -5,7 +5,7 @@ session_start();
 if (!isset($_SESSION['userID']))
     header("Location: login.php");
 
-//checks if there was a chatroom and a user posted from the ajax
+//checks if there was a chatroom posted from the ajax
 if (isset($_POST['ChatroomID'])) {
 
     $ChatroomID = $_POST['ChatroomID'];
@@ -56,7 +56,7 @@ if (isset($_POST['ChatroomID'])) {
         $sqlAllMessages =
             "SELECT
               message.Content AS 'MessageContent',
-              message.SenderID as 'SenderID'
+              message.SenderID AS 'SenderID'
             FROM
               message
             WHERE

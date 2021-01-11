@@ -16,68 +16,39 @@ if (isset($_GET['ChatRoomID'])) {
         $ChatRoomID = $_GET['ChatRoomID'];
         $ToRemove = $_GET['UserToRemoveID'];
 
-        //statement to get the admin connector between this user and the chatroom the new user is being added to
-        $sqlVerifyChatroomConnector =
-            "SELECT
-                connector.ID
-            FROM
-                connector
-            WHERE
-                connector.UserID = '$UserID' AND 
-                connector.Admin = '1' AND
-                connector.ChatroomID = '$ChatRoomID';";
+        //checks if the input  and chatroomid was not emtpy
+        if ($ToRemove != "" && $ChatRoomID != "") {
 
-        //checks if there was a connector found
-        if (mysqli_num_rows(mysqli_query($conn, $sqlVerifyChatroomConnector)) > 0) {
+            //statement to get the admin connector between this user and the chatroom the new user is being added to
+            $sqlVerifyChatroomConnector =
+                "SELECT
+                    connector.ID
+                FROM
+                    connector
+                WHERE
+                    connector.UserID = '$UserID' AND 
+                    connector.Admin = '1' AND
+                    connector.ChatroomID = '$ChatRoomID';";
 
-            //checks if the input was not emtpy
-            if ($ToRemove != "") {
+            //checks if there was a connector found
+            if (mysqli_num_rows(mysqli_query($conn, $sqlVerifyChatroomConnector)) > 0) {
 
-                //statement to pull the user
-                $sqlCheckUserExists =
-                    "SELECT
-                        _user.ID
-                    FROM
-                        _user
+                //statement to remove the memeber
+                $sqlRemoveMember =
+                    "DELETE FROM
+                        connector
                     WHERE
-                        _user.ID = '$ToRemove';";
+                        connector.UserID = '$ToRemove' AND
+                        connector.ChatroomID = '$ChatRoomID';";
 
-                //checks if there was a user found
-                if (mysqli_num_rows(mysqli_query($conn, $sqlCheckUserExists)) > 0) {
+                //removes the member
+                mysqli_query($conn, $sqlRemoveMember);
 
-                    //statement to pull the users to remove's connection (to check if there was one)
-                    $sqlCheckExistingMember =
-                        "SELECT
-                            connector.ID
-                        FROM
-                            connector
-                        WHERE
-                            connector.UserID = '$ToRemove' AND 
-                            connector.ChatroomID = '$ChatRoomID';";
-
-                    //checks if there was a connection found
-                    if (mysqli_num_rows(mysqli_query($conn, $sqlCheckExistingMember)) != 0) {
-
-                        //statement to remove the memeber
-                        $sqlRemoveMember =
-                            "DELETE FROM
-                                connector
-                            WHERE
-                                connector.UserID = '$ToRemove' AND
-                                connector.ChatroomID = '$ChatRoomID';";
-
-                        //removes the member
-                        mysqli_query($conn, $sqlRemoveMember);
-
-                        header("Location: ../chatSettings.php?ChatRoomID=" . $ChatRoomID . "&Note=UserRemoved");
-                    } else
-                        header("Location: ../chatSettings.php?ChatRoomID=" . $ChatRoomID . "&Note=NotAMember");
-                } else
-                    header("Location: ../chatSettings.php?ChatRoomID=" . $ChatRoomID . "&Note=NotAUser");
+                header("Location: ../chatSettings.php?ChatRoomID=" . $ChatRoomID . "&Note=UserRemoved");
             } else
-                header("Location: ../chatSettings.php?ChatRoomID=" . $ChatRoomID . "&Note=EmptyInput");
+                header("Location: ../chatSettings.php?ChatRoomID=" . $ChatRoomID . "&Note=NoChatAccess");
         } else
-            header("Location: ../chatSettings.php?ChatRoomID=" . $ChatRoomID . "&Note=NoChatAccess");
+            header("Location: ../chatSettings.php?ChatRoomID=" . $ChatRoomID . "&Note=EmptyInput");
     } else
         header("Location: ../chatSettings.php?Note=BadFileAccess&ChatRoomID=" . $ChatRoomID);
 } else

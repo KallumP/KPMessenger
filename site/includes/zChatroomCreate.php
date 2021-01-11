@@ -3,79 +3,75 @@ include_once 'dbh.inc.php';
 session_start();
 
 //checks if the user has logged in
-if (isset($_SESSION['userID'])) {
+if (!isset($_SESSION['userID']))
+  header("Location: login.php");
 
-  //checks if the recipientID was in the url (the id of the user who will be include in this chat)
-  if (isset($_GET['recipientID'])) {
+//checks if the recipientID was in the url (the id of the user who will be include in this chat)
+if (isset($_GET['recipientID'])) {
 
-    //creates the chatroom
-    $sqlCreateChat =
-      "INSERT INTO 
-        chatroom (Name)
-      VALUES
-        ('temp');";
+  //creates the chatroom
+  $sqlCreateChat =
+    "INSERT INTO 
+      chatroom (Name)
+    VALUES
+      ('temp');";
 
-    //queries and checks if the query worked
-    if ($conn->query($sqlCreateChat) === TRUE)
+  //queries and checks if the query worked
+  if ($conn->query($sqlCreateChat) === TRUE)
 
-      //gets the id of the chat
-      $chatID = $conn->insert_id;
+    //gets the id of the chat
+    $chatID = $conn->insert_id;
 
-    $userID = $_SESSION['userID'];
-    $recipientID = $_GET['recipientID'];
-
-
-    //creates the connector for this user (adnim)
-    $sqlConnector1 =
-      "INSERT INTO 
-        connector (UserID, ChatroomID, Admin)
-      VALUES
-        ('$userID', '$chatID', '1');";
-    mysqli_query($conn, $sqlConnector1);
-
-    //creates the connector for other user (not adnim)
-    $sqlConnector2 =
-      "INSERT INTO 
-        connector (UserID, ChatroomID)
-      VALUES
-        ('$recipientID', '$chatID');";
-    mysqli_query($conn, $sqlConnector2);
+  $userID = $_SESSION['userID'];
+  $recipientID = $_GET['recipientID'];
 
 
-    //gets the other user's user name
-    $sqlGetRecipientName =
-      "SELECT
-        _user.UserName as 'senderName'
-      FROM
-        _user
-      WHERE
-        _user.ID = '$recipientID';";
-    $recipientNameResult = mysqli_query($conn, $sqlGetRecipientName);
-    $recipientnameResultRow = mysqli_fetch_assoc($recipientNameResult);
+  //creates the connector for this user (adnim)
+  $sqlConnector1 =
+    "INSERT INTO 
+      connector (UserID, ChatroomID, Admin)
+    VALUES
+      ('$userID', '$chatID', '1');";
+  mysqli_query($conn, $sqlConnector1);
 
-    //creates the new chat name
-    $userName = $_SESSION['userName'];
-    $recipientName = $recipientnameResultRow['senderName'];
-    $newChatName = $userName . ", " . $recipientName;
-
-    //updates the chatroom name
-    $sqlChatroomNameUpdate =
-      "UPDATE 
-        chatroom
-      SET 
-        chatroom.Name = '$newChatName'
-      WHERE
-        chatroom.ID = '$chatID';";
-    mysqli_query($conn, $sqlChatroomNameUpdate);
+  //creates the connector for other user (not adnim)
+  $sqlConnector2 =
+    "INSERT INTO 
+      connector (UserID, ChatroomID)
+    VALUES
+      ('$recipientID', '$chatID');";
+  mysqli_query($conn, $sqlConnector2);
 
 
-    header("Location: ../index.php");
-    exit();
-  } else {
+  //gets the other user's user name
+  $sqlGetRecipientName =
+    "SELECT
+      _user.UserName as 'senderName'
+    FROM
+      _user
+    WHERE
+      _user.ID = '$recipientID';";
+  $recipientNameResult = mysqli_query($conn, $sqlGetRecipientName);
+  $recipientnameResultRow = mysqli_fetch_assoc($recipientNameResult);
 
-    header("Location: ../index.php");
-    exit();
-  }
+  //creates the new chat name
+  $userName = $_SESSION['userName'];
+  $recipientName = $recipientnameResultRow['senderName'];
+  $newChatName = $userName . ", " . $recipientName;
+
+  //updates the chatroom name
+  $sqlChatroomNameUpdate =
+    "UPDATE 
+      chatroom
+    SET 
+      chatroom.Name = '$newChatName'
+    WHERE
+      chatroom.ID = '$chatID';";
+  mysqli_query($conn, $sqlChatroomNameUpdate);
+
+
+  header("Location: ../index.php");
+  exit();
 } else {
 
   header("Location: ../index.php");

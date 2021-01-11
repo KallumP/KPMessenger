@@ -2,26 +2,25 @@
 include 'dbh.inc.php';
 session_start();
 
-if (isset($_SESSION['userID'])) {
+//checks if the user has logged in
+if (!isset($_SESSION['userID']))
+  header("Location: login.php");
 
-  if (isset($_GET['recipientID'])) {
+if (isset($_GET['recipientID'])) {
 
-    //gets the data required for the request
-    $senderID = $_SESSION['userID'];
-    $recipientID = $_GET['recipientID'];
+  //gets the data required for the request
+  $senderID = $_SESSION['userID'];
+  $recipientID = $_GET['recipientID'];
 
-    //query to 
-    $sqlSendFriendRequest =
-      "INSERT INTO 
-        friendrequest (SenderID, RecipientID)
-      VALUES
-        ('$senderID', '$recipientID');";
+  //query to send the friend request
+  $sqlSendFriendRequest =
+    "INSERT INTO 
+      friendrequest (SenderID, RecipientID)
+    VALUES
+      ('$senderID', '$recipientID');";
 
-    $SendFriendRequestResult = mysqli_query($conn, $sqlSendFriendRequest);
+  $SendFriendRequestResult = mysqli_query($conn, $sqlSendFriendRequest);
 
-    header("Location: ../searchAllUsers.php?note=requestSent");
-  } else
-    header("Location: ../searchAllUsers.php?note=noPost");
-} else {
-  header("Location: ../index.php");
-}
+  header("Location: ../searchAllUsers.php?note=requestSent");
+} else
+  header("Location: ../searchAllUsers.php?note=noPost");

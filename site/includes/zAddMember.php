@@ -6,14 +6,10 @@ session_start();
 if (!isset($_SESSION['userID']))
     header("Location: login.php");
 
-echo "post not passed<br>";
-
 //checks if the page is loaded correctly
 if (isset($_GET['ChatroomID'])) {
-    echo "chatroom passed<br>";
 
     if (isset($_POST['UserToAdd'])) {
-        echo "toadd passed<br>";
 
         $UserID = $_SESSION['userID'];
         $ChatroomID = $_GET['ChatroomID'];
@@ -32,11 +28,9 @@ if (isset($_GET['ChatroomID'])) {
 
         //checks if there was a connector found
         if (mysqli_num_rows(mysqli_query($conn, $sqlVerifyChatroomConnector)) > 0) {
-            echo "user has access to chat<br>";
 
             //checks if the input was not emtpy
             if ($ToAdd != "") {
-                echo "input was not empty<br>";
 
                 //statement to pull the user
                 $sqlCheckUserExists =
@@ -49,9 +43,8 @@ if (isset($_GET['ChatroomID'])) {
 
                 //checks if there was a user found
                 if (mysqli_num_rows(mysqli_query($conn, $sqlCheckUserExists)) > 0) {
-                    echo "user was found<br>";
 
-                    //statement to pull the new users connectoin (to check if there was one)
+                    //statement to pull the new users connection (to check if there was one)
                     $sqlCheckExistingMember =
                         "SELECT
                             connector.ID
@@ -63,7 +56,6 @@ if (isset($_GET['ChatroomID'])) {
 
                     //checks if there was a connection found
                     if (mysqli_num_rows(mysqli_query($conn, $sqlCheckExistingMember)) == 0) {
-                        echo "member does not exist yet<br>";
 
                         //statement to add the memeber
                         $sqlAddMember =
