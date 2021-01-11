@@ -14,6 +14,28 @@ if (!isset($_SESSION['userID']))
     <title>KPMessenger</title>
     <link href="style.css" rel="stylesheet" />
 
+    <style>
+        /* width */
+        ::-webkit-scrollbar {
+            width: 2px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #ffffff;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555555;
+        }
+    </style>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script>
         let GetNotes = function() {
@@ -22,17 +44,37 @@ if (!isset($_SESSION['userID']))
             });
         }
 
+        let GetRecentMessages = function() {
+
+            //gets the chat id from the url, and assigns it -1 if there wasn't one
+            let URLChatRoomID;
+
+            <?php if (isset($_GET['ChatRoomID'])) { ?>
+                URLChatRoomID = <?php echo $_GET['ChatRoomID'] ?>;
+            <?php } else { ?>
+                URLChatRoomID = -1;
+            <?php } ?>
+
+            $("#RecentMessages").load("includes/zLoadRecents.php", {
+
+                ChatroomID: URLChatRoomID
+            });
+        }
+
         //calls the initial ajax (to load up the dynamic parts of the page)
         $(document).ready(function() {
 
             GetNotes();
+            GetRecentMessages();
 
         });
+
 
         //the timer to pull new messages (short polling every 4 seconds)
         setInterval(function() {
 
             GetNotes();
+            GetRecentMessages();
 
         }, 4000);
     </script>
@@ -56,16 +98,22 @@ if (!isset($_SESSION['userID']))
 
     </header>
 
+    <div id="RecentMessages" class="RecentMessages">
+
+    </div>
+
     <?php if (isset($_SESSION['userName'])) { ?>
 
         <div class="AccountOptions">
 
-            <h1>Logged in as: <?php echo $_SESSION['userName']  ?> || ID: <?php echo $_SESSION['userID']  ?></h1>
+            <div class="AccountNameAndID CenterObjects">
+                <h1 class='WhiteHeader'>Logged in as: <?php echo $_SESSION['userName']  ?> # ID: <?php echo $_SESSION['userID']  ?></h1>
+            </div>
 
-
-            <a href="includes/zLogout.php">Log out</a>
+            <div class="Logout CenterObjects">
+                <a class='highRiskLink' href="includes/zLogout.php">Log out</a>
+            </div>
         </div>
-
 
     <?php } ?>
 

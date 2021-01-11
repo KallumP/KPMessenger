@@ -82,7 +82,7 @@ if (!isset($_SESSION['userID']))
 
     <div class="SearchContainer">
 
-        <h1>You can search for new friends here!</h1>
+        <h1 class='WhiteHeader'>You can search for new friends here!</h1>
         <form action="searchAllUsers.php" method="POST">
             <?php include("includes/search.inc.php"); ?>
         </form>
@@ -122,7 +122,7 @@ if (!isset($_SESSION['userID']))
                             $currentSearchedUserID = $UserSearchResultRow['userID'];
 
                             echo "<div class='UserBox'>";
-                            echo "<h2> Username: " . $UserSearchResultRow['userName'] . "# " . $UserSearchResultRow['userID'] . "</h2>";
+                            echo "<h2 class='WhiteHeader'> Username: " . $UserSearchResultRow['userName'] . "# " . $UserSearchResultRow['userID'] . "</h2>";
                             echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Send friend request</p></a>";
                             echo "<a href=includes/zChatroomCreate.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Create new chat</p></a>";
 

@@ -5,7 +5,7 @@ if (!isset($_SESSION['userID']))
 
 if (isset($_GET['ChatRoomID'])) {
 
-    echo "<h2>Memers of this chat: </h2>";
+    echo "<h2 class='WhiteHeader'>Members of this chat: </h2>";
 
 
     $ChatRoomID = mysqli_real_escape_string($conn, $_GET['ChatRoomID']);

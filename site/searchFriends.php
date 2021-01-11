@@ -82,7 +82,7 @@ if (!isset($_SESSION['userID']))
 
     <div class="SearchContainer">
 
-        <h1>You can search for your friends here!</h1>
+        <h1 class='WhiteHeader'>You can search for your friends here!</h1>
 
         <form action="searchFriends.php" method="POST">
             <?php include("includes/search.inc.php"); ?>
@@ -128,7 +128,7 @@ if (!isset($_SESSION['userID']))
                             $currentSearchedUserID = $friendID;
 
                             echo "<div class='UserBox'>";
-                            echo "<h2> Username: " . $friendName . "# " . $friendID . "</h2>";
+                            echo "<h2 class='WhiteHeader'> Username: " . $friendName . "# " . $friendID . "</h2>";
                             echo "<a href=includes/zChatroomCreate.php?recipientID=" . $friendID . "><p>Create new chat</p></a><br>";
 
                             include("includes/findCommonChats.inc.php");
@@ -147,7 +147,7 @@ if (!isset($_SESSION['userID']))
                         $currentSearchedUserID = $friendID;
 
                         echo "<div class='UserBox'>";
-                        echo "<h2> Username: " . $friendsRow['friendName'] . "# " . $friendsRow['friendID'] . "</h2>";
+                        echo "<h2 class='WhiteHeader'> Username: " . $friendsRow['friendName'] . "# " . $friendsRow['friendID'] . "</h2>";
                         echo "<a href=includes/zChatroomCreate.php?recipientID=" . $friendsRow['friendID'] . "><p>Create new chat</p></a>";
 
                         include("includes/findCommonChats.inc.php");
