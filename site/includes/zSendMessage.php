@@ -69,3 +69,5 @@ if (isset($_POST['messageSend'])) {
         }
     }
 }
+
+header("Location: ../index.php");

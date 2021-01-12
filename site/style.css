@@ -1,6 +1,6 @@
 @import url('https://fonts.google.com/specimen/Montserrat');
 :root {
-  --backColor: black;
+  /* --backColor: black;
   --fontColor: white;
   --linkHoverColor: orangered;
   --noteColor: red;
@@ -8,7 +8,18 @@
   --readFontColor: white;
   --unreadFontColor: rgb(66, 120, 219);
   --adminIndicator: rgb(91, 226, 86);
+  --highRiskLink: rgb(211, 96, 96); */
+  /* Aether */
+  --backColor: #101820;
+  --fontColor: rgb(250, 91, 255);
+  --linkHoverColor: orangered;
+  --noteColor: red;
+  --borderColor: white;
+  --readFontColor: rgb(250, 91, 255);
+  --unreadFontColor: rgb(66, 163, 219);
+  --adminIndicator: rgb(91, 226, 86);
   --highRiskLink: rgb(211, 96, 96);
+  --headerFont: white;
 }
 
 * {
@@ -89,6 +100,10 @@ header {
   border-right-style: none;
   border-left-style: none;
   border-bottom-style: solid;
+}
+
+.WhiteHeader {
+  color: var(--headerFont);
 }
 
 .Actions {
@@ -198,12 +213,17 @@ header {
   width: 100%;
 }
 
+.AccountNameAndID {
+  padding-bottom: 50px;
+}
+
 /* Recent messages */
 
 .RecentMessages {
-  float: left;
+  position: absolute;
   width: 20%;
   height: 100%;
+  border-right: white solid 1px;
 }
 
 .RecentMessages .MessagePrev {
@@ -218,8 +238,9 @@ header {
   color: var(--readFontColor);
 }
 
-.RecentMessages .MessagePrev a h2 {
-  color: var(--readFontColor);
+.RecentMessages .MessagePrev a .WhiteHeader {
+  color: var(--headerFont);
+  font-weight: normal;
 }
 
 .RecentMessages .MessagePrev a:hover h2 {
@@ -297,16 +318,6 @@ header {
   z-index: -1;
 }
 
-.ChatRoom .RefreshMessage {
-  position: fixed;
-  top: 60px;
-  left: 60%;
-  padding: 10px;
-  margin-top: 15px;
-  color: black;
-  z-index: -1;
-}
-
 .ChatRoom .Messages {
   z-index: -1;
   overflow-y: auto;
@@ -332,11 +343,7 @@ header {
   padding-left: 20px;
   margin-left: 20px;
   float: left;
-  border-width: 1px;
-  border-top-style: none;
-  border-right-style: none;
-  border-left-style: solid;
-  border-bottom-style: none;
+  border-left: var(--borderColor) 1px solid;
 }
 
 .ChatRoom .RecievedMessage h3 {
@@ -351,11 +358,7 @@ header {
   padding-right: 20px;
   margin-right: 20px;
   float: right;
-  border-width: 1px;
-  border-top-style: none;
-  border-right-style: solid;
-  border-left-style: none;
-  border-bottom-style: none;
+  border-right: var(--borderColor) 1px solid;
 }
 
 .ChatRoom .SentMessage h3 {

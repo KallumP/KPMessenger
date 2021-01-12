@@ -49,7 +49,7 @@ if (isset($_POST['ChatroomID'])) {
         //checks if there were any messages
         if (mysqli_num_rows($ChatNameResult) > 0) {
             $chatname = mysqli_fetch_assoc($ChatNameResult)['Name'];
-            echo "<a href='chatSettings.php?ChatRoomID=" . $ChatroomID . "'><h1 id='ChatName' class='ChatName'>" . $chatname .  "</h1></a>";
+            echo "<a href='chatSettings.php?ChatRoomID=" . $ChatroomID . "'><h1 id='ChatName' class='ChatName WhiteHeader'>" . $chatname .  "</h1></a>";
         }
 
         //pulls the last 10 messages from this chatroom
@@ -93,7 +93,7 @@ if (isset($_POST['ChatroomID'])) {
                     echo "<div class='SentMessage Message'>";
 
                     echo "<p>" .  $message . "</p>";
-                    echo "<h3> Sent by you</h3>";
+                    echo "<h3 class='WhiteHeader'> Sent by you</h3>";
 
                     echo "</div>";
                 } else {
@@ -121,7 +121,7 @@ if (isset($_POST['ChatroomID'])) {
                     echo "<div class='RecievedMessage Message'>";
 
                     echo "<p>" .  $message . "</p>";
-                    echo "<h3>Sent by " . $senderName . "</h3>";
+                    echo "<h3 class='WhiteHeader'>Sent by " . $senderName . "</h3>";
 
                     echo "</div>";
                 }
@@ -129,11 +129,11 @@ if (isset($_POST['ChatroomID'])) {
         } else {
 
             //there were no messages in the chat
-            echo "<h2>Looks like there are no messages in this chat.<br>Why not initiate and send one yourself</h3><br><br>";
+            echo "<h2 class='WhiteHeader'>Looks like there are no messages in this chat.<br>Why not initiate and send one yourself</h3><br><br>";
         }
     } else {
 
         //user had no access
-        echo "<h2>You don't have access to this chat</h3>";
+        echo "<h2 class='WhiteHeader'>You don't have access to this chat</h3>";
     }
 }

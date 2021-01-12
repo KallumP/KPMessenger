@@ -154,12 +154,12 @@ if (!isset($_SESSION['userID']))
 
                         //the name of the chat
                         echo "<a href='index.php?ChatRoomID=" . $ChatRoomID . "'> Back </a>";
-                        echo "<h1>Settings for " . $ChatNameRow['ChatName'] . " </h1>";
+                        echo "<h1 class='WhiteHeader'>Settings for " . $ChatNameRow['ChatName'] . " </h1>";
 
                         if ($adminStatus == 1) {
                             //the input to change the chat name
                             echo "<form action='includes/zUpdateChatName.php?ChatRoomID=" . $ChatRoomID . "' method='POST' class='ChatName'>";
-                            echo "<label for='ChatName'>Chat name:</label><br>";
+                            echo "<label class='WhiteHeader' for='ChatName'>Chat name:</label><br>";
                             echo "<input class='ChatNameInput BorderInputs' type='text' name='ChatName' value='" . $ChatNameRow['ChatName'] . "'> </input>";
                             echo "<button id='UpdateChatName' class='Send BorderInputs' type='submit' name='submit'> Update </button>";
                             echo "</form>";
@@ -169,7 +169,7 @@ if (!isset($_SESSION['userID']))
                         if ($adminStatus == 1) {
                             //the input to add new members
                             echo "<form action='includes/zAddMember.php?ChatroomID=" . $ChatRoomID . "' method='POST' id='AddMemberForm' class='ChatName'>";
-                            echo "<label for='UserToAdd'>Add new members to this chat (use their unique code (found after the #)):</label><br>";
+                            echo "<label class='WhiteHeader' for='UserToAdd'>Add new members to this chat (use their unique code (found after the #)):</label><br>";
                             echo "<input id='UserToAdd' class='ChatNameInput BorderInputs' type='text' name='UserToAdd'> </input>";
                             echo "<button id='AddMember' class='Send BorderInputs' type='submit' name='submit'> Add </button>";
                             echo "</form>";

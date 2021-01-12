@@ -5,7 +5,7 @@ session_start();
 if (!isset($_SESSION['userID']))
   header("Location: login.php");
 ?>
-<h1>Recent Messages</h1>
+<h1 class='WhiteHeader'>Recent Messages</h1>
 
 <?php
 $UserID = $_SESSION['userID'];
@@ -120,7 +120,7 @@ if (isset($_POST['ChatroomID'])) {
           else
             echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
 
-          echo "<h2>" . $recentMessageRow['ChatName'] . "</h2>";
+          echo "<h2 class='WhiteHeader'>" . $recentMessageRow['ChatName'] . "</h2>";
           echo "<p>" . $messagePreview . "</p>";
           echo "</a>";
           echo "</div>";
@@ -135,7 +135,7 @@ if (isset($_POST['ChatroomID'])) {
           else
             echo "<a href=index.php?ChatRoomID=" . $recentMessageRow['ChatID'] . ">";
 
-          echo "<h2>" . $recentMessageRow['ChatName'] . "</h2>";
+          echo "<h2 class='WhiteHeader'>" . $recentMessageRow['ChatName'] . "</h2>";
           echo "<p>" . $messagePreview . "</p>";
           echo "</a>";
           echo "</div>";
