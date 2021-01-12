@@ -35,20 +35,20 @@ session_start();
             ?>
         </div>
 
-        <h1>Create an account</h1>
+        <h1 class='WhiteHeader'>Create an account</h1>
 
         <form action="includes/zAccountCreate.php" method="POST">
 
             <!-- <label for="email">Enter your email</label><br>
             <input class="email" type="text" name="email" placeholder="Enter username"><br><br> -->
 
-            <label for="username">Enter your desired username</label><br>
+            <label class='WhiteHeader' for="username">Enter your desired username</label><br>
             <input class="username_txt BorderInputs" type="text" name="username" placeholder="Enter username"><br><br>
 
-            <label for="username">Enter a password for this account</label><br>
+            <label class='WhiteHeader' for="username">Enter a password for this account</label><br>
             <input class="password_txt BorderInputs" type="password" name="password" placeholder="Enter password"><br><br>
 
-            <label for="username">Re-enter the same password</label><br>
+            <label class='WhiteHeader' for="username">Re-enter the same password</label><br>
             <input class="password_txt BorderInputs" type="password" name="password-validate" placeholder="Enter password"><br><br><br>
 
             <button class="login_btn BorderInputs" type="submit" name="login"> Submit </button>
