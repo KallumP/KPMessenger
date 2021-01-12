@@ -4,8 +4,8 @@ $sqlChatCheck =
   "SELECT
     chatroom.ID as 'chatID'
   FROM
-    chatRoom
-  LEFT JOIN connector ON chatRoom.ID = connector.ChatRoomID
+    chatroom
+  LEFT JOIN connector ON chatroom.ID = connector.ChatRoomID
   WHERE
     connector.UserID = '$currentSearchedUserID';";
 
