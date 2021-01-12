@@ -24,7 +24,7 @@ session_start();
 
         <div class="Login">
 
-            <h1> Log into KPMessenger </h1>
+            <h1 class='WhiteHeader'> Log into KPMessenger </h1>
 
             <div class="Notes">
                 <?php

@@ -40,6 +40,23 @@ if (!isset($_SESSION['userID']))
             });
         }
 
+        let SetChatBoxHeight = function() {
+
+            //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
+
+            //in px
+            let bannerHeight = 210;
+
+            $('#Messages').css({
+                'max-height': ($(window).height() - bannerHeight) + 'px'
+            });
+
+            $('#RecentMessages').css({
+                'max-height': ($(window).height() - bannerHeight + 150) + 'px'
+            });
+
+        }
+
         //calls the initial ajax (to load up the dynamic parts of the page)
         $(document).ready(function() {
 
@@ -55,86 +72,92 @@ if (!isset($_SESSION['userID']))
             GetRecentMessages();
 
         }, 4000);
+
+        $(window).resize(function() { // On resize
+            SetChatBoxHeight();
+        });
     </script>
 </head>
 
 <body>
+    <div class=Container>
+        <header>
 
-    <header>
+            <div id="Banner" class="AccountBanner">
 
-        <div id="Banner" class="AccountBanner">
+            </div>
+
+            <div class="Actions">
+                <ul>
+                    <li><a href="index.php">Messages</a></li>
+                    <li><a href="searchFriends.php">Friends</a></li>
+                    <li><a class="Current">Search all Users</a></li>
+                </ul>
+            </div>
+
+        </header>
+
+        <div id="RecentMessages" class="RecentMessages">
 
         </div>
 
-        <div class="Actions">
-            <ul>
-                <li><a href="index.php">Messages</a></li>
-                <li><a href="searchFriends.php">Friends</a></li>
-                <li><a class="Current">Search all Users</a></li>
-            </ul>
-        </div>
+        <div class="Content">
+            <div class="SearchContainer">
 
-    </header>
+                <h1 class='WhiteHeader'>You can search for new friends here!</h1>
+                <form action="searchAllUsers.php" method="POST">
+                    <?php include("includes/search.inc.php"); ?>
+                </form>
 
-    <div id="RecentMessages" class="RecentMessages">
+                <div class="SearchResults">
+                    <?php
 
-    </div>
+                    //checks if the user has searched something
+                    if (isset($_POST['searchSubmit'])) {
 
-    <div class="SearchContainer">
+                        //gets the user search input
+                        $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
 
-        <h1 class='WhiteHeader'>You can search for new friends here!</h1>
-        <form action="searchAllUsers.php" method="POST">
-            <?php include("includes/search.inc.php"); ?>
-        </form>
+                        //checks if the user id and the username was the same as the input search 
+                        if ($searchInput != $_SESSION['userID'] && $searchInput != $_SESSION['userName']) {
 
-        <div class="SearchResults">
-            <?php
+                            //pulls the users that were searched for
+                            $sqlUserSearch =
+                                "SELECT
+                                    _user.UserName as 'userName',
+                                    _user.ID as 'userID'
+                                FROM
+                                    _user
+                                WHERE
+                                    _user.UserName = '$searchInput' OR _user.ID = '$searchInput';";
 
-            //checks if the user has searched something
-            if (isset($_POST['searchSubmit'])) {
+                            $UserSearchResult = mysqli_query($conn, $sqlUserSearch);
+                            $UserSearchResultCheck = mysqli_num_rows($UserSearchResult);
 
-                //gets the user search input
-                $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
+                            //checks to see if any users were pulled
+                            if ($UserSearchResultCheck > 0) {
 
-                //checks if the user id and the username was the same as the input search 
-                if ($searchInput != $_SESSION['userID'] && $searchInput != $_SESSION['userName']) {
+                                //loops through each searched user
+                                while ($UserSearchResultRow = mysqli_fetch_assoc($UserSearchResult)) {
 
-                    //pulls the users that were searched for
-                    $sqlUserSearch =
-                        "SELECT
-                            _user.UserName as 'userName',
-                            _user.ID as 'userID'
-                        FROM
-                            _user
-                        WHERE
-                            _user.UserName = '$searchInput' OR _user.ID = '$searchInput';";
+                                    //saves the current searched user id
+                                    $currentSearchedUserID = $UserSearchResultRow['userID'];
 
-                    $UserSearchResult = mysqli_query($conn, $sqlUserSearch);
-                    $UserSearchResultCheck = mysqli_num_rows($UserSearchResult);
+                                    echo "<div class='UserBox'>";
+                                    echo "<h2 class='WhiteHeader'> Username: " . $UserSearchResultRow['userName'] . "# " . $UserSearchResultRow['userID'] . "</h2>";
+                                    echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Send friend request</p></a>";
+                                    echo "<a href=includes/zChatroomCreate.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Create new chat</p></a>";
 
-                    //checks to see if any users were pulled
-                    if ($UserSearchResultCheck > 0) {
+                                    include("includes/findCommonChats.inc.php");
 
-                        //loops through each searched user
-                        while ($UserSearchResultRow = mysqli_fetch_assoc($UserSearchResult)) {
-
-                            //saves the current searched user id
-                            $currentSearchedUserID = $UserSearchResultRow['userID'];
-
-                            echo "<div class='UserBox'>";
-                            echo "<h2 class='WhiteHeader'> Username: " . $UserSearchResultRow['userName'] . "# " . $UserSearchResultRow['userID'] . "</h2>";
-                            echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Send friend request</p></a>";
-                            echo "<a href=includes/zChatroomCreate.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Create new chat</p></a>";
-
-                            include("includes/findCommonChats.inc.php");
-
-                            echo "</div>";
+                                    echo "</div>";
+                                }
+                            }
                         }
                     }
-                }
-            }
-            ?>
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
-
 </body>

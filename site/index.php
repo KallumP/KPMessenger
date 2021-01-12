@@ -80,6 +80,11 @@ if (!isset($_SESSION['userID']))
       $('#Messages').css({
         'max-height': ($(window).height() - bannerHeight) + 'px'
       });
+
+      $('#RecentMessages').css({
+        'max-height': ($(window).height() - bannerHeight + 150) + 'px'
+      });
+
     }
 
     //calls the initial ajax (to load up the dynamic parts of the page)
@@ -139,7 +144,7 @@ if (!isset($_SESSION['userID']))
 
     </div>
 
-
+    <!-- <div class="Content"> -->
     <div class="ChatRoom">
 
       <div id='Messages' class='Messages'>
@@ -165,6 +170,7 @@ if (!isset($_SESSION['userID']))
         ?>
       </div>
 
+      <!-- </div> -->
     </div>
   </div>
 </body>

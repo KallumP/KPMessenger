@@ -220,10 +220,10 @@ header {
 /* Recent messages */
 
 .RecentMessages {
-  position: absolute;
+  float: left;
   width: 20%;
-  height: 100%;
   border-right: white solid 1px;
+  overflow-y: auto;
 }
 
 .RecentMessages .MessagePrev {
@@ -303,12 +303,19 @@ header {
   color: var(--linkHoverColor);
 }
 
+.Content {
+  float: right;
+  width: 78%;
+  border: 1px;
+}
+
 .ChatRoom {
   position: fixed;
   width: 79%;
   bottom: 10px;
   left: 21%;
   z-index: -1;
+  min-width: 740px;
 }
 
 .ChatRoom .ChatName {

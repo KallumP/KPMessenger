@@ -61,11 +61,28 @@ if (!isset($_SESSION['userID']))
             });
         }
 
+        let SetChatBoxHeight = function() {
+
+            //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
+
+            //in px
+            let bannerHeight = 210;
+
+            $('#RecentMessages').css({
+                'max-height': ($(window).height() - bannerHeight + 150) + 'px'
+            });
+
+            $('#RecentMessages').css({
+                'max-height': ($(window).height() - bannerHeight + 150) + 'px'
+            });
+        }
+
         //calls the initial ajax (to load up the dynamic parts of the page)
         $(document).ready(function() {
 
             GetNotes();
             GetRecentMessages();
+            SetChatBoxHeight();
 
         });
 
@@ -77,48 +94,56 @@ if (!isset($_SESSION['userID']))
             GetRecentMessages();
 
         }, 4000);
+
+        $(window).resize(function() { // On resize
+            SetChatBoxHeight();
+        });
     </script>
 </head>
 
 <body>
 
-    <header>
+    <div class=Container>
+        <header>
 
-        <div id="Banner" class="AccountBanner">
+            <div id="Banner" class="AccountBanner">
+
+            </div>
+
+            <div class="Actions">
+                <ul>
+                    <li><a href="index.php">Messages</a></li>
+                    <li><a href="searchFriends.php">Friends</a></li>
+                    <li><a href="searchAllUsers.php">Search all Users</a></li>
+                </ul>
+            </div>
+
+        </header>
+
+        <div id="RecentMessages" class="RecentMessages">
 
         </div>
 
-        <div class="Actions">
-            <ul>
-                <li><a href="index.php">Messages</a></li>
-                <li><a href="searchFriends.php">Friends</a></li>
-                <li><a href="searchAllUsers.php">Search all Users</a></li>
-            </ul>
-        </div>
+        <?php if (isset($_SESSION['userName'])) { ?>
 
-    </header>
+            <div class="Content">
+                <div class="AccountOptions">
 
-    <div id="RecentMessages" class="RecentMessages">
+                    <div class="AccountNameAndID CenterObjects">
+                        <h1 class='WhiteHeader'>Logged in as: <?php echo $_SESSION['userName']  ?> # ID: <?php echo $_SESSION['userID']  ?></h1>
+                    </div>
+
+                    <div class="Logout CenterObjects">
+                        <a class='highRiskLink' href="includes/zLogout.php">Log out</a>
+                    </div>
+                </div>
+            </div>
+
+        <?php } ?>
+
+
 
     </div>
-
-    <?php if (isset($_SESSION['userName'])) { ?>
-
-        <div class="AccountOptions">
-
-            <div class="AccountNameAndID CenterObjects">
-                <h1 class='WhiteHeader'>Logged in as: <?php echo $_SESSION['userName']  ?> # ID: <?php echo $_SESSION['userID']  ?></h1>
-            </div>
-
-            <div class="Logout CenterObjects">
-                <a class='highRiskLink' href="includes/zLogout.php">Log out</a>
-            </div>
-        </div>
-
-    <?php } ?>
-
-
-
 </body>
 
 <?php  ?>
