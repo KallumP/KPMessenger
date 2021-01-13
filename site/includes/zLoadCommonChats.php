@@ -1,11 +1,11 @@
 <?php
-//query to pull all chatroom IDs that the current searched user is a part of
+//query to pull all Chatroom IDs that the current searched user is a part of
 $sqlChatCheck =
   "SELECT
     chatroom.ID as 'chatID'
   FROM
-    chatRoom
-  LEFT JOIN connector ON chatRoom.ID = connector.ChatRoomID
+    chatroom
+  LEFT JOIN connector ON chatroom.ID = connector.ChatroomID
   WHERE
     connector.UserID = '$currentSearchedUserID';";
 
@@ -25,14 +25,14 @@ if ($ChatResultCheck > 0) {
     //saves the current chat id of the current searched user
     $currentSearchedUserCurrentChatID = $ChatResultRow['chatID'];
 
-    //query to pull all chatrooms that the current searched user is a part of that the user is also a part of
+    //query to pull all Chatrooms that the current searched user is a part of that the user is also a part of
     $sqlCommonChatCheck =
       "SELECT
         chatroom.ID as 'chatID',
         chatroom.Name as 'chatName'
       FROM
         chatroom
-      LEFT JOIN connector ON chatroom.ID = connector.ChatRoomID
+      LEFT JOIN connector ON chatroom.ID = connector.ChatroomID
       WHERE
         connector.UserID = '$userID' AND chatroom.ID = '$currentSearchedUserCurrentChatID';";
 
@@ -45,7 +45,7 @@ if ($ChatResultCheck > 0) {
       //loops through each common chat
       while ($CommonChatResultRow = mysqli_fetch_assoc($CommonChatResult)) {
         $commonchat = true;
-        echo "<a href=index.php?ChatRoomID=" . $CommonChatResultRow['chatID'] . "><p>Open chat: " . $CommonChatResultRow['chatName'] . "</p></a>";
+        echo "<a href=index.php?ChatroomID=" . $CommonChatResultRow['chatID'] . "><p>Open chat: " . $CommonChatResultRow['chatName'] . "</p></a>";
       }
     }
   }

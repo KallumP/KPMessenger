@@ -47,17 +47,17 @@ if (!isset($_SESSION['userID']))
         let GetRecentMessages = function() {
 
             //gets the chat id from the url, and assigns it -1 if there wasn't one
-            let URLChatRoomID;
+            let URLChatroomID;
 
-            <?php if (isset($_GET['ChatRoomID'])) { ?>
-                URLChatRoomID = <?php echo $_GET['ChatRoomID'] ?>;
+            <?php if (isset($_GET['ChatroomID'])) { ?>
+                URLChatroomID = <?php echo $_GET['ChatroomID'] ?>;
             <?php } else { ?>
-                URLChatRoomID = -1;
+                URLChatroomID = -1;
             <?php } ?>
 
             $("#RecentMessages").load("includes/zLoadRecents.php", {
 
-                ChatroomID: URLChatRoomID
+                ChatroomID: URLChatroomID
             });
         }
 
@@ -130,17 +130,17 @@ if (!isset($_SESSION['userID']))
                 <?php
 
                 //checks if a chat was selected
-                if (isset($_GET['ChatRoomID'])) {
+                if (isset($_GET['ChatroomID'])) {
 
-                    //checks if the chatroom was left empty
-                    if ($_GET['ChatRoomID'] != "") {
+                    //checks if the Chatroom was left empty
+                    if ($_GET['ChatroomID'] != "") {
 
                         //check if the current user has access to this chat
 
-                        $ChatRoomID = mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
+                        $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
                         $UserID = $_SESSION['userID'];
 
-                        //check if the user has access to this chatroom and gets the admin status at the same time
+                        //check if the user has access to this Chatroom and gets the admin status at the same time
                         $sqlUserConnector =
                             "SELECT 
                             connector.Admin as 'AdminStatus'
@@ -148,7 +148,7 @@ if (!isset($_SESSION['userID']))
                             connector
                         WHERE
                             connector.UserID = '$UserID' AND 
-                            connector.ChatroomID = '$ChatRoomID';";
+                            connector.ChatroomID = '$ChatroomID';";
 
                         //turns result into an array of results
                         $userConnectorResult = mysqli_query($conn, $sqlUserConnector);
@@ -165,7 +165,7 @@ if (!isset($_SESSION['userID']))
                             FROM
                                 chatroom
                             WHERE 
-                                chatroom.ID = $ChatRoomID;";
+                                chatroom.ID = $ChatroomID;";
 
                             $ChatNameResult = mysqli_query($conn, $sqlGetChatName);
 
@@ -176,12 +176,12 @@ if (!isset($_SESSION['userID']))
                                 $ChatNameRow = mysqli_fetch_assoc($ChatNameResult);
 
                                 //the name of the chat
-                                echo "<a href='index.php?ChatRoomID=" . $ChatRoomID . "'> Back </a>";
+                                echo "<a href='index.php?ChatroomID=" . $ChatroomID . "'> Back </a>";
                                 echo "<h1 class='WhiteHeader'>Settings for " . $ChatNameRow['ChatName'] . " </h1>";
 
                                 if ($adminStatus == 1) {
                                     //the input to change the chat name
-                                    echo "<form action='includes/zUpdateChatName.php?ChatRoomID=" . $ChatRoomID . "' method='POST' class='ChatName'>";
+                                    echo "<form action='includes/zUpdateChatName.php?ChatroomID=" . $ChatroomID . "' method='POST' class='ChatName'>";
                                     echo "<label class='WhiteHeader' for='ChatName'>Chat name:</label><br>";
                                     echo "<input class='ChatNameInput BorderInputs' type='text' name='ChatName' value='" . $ChatNameRow['ChatName'] . "'> </input>";
                                     echo "<button id='UpdateChatName' class='Send BorderInputs' type='submit' name='submit'> Update </button>";
@@ -191,7 +191,7 @@ if (!isset($_SESSION['userID']))
 
                                 if ($adminStatus == 1) {
                                     //the input to add new members
-                                    echo "<form action='includes/zAddMember.php?ChatroomID=" . $ChatRoomID . "' method='POST' id='AddMemberForm' class='ChatName'>";
+                                    echo "<form action='includes/zAddMember.php?ChatroomID=" . $ChatroomID . "' method='POST' id='AddMemberForm' class='ChatName'>";
                                     echo "<label class='WhiteHeader' for='UserToAdd'>Add new members to this chat (use their unique code (found after the #)):</label><br>";
                                     echo "<input id='UserToAdd' class='ChatNameInput BorderInputs' type='text' name='UserToAdd'> </input>";
                                     echo "<button id='AddMember' class='Send BorderInputs' type='submit' name='submit'> Add </button>";
@@ -229,7 +229,7 @@ if (!isset($_SESSION['userID']))
 
                                 //all the members of the chat
                                 echo "<div class='LeaveChat CenterObjects'>";
-                                echo "<a class='highRiskLink' href='includes/zLeaveChat.php?ChatRoomID=" . $ChatRoomID . "'>Leave Chat</a>";
+                                echo "<a class='highRiskLink' href='includes/zLeaveChat.php?ChatroomID=" . $ChatroomID . "'>Leave Chat</a>";
                                 echo "</div>";
                             }
                         } else header("Location: index.php");

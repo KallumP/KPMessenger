@@ -40,9 +40,9 @@ if (!isset($_SESSION['userID']))
   <script>
     let GetMessages = function() {
 
-      <?php if (isset($_GET['ChatRoomID'])) { ?>
+      <?php if (isset($_GET['ChatroomID'])) { ?>
         $('#Messages').load('includes/zLoadMessages.php', {
-          ChatroomID: <?php echo $_GET['ChatRoomID'] ?>
+          ChatroomID: <?php echo $_GET['ChatroomID'] ?>
         });
       <?php } ?>
     }
@@ -50,17 +50,17 @@ if (!isset($_SESSION['userID']))
     let GetRecentMessages = function() {
 
       //gets the chat id from the url, and assigns it -1 if there wasn't one
-      let URLChatRoomID;
+      let URLChatroomID;
 
-      <?php if (isset($_GET['ChatRoomID'])) { ?>
-        URLChatRoomID = <?php echo $_GET['ChatRoomID'] ?>;
+      <?php if (isset($_GET['ChatroomID'])) { ?>
+        URLChatroomID = <?php echo $_GET['ChatroomID'] ?>;
       <?php } else { ?>
-        URLChatRoomID = -1;
+        URLChatroomID = -1;
       <?php } ?>
 
       $("#RecentMessages").load("includes/zLoadRecents.php", {
 
-        ChatroomID: URLChatRoomID
+        ChatroomID: URLChatroomID
       });
     }
 
@@ -155,9 +155,9 @@ if (!isset($_SESSION['userID']))
       <div class="MessageInput">
 
         <?php
-        if (isset($_GET['ChatRoomID'])) {
+        if (isset($_GET['ChatroomID'])) {
           //generates the url to send the message with
-          $SendMessageTo = "includes/zSendMessage.php?chatRoomID=" . mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
+          $SendMessageTo = "includes/zSendMessage.php?ChatroomID=" . $_GET['ChatroomID'];
           echo "<form action='$SendMessageTo'  method='POST' autocomplete='off'>"
         ?>
 

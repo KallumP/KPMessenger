@@ -5,13 +5,13 @@ session_start();
 if (!isset($_SESSION['userID']))
     header("Location: login.php");
 
-//checks if there was a chatroom posted from the ajax
+//checks if there was a Chatroom posted from the ajax
 if (isset($_POST['ChatroomID'])) {
 
     $ChatroomID = $_POST['ChatroomID'];
     $UserID = $_SESSION['userID'];
 
-    //check if the user has access to this chatroom
+    //check if the user has access to this Chatroom
     $sqlUserConnector =
         "SELECT 
             connector.ID
@@ -32,7 +32,7 @@ if (isset($_POST['ChatroomID'])) {
                 _Read = 1
             WHERE
                 connector.UserID = '$UserID' AND
-                connector.ChatRoomID = '$ChatroomID';";
+                connector.ChatroomID = '$ChatroomID';";
 
         mysqli_query($conn, $sqlUpdateConnectorReadStatus);
 
@@ -49,10 +49,10 @@ if (isset($_POST['ChatroomID'])) {
         //checks if there were any messages
         if (mysqli_num_rows($ChatNameResult) > 0) {
             $chatname = mysqli_fetch_assoc($ChatNameResult)['Name'];
-            echo "<a href='chatSettings.php?ChatRoomID=" . $ChatroomID . "'><h1 id='ChatName' class='ChatName WhiteHeader'>" . $chatname .  "</h1></a>";
+            echo "<a href='chatSettings.php?ChatroomID=" . $ChatroomID . "'><h1 id='ChatName' class='ChatName WhiteHeader'>" . $chatname .  "</h1></a>";
         }
 
-        //pulls the last 10 messages from this chatroom
+        //pulls the last 10 messages from this Chatroom
         $sqlAllMessages =
             "SELECT
               message.Content AS 'MessageContent',
@@ -60,7 +60,7 @@ if (isset($_POST['ChatroomID'])) {
             FROM
               message
             WHERE
-              message.ChatRoomID = '$ChatroomID'
+              message.ChatroomID = '$ChatroomID'
             ORDER BY
               message.ID
             DESC

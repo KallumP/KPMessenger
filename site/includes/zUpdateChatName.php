@@ -10,9 +10,9 @@ if (!isset($_SESSION['userID']))
 if (isset($_POST['submit'])) {
 
     $UserID = $_SESSION['userID'];
-    $ChatRoomID = mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
+    $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
 
-    //statement to get the admin connector between this user and the chatroom the message is being sent to
+    //statement to get the admin connector between this user and the Chatroom the message is being sent to
     $sqlVerifyChatroomConnector =
         "SELECT
             connector.ID
@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
             connector
         WHERE
             connector.UserID = '$UserID' AND
-            connector.ChatroomID = '$ChatRoomID' AND
+            connector.ChatroomID = '$ChatroomID' AND
             connector.Admin = '1';";
 
     //checks if there was an admin connector found (the user has access to the chat)
@@ -38,11 +38,11 @@ if (isset($_POST['submit'])) {
                 SET 
                     chatroom.Name = '$newName'
                 WHERE 
-                    chatroom.ID = '$ChatRoomID';";
+                    chatroom.ID = '$ChatroomID';";
 
             mysqli_query($conn, $sqlUpdateName);
 
-            header("Location: ../index.php?ChatRoomID=" . $ChatRoomID);
+            header("Location: ../index.php?ChatroomID=" . $ChatroomID);
         }
     }
 }
