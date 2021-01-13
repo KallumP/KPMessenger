@@ -18,7 +18,7 @@ if (isset($_POST['ChatroomID'])) {
   $sqlGetRecentMessages =
     "SELECT 
       chatroom.Name AS 'ChatName',
-      chatroom.ID AS 'ChatID'
+      chatroom.ID AS 'ChatroomID'
     FROM
       chatroom
     LEFT JOIN connector ON chatroom.ID = connector.ChatroomID
@@ -35,7 +35,7 @@ if (isset($_POST['ChatroomID'])) {
     //loops through each recent message
     while ($recentMessageRow = mysqli_fetch_assoc($RecentMessagesResult)) {
 
-      $currentChat = $recentMessageRow['ChatID'];
+      $currentChat = $recentMessageRow['ChatroomID'];
       $lastMessageID = "";
       $lastMessage = "";
       $messagePreview = "";
@@ -90,7 +90,7 @@ if (isset($_POST['ChatroomID'])) {
         }
       }
 
-      $ChatroomID = $recentMessageRow['ChatID'];
+      $ChatroomID = $recentMessageRow['ChatroomID'];
 
 
       //gets the read status of the chat
@@ -115,10 +115,10 @@ if (isset($_POST['ChatroomID'])) {
           echo "<div class='MessagePrev Unread'>";
 
           //checks if this recent chat is the same as the currently opened chat
-          if ($_POST['ChatroomID'] ==  $recentMessageRow['ChatID'])
-            echo "<a class='Current' href=index.php?ChatroomID=" . $recentMessageRow['ChatID'] . ">";
+          if ($_POST['ChatroomID'] ==  $recentMessageRow['ChatroomID'])
+            echo "<a class='Current' href=index.php?ChatroomID=" . $recentMessageRow['ChatroomID'] . ">";
           else
-            echo "<a href=index.php?ChatroomID=" . $recentMessageRow['ChatID'] . ">";
+            echo "<a href=index.php?ChatroomID=" . $recentMessageRow['ChatroomID'] . ">";
 
           echo "<h2 class='WhiteHeader'>" . $recentMessageRow['ChatName'] . "</h2>";
           echo "<p>" . $messagePreview . "</p>";
@@ -130,10 +130,10 @@ if (isset($_POST['ChatroomID'])) {
           echo "<div class='MessagePrev'>";
 
           //checks if this recent chat is the same as the currently opened chat
-          if ($_POST['ChatroomID'] ==  $recentMessageRow['ChatID'])
+          if ($_POST['ChatroomID'] ==  $recentMessageRow['ChatroomID'])
             echo "<a class='Current'>";
           else
-            echo "<a href=index.php?ChatroomID=" . $recentMessageRow['ChatID'] . ">";
+            echo "<a href=index.php?ChatroomID=" . $recentMessageRow['ChatroomID'] . ">";
 
           echo "<h2 class='WhiteHeader'>" . $recentMessageRow['ChatName'] . "</h2>";
           echo "<p>" . $messagePreview . "</p>";

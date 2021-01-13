@@ -62,14 +62,14 @@ if (isset($_GET['requestID'])) {
     if ($conn->query($sqlCreateChat) === TRUE)
 
       //gets the id of the chat
-      $chatID = $conn->insert_id;
+      $ChatroomID = $conn->insert_id;
 
     //creates the connector for this user
     $sqlConnector1 =
       "INSERT INTO 
         connector (UserID, ChatroomID, Admin)
       VALUES
-        ('$userID', '$chatID', '1');";
+        ('$userID', '$ChatroomID', '1');";
     mysqli_query($conn, $sqlConnector1);
 
     //creates the connector for the user who sent the friend request
@@ -77,7 +77,7 @@ if (isset($_GET['requestID'])) {
       "INSERT INTO 
         connector (UserID, ChatroomID, Admin)
       VALUES
-        ('$senderID', '$chatID', '1');";
+        ('$senderID', '$ChatroomID', '1');";
     mysqli_query($conn, $sqlConnector2);
 
 
@@ -104,7 +104,7 @@ if (isset($_GET['requestID'])) {
       SET 
         chatroom.Name = '$newChatName'
       WHERE
-        chatroom.ID = '$chatID';";
+        chatroom.ID = '$ChatroomID';";
     mysqli_query($conn, $sqlChatroomNameUpdate);
 
 
