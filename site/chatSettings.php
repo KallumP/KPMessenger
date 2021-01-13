@@ -72,10 +72,6 @@ if (!isset($_SESSION['userID']))
                 'max-height': ($(window).height() - bannerHeight + 150) + 'px'
             });
 
-            $('#RecentMessages').css({
-                'max-height': ($(window).height() - bannerHeight + 150) + 'px'
-            });
-
         }
 
         //calls the initial ajax (to load up the dynamic parts of the page)

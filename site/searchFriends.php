@@ -46,10 +46,6 @@ if (!isset($_SESSION['userID']))
             //in px
             let bannerHeight = 210;
 
-            $('#Messages').css({
-                'max-height': ($(window).height() - bannerHeight) + 'px'
-            });
-
             $('#RecentMessages').css({
                 'max-height': ($(window).height() - bannerHeight + 150) + 'px'
             });

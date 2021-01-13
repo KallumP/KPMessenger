@@ -40,7 +40,7 @@ if (!isset($_SESSION['userID']))
     <script>
         let GetNotes = function() {
             $("#Banner").load("includes/zLoadNotes.php", {
-                AccountOptions: "true"
+                CurrentPage: "accountOptions"
             });
         }
 
@@ -67,10 +67,6 @@ if (!isset($_SESSION['userID']))
 
             //in px
             let bannerHeight = 210;
-
-            $('#RecentMessages').css({
-                'max-height': ($(window).height() - bannerHeight + 150) + 'px'
-            });
 
             $('#RecentMessages').css({
                 'max-height': ($(window).height() - bannerHeight + 150) + 'px'
