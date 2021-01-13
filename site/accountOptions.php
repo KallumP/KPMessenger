@@ -47,17 +47,17 @@ if (!isset($_SESSION['userID']))
         let GetRecentMessages = function() {
 
             //gets the chat id from the url, and assigns it -1 if there wasn't one
-            let URLChatRoomID;
+            let URLChatroomID;
 
-            <?php if (isset($_GET['ChatRoomID'])) { ?>
-                URLChatRoomID = <?php echo $_GET['ChatRoomID'] ?>;
+            <?php if (isset($_GET['ChatroomID'])) { ?>
+                URLChatroomID = <?php echo $_GET['ChatroomID'] ?>;
             <?php } else { ?>
-                URLChatRoomID = -1;
+                URLChatroomID = -1;
             <?php } ?>
 
             $("#RecentMessages").load("includes/zLoadRecents.php", {
 
-                ChatroomID: URLChatRoomID
+                ChatroomID: URLChatroomID
             });
         }
 

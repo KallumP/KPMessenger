@@ -13,7 +13,7 @@ CREATE TABLE chatroom (
 CREATE TABLE message (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     	SenderID int(5),
-    	ChatRoomID int(5),
+    	ChatroomID int(5),
 	Content text
 );
 
@@ -83,6 +83,6 @@ ON DELETE CASCADE ON UPDATE RESTRICT;
 
 ALTER TABLE `message` 
 ADD CONSTRAINT `MessageToChat` 
-FOREIGN KEY (`ChatRoomID`) 
+FOREIGN KEY (`ChatroomID`) 
 REFERENCES `chatroom`(`ID`) 
 ON DELETE CASCADE ON UPDATE RESTRICT;

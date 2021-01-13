@@ -51,7 +51,7 @@ if (isset($_GET['requestID'])) {
     mysqli_query($conn, $sqlFriendRelation2);
 
 
-    //creates the chatroom
+    //creates the Chatroom
     $sqlCreateChat =
       "INSERT INTO 
         chatroom (Name)
@@ -97,7 +97,7 @@ if (isset($_GET['requestID'])) {
     $senderName = $sendernameResultRow['senderName'];
     $newChatName = $senderName . ", " . $userName;
 
-    //updates the chatroom name
+    //updates the Chatroom name
     $sqlChatroomNameUpdate =
       "UPDATE 
         chatroom

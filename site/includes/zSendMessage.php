@@ -15,9 +15,9 @@ if (isset($_POST['messageSend'])) {
 
 
         $UserID = $_SESSION['userID'];
-        $ChatroomID = $_GET['chatRoomID'];
+        $ChatroomID = $_GET['ChatroomID'];
 
-        //statement to get the connector between this user and the chatroom the message is being sent to
+        //statement to get the connector between this user and the Chatroom the message is being sent to
         $sqlVerifyChatroomConnector =
             "SELECT
                 connector.ID
@@ -43,7 +43,7 @@ if (isset($_POST['messageSend'])) {
             //gets the time this message was sent
             $sendTime = date("Y-m-d H:i:s");
 
-            //updates the chatroom with the message send time
+            //updates the Chatroom with the message send time
             $sqlUpdateChatroomTime =
                 "UPDATE
                     chatroom
@@ -61,11 +61,12 @@ if (isset($_POST['messageSend'])) {
                 SET
                     _Read = 0
                 WHERE
-                    connector.ChatRoomID = '$ChatroomID';";
+                    connector.ChatroomID = '$ChatroomID';";
 
             mysqli_query($conn, $sqlUpdateConnectorReadStatus);
 
-            header("Location: ../index.php?ChatRoomID=" . $ChatroomID);
+            header("Location: ../index.php?ChatroomID=" . $ChatroomID);
+            exit();
         }
     }
 }

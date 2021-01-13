@@ -3,14 +3,14 @@
 if (!isset($_SESSION['userID']))
     header("Location: login.php");
 
-if (isset($_GET['ChatRoomID'])) {
+if (isset($_GET['ChatroomID'])) {
 
     echo "<h2 class='WhiteHeader'>Members of this chat: </h2>";
 
 
-    $ChatRoomID = mysqli_real_escape_string($conn, $_GET['ChatRoomID']);
+    $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
 
-    //gets all the chatroom id's and names that the user is a part of
+    //gets all the Chatroom id's and names that the user is a part of
     $sqlGetMembers =
         "SELECT 
             _user.UserName AS 'UserName',
@@ -21,7 +21,7 @@ if (isset($_GET['ChatRoomID'])) {
         LEFT JOIN 
             connector ON _user.ID = connector.UserID
         WHERE 
-            connector.ChatroomID = '$ChatRoomID';";
+            connector.ChatroomID = '$ChatroomID';";
 
     $GetMembersResult = mysqli_query($conn, $sqlGetMembers);
 
@@ -46,7 +46,7 @@ if (isset($_GET['ChatRoomID'])) {
 
                 //checks if the user is admin
                 if ($adminStatus == 1)
-                    echo "<p>" . $UserName . "#" . $UserID . "<a class='highRiskLink' href='includes/zRemoveUser.php?UserToRemoveID=" . $UserID . "&ChatRoomID=" . $ChatRoomID . "'>Remove User</a><a href='includes/zMakeAdmin.php?UserToMakeAdmin=" . $UserID . "&ChatRoomID=" . $ChatRoomID . "'>Make Admin</a></p>";
+                    echo "<p>" . $UserName . "#" . $UserID . "<a class='highRiskLink' href='includes/zRemoveUser.php?UserToRemoveID=" . $UserID . "&ChatroomID=" . $ChatroomID . "'>Remove User</a><a href='includes/zMakeAdmin.php?UserToMakeAdmin=" . $UserID . "&ChatroomID=" . $ChatroomID . "'>Make Admin</a></p>";
                 else
                     echo "<p>" . $UserName . "#" . $UserID . "</p>";
             }

@@ -15,7 +15,7 @@ if (isset($_GET['ChatroomID'])) {
         $ChatroomID = $_GET['ChatroomID'];
         $ToAdd = $_POST['UserToAdd'];
 
-        //statement to get the connector between this user and the chatroom the new user is being added to (only if the user is admin)
+        //statement to get the connector between this user and the Chatroom the new user is being added to (only if the user is admin)
         $sqlVerifyChatroomConnector =
             "SELECT
                 connector.ID
@@ -67,16 +67,16 @@ if (isset($_GET['ChatroomID'])) {
                         //adds the member
                         mysqli_query($conn, $sqlAddMember);
 
-                        header("Location: ../chatSettings.php?ChatRoomID=" . $ChatroomID . "&Note=UserAdded");
+                        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=UserAdded");
                     } else
-                        header("Location: ../chatSettings.php?ChatRoomID=" . $ChatroomID . "&Note=AlreadyAMember");
+                        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=AlreadyAMember");
                 } else
-                    header("Location: ../chatSettings.php?ChatRoomID=" . $ChatroomID . "&Note=NotAUser");
+                    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=NotAUser");
             } else
-                header("Location: ../chatSettings.php?ChatRoomID=" . $ChatroomID . "&Note=EmptyInput");
+                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=EmptyInput");
         } else
-            header("Location: ../chatSettings.php?ChatRoomID=" . $ChatroomID . "&Note=NoChatAccess");
+            header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=NoChatAccess");
     } else
-        header("Location: ../chatSettings.php?Note=BadFileAccess&ChatRoomID=" . $ChatroomID);
+        header("Location: ../chatSettings.php?Note=BadFileAccess&ChatroomID=" . $ChatroomID);
 } else
-    header("Location: ../chatSettings.php?Note=BadFileAccess&ChatRoomID=" . $ChatroomID);
+    header("Location: ../chatSettings.php?Note=BadFileAccess&ChatroomID=" . $ChatroomID);

@@ -9,7 +9,7 @@ if (!isset($_SESSION['userID']))
 //checks if the recipientID was in the url (the id of the user who will be include in this chat)
 if (isset($_GET['recipientID'])) {
 
-  //creates the chatroom
+  //creates the Chatroom
   $sqlCreateChat =
     "INSERT INTO 
       chatroom (Name)
@@ -59,7 +59,7 @@ if (isset($_GET['recipientID'])) {
   $recipientName = $recipientnameResultRow['senderName'];
   $newChatName = $userName . ", " . $recipientName;
 
-  //updates the chatroom name
+  //updates the Chatroom name
   $sqlChatroomNameUpdate =
     "UPDATE 
       chatroom
