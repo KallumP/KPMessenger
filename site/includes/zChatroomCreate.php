@@ -20,7 +20,7 @@ if (isset($_GET['recipientID'])) {
   if ($conn->query($sqlCreateChat) === TRUE)
 
     //gets the id of the chat
-    $chatID = $conn->insert_id;
+    $ChatroomID = $conn->insert_id;
 
   $userID = $_SESSION['userID'];
   $recipientID = $_GET['recipientID'];
@@ -31,7 +31,7 @@ if (isset($_GET['recipientID'])) {
     "INSERT INTO 
       connector (UserID, ChatroomID, Admin)
     VALUES
-      ('$userID', '$chatID', '1');";
+      ('$userID', '$ChatroomID', '1');";
   mysqli_query($conn, $sqlConnector1);
 
   //creates the connector for other user (not adnim)
@@ -39,7 +39,7 @@ if (isset($_GET['recipientID'])) {
     "INSERT INTO 
       connector (UserID, ChatroomID)
     VALUES
-      ('$recipientID', '$chatID');";
+      ('$recipientID', '$ChatroomID');";
   mysqli_query($conn, $sqlConnector2);
 
 
@@ -66,7 +66,7 @@ if (isset($_GET['recipientID'])) {
     SET 
       chatroom.Name = '$newChatName'
     WHERE
-      chatroom.ID = '$chatID';";
+      chatroom.ID = '$ChatroomID';";
   mysqli_query($conn, $sqlChatroomNameUpdate);
 
 
