@@ -31,17 +31,19 @@ if (isset($_POST['messageSend'])) {
         //checks if there was a connector found
         if (mysqli_num_rows(mysqli_query($conn, $sqlVerifyChatroomConnector)) > 0) {
 
+            //gets the time this message was sent
+            $sendTime = date("Y-m-d H:i:s");
+
             //query to insert the new message
             $sqlInsertMessage =
                 "INSERT INTO
-                    message (SenderID, ChatroomID, Content)
+                    message (SenderID, ChatroomID, Content, TimeSent)
                 VALUES
-                    ('$UserID', '$ChatroomID', '$messageContent');";
+                    ('$UserID', '$ChatroomID', '$messageContent', '$sendTime');";
 
             mysqli_query($conn, $sqlInsertMessage);
 
-            //gets the time this message was sent
-            $sendTime = date("Y-m-d H:i:s");
+
 
             //updates the Chatroom with the message send time
             $sqlUpdateChatroomTime =
