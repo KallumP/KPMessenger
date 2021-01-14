@@ -7,7 +7,7 @@ if (!isset($_SESSION['userID']))
 
 $userID = $_SESSION['userID'];
 
-//gets all the unanswered friendrequests for this user
+//gets all the friendrequests for this user
 $sqlGetFriendRequests =
     "SELECT
         friendrequest.ID AS 'requestID',
@@ -26,46 +26,37 @@ $numberOfNotifications += mysqli_num_rows($getFriendRequestsResult);
 ?>
 <ul>
 
-    <!-- If there were notifications, it shows the number there was -->
-    <?php if ($numberOfNotifications > 0) { ?>
-        <li id='NotificationTab' class='Unread'> <a class='Unread' href="#">Notifications: <?php echo $numberOfNotifications ?></a>
-            <ul>
-                <?php while ($friendRequestsRow = mysqli_fetch_assoc($getFriendRequestsResult)) {
+    <?php
 
-                    $senderID = $friendRequestsRow['senderID'];
-                    $requestID = $friendRequestsRow['requestID'];
+    //gets the current page (incase its one of the banner items)
+    $currentPage = "other";
+    if (isset($_POST["CurrentPage"]))
+        $currentPage = $_POST["CurrentPage"];
 
-                    //query to get the name of the friend request sender
-                    $sqlGetRequestSenderName =
-                        "SELECT
-                            _user.UserName as 'senderName'
-                        FROM
-                            _user
-                        WHERE
-                            _user.ID = '$senderID';";
+    //if there were any notifications
+    if ($numberOfNotifications > 0) {
 
-                    //queries the database
-                    $getSenderNameResult = mysqli_query($conn, $sqlGetRequestSenderName);
-                    $friendRequestsSenderNameRow = mysqli_fetch_assoc($getSenderNameResult);
+        //output the notifications item as "unread"
+        echo "<li id='NotificationTab'> <a class='Unread' href='notifications.php'>Notifications: " . $numberOfNotifications  . "</a></li>";
+    } else {
 
-                    //displays the friend request
-                    echo "<li><a href='includes/zFriendRequestAccept.php?requestID=" . $requestID . "'> Friend request from: " . $friendRequestsSenderNameRow['senderName'] . "</a></li>";
-                }
+        //if the current page was the notes page
+        if ($currentPage == "notes")
 
-                ?>
-            </ul>
+            //outputs the notifications item as "current"
+            echo "<li id='NotificationTab'> <a class='Current' href='#'>Notifications: " . $numberOfNotifications  . "</a></li>";
+        else
 
-            <!-- If there werent any notes, then it doesn't put anything in the notes section (and the class is not unread) -->
-        <?php } else { ?>
-        <li id='NotificationTab'> <a href="#">Notifications: 0</a>
-        <?php } ?>
+            //outputs the notifications item
+            echo "<li id='NotificationTab'> <a href='notifications.php'>Notifications: " . $numberOfNotifications  . "</a></li>";
+    }
 
-        </li>
+    //checks if the current page was the account options
+    if ($currentPage == "accountOptions")
+        echo "<li><a class='Current'>Account options: " . $_SESSION['userName'] . "</a></li>";
+    else
+        echo "<li><a href='accountOptions.php'>Account options: " . $_SESSION['userName'] . "</a></li>";
+    ?>
 
-        <?php if (isset($_POST["AccountOptions"])) { ?>
-            <li><a class="Current">Account options: <?php echo $_SESSION['userName'] ?></a></li>
-        <?php } else { ?>
-            <li><a href="accountOptions.php">Account options: <?php echo $_SESSION['userName'] ?></a></li>
-        <?php } ?>
-        <li><a href="includes/zLogout.php">Log out </a></li>
+    <li><a href="includes/zLogout.php">Log out </a></li>
 </ul>

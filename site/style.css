@@ -145,22 +145,7 @@ header {
   padding-left: 20px;
 }
 
-.AccountBanner ul li ul {
-  display: none;
-  position: absolute;
-}
-
-.AccountBanner ul li:hover ul {
-  display: block;
-  padding-top: 30px;
-  padding-bottom: 15px;
-  left: -40px;
-}
-
-.AccountBanner ul li ul li {
-  padding: 0;
-  width: 220px;
-}
+.AccoutnBanner ul li .Current {}
 
 .CreateAccount {
   padding-top: 100px;
@@ -429,7 +414,6 @@ header {
   width: 50%;
   padding-bottom: 20px;
   margin: auto;
-  border-style: solid;
   border-width: 1px;
   border-top-style: none;
   border-right-style: none;
@@ -515,4 +499,34 @@ header {
 .ChatSettings .LeaveChat {
   margin: auto;
   padding-top: 100px;
+  padding-bottom: 50px;
+}
+
+.Notifications {
+  text-align: center;
+}
+
+.Notifications .title {
+  padding: 150px auto;
+}
+
+.Notifications .FriendRequests .Request {
+  padding-top: 10px;
+  width: 50%;
+  margin: auto;
+  border-width: 1px;
+  border-top-style: none;
+  border-right-style: none;
+  border-left-style: none;
+  border-bottom-style: dotted;
+}
+
+.Notifications .FriendRequests .Request a {
+  margin-top: 0px;
+  padding-top: 0px;
+  text-decoration: none;
+}
+
+.Notifications .FriendRequests .Request a:hover p {
+  color: var(--linkHoverColor);
 }
