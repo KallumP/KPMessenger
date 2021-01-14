@@ -32,6 +32,14 @@ html {
   height: 100%;
 }
 
+input {
+  padding-left: 10px;
+}
+
+textarea:focus, input:focus {
+  outline: none;
+}
+
 .Border {
   border-color: var(--borderColor);
   border-style: solid;
@@ -144,8 +152,6 @@ header {
   padding-right: 10px;
   padding-left: 20px;
 }
-
-.AccoutnBanner ul li .Current {}
 
 .CreateAccount {
   padding-top: 100px;
