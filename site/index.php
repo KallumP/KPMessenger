@@ -82,7 +82,8 @@ if (!isset($_SESSION['userID']))
       });
 
       $('#RecentMessages').css({
-        'max-height': ($(window).height() - bannerHeight + 150) + 'px'
+        'max-height': ($(window).height() - bannerHeight + 150) + 'px',
+        'height': ($(window).height() - bannerHeight + 150) + 'px'
       });
 
     }
@@ -143,8 +144,6 @@ if (!isset($_SESSION['userID']))
     <div id="RecentMessages" class="RecentMessages">
 
     </div>
-
-    <!-- <div class="Content"> -->
     <div class="ChatRoom">
 
       <div id='Messages' class='Messages'>
@@ -184,8 +183,6 @@ if (!isset($_SESSION['userID']))
         }
         ?>
       </div>
-
-      <!-- </div> -->
     </div>
   </div>
 </body>
