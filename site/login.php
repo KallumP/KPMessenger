@@ -49,10 +49,11 @@ session_start();
 
                 <input class="username_txt BorderInputs " type="text" name="username" placeholder="Enter username"><br><br>
                 <input class="password_txt BorderInputs" type="password" name="password" placeholder="Enter password"><br><br>
-                <div class="CenterObjects">
-                    <button class="login_btn BorderInputs" type="submit" name="login"> Login </button>
-                    <a href="createNewAccount.php">Create new account</a>
-                </div>
+                <button class="login_btn BorderInputs" type="submit" name="login"> Login </button>
+
+                <a href="createNewAccount.php">
+                    <p>Create new account</p>
+                </a>
             </form>
 
         </div>

@@ -15,7 +15,7 @@ session_start();
 
 <body>
 
-    <div class="CreateAccount">
+    <div class="Login">
 
         <div class="Notes">
             <?php
@@ -49,9 +49,13 @@ session_start();
             <input class="password_txt BorderInputs" type="password" name="password" placeholder="Enter password"><br><br>
 
             <label class='WhiteHeader' for="username">Re-enter the same password</label><br>
-            <input class="password_txt BorderInputs" type="password" name="password-validate" placeholder="Enter password"><br><br><br>
+            <input class="password_txt BorderInputs" type="password" name="password-validate" placeholder="Enter password"><br><br>
 
             <button class="login_btn BorderInputs" type="submit" name="login"> Submit </button>
+
+            <a href="login.php">
+                <p>Back to log in</p>
+            </a>
 
         </form>
     </div>

@@ -72,8 +72,7 @@ if (isset($_GET['ChatroomID'])) {
                         FROM
                             connector
                         WHERE
-                            connector.ChatroomID = '$ChatroomID';
-                    );";
+                            connector.ChatroomID = '$ChatroomID');";
 
             //https://stackoverflow.com/questions/7604893/how-do-i-select-an-entire-row-which-has-the-largest-id-in-the-table
 
