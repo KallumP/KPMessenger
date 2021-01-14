@@ -156,16 +156,31 @@ if (!isset($_SESSION['userID']))
 
         <?php
         if (isset($_GET['ChatroomID'])) {
+
           //generates the url to send the message with
           $SendMessageTo = "includes/zSendMessage.php?ChatroomID=" . $_GET['ChatroomID'];
-          echo "<form action='$SendMessageTo'  method='POST' autocomplete='off'>"
-        ?>
+          echo "<form action='$SendMessageTo'  method='POST' autocomplete='off'>";
 
-          <input class="messageEntry BorderInputs" type="text" name="messageEntry" placeholder="Type your message here" rows="1" autofocus></textarea>
-          <button class="messageSend BorderInputs" type="submit" name="messageSend"> Send </button>
-          </form>
 
-        <?php
+          $ChatroomID = $_GET['ChatroomID'];
+          $UserID = $_SESSION['userID'];
+
+          //check if the user has access to this Chatroom
+          $sqlUserConnector =
+            "SELECT 
+                  connector.ID
+              FROM  
+                  connector
+              WHERE
+                  connector.UserID = '$UserID' AND 
+                  connector.ChatroomID = '$ChatroomID';";
+
+          //if the user has access to this chat (the query returned a connector)
+          if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector))) {
+            echo "<input class='messageEntry BorderInputs' type='text' name='messageEntry' placeholder='Type your message here' rows='1' autofocus></textarea>";
+            echo "<button class='messageSend BorderInputs' type='submit' name='messageSend'> Send </button>";
+            echo "</form>";
+          }
         }
         ?>
       </div>
