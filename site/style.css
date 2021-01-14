@@ -33,10 +33,7 @@ html {
 }
 
 input {
-  padding-left: 10px;
-}
-
-textarea:focus, input:focus {
+  padding-left: 6px;
   outline: none;
 }
 
@@ -57,7 +54,6 @@ textarea:focus, input:focus {
 .CenterObjects {
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -153,30 +149,6 @@ header {
   padding-left: 20px;
 }
 
-.CreateAccount {
-  padding-top: 100px;
-  width: 20%;
-  margin: auto;
-}
-
-.CreateAccount h1 {
-  text-align: center;
-}
-
-.CreateAccount input {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin: auto;
-  width: 99%;
-}
-
-.CreateAccount button {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin: auto;
-  width: 100%;
-}
-
 .Login {
   padding-top: 100px;
   margin: auto;
@@ -190,22 +162,30 @@ header {
 .Login a {
   text-decoration: none;
   font: 1em;
-  margin-top: 30px;
   text-align: center;
 }
 
 .Login input {
-  padding: 10px 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
   width: 100%;
+  max-width: 100%;
 }
 
 .Login button {
-  padding: 10px 0;
+  padding: 10px 3px;
   width: 100%;
+  margin: 5px;
+}
+
+.Login p {
+  padding-top: 30px;
 }
 
 .AccountNameAndID {
   padding-bottom: 50px;
+  display: flex;
+  justify-content: center;
 }
 
 /* Recent messages */
