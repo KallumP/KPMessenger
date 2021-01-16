@@ -38,11 +38,11 @@ if (isset($_POST['ChatroomID'])) {
 
         $sqlChatName =
             "SELECT
-              chatroom.Name AS 'Name'
+                chatroom.Name AS 'Name'
             FROM
-              chatroom
+                chatroom
             WHERE
-              chatroom.ID = '$ChatroomID'";
+                chatroom.ID = '$ChatroomID'";
 
         $ChatNameResult = mysqli_query($conn, $sqlChatName);
 
@@ -55,17 +55,18 @@ if (isset($_POST['ChatroomID'])) {
         //pulls the last 10 messages from this Chatroom
         $sqlAllMessages =
             "SELECT
-              message.Content AS 'MessageContent',
-              message.SenderID AS 'SenderID'
+                message.Content AS 'MessageContent',
+                message.SenderID AS 'SenderID',
+                message.TimeSent as 'Time'
             FROM
-              message
+                message
             WHERE
-              message.ChatroomID = '$ChatroomID'
+                message.ChatroomID = '$ChatroomID'
             ORDER BY
-              message.ID
+                message.ID
             DESC
             LIMIT
-              10;";
+                10;";
 
         $AllMessagesResult = mysqli_query($conn, $sqlAllMessages);
         $AllMessagesResultCheck = mysqli_num_rows($AllMessagesResult);
@@ -85,6 +86,59 @@ if (isset($_POST['ChatroomID'])) {
 
                 $senderID = $messageRow['SenderID'];
                 $message = wordwrap($messageRow['MessageContent'], 70, "<br>");
+                $time = date_create($messageRow['Time']);
+                $timeNow = new DateTime('now');
+
+                $timeSinceSent = $time->diff($timeNow);
+
+                //https://stackoverflow.com/questions/365191/how-to-get-time-difference-in-minutes-in-php
+                $yearsSinceStart = $timeSinceSent->y;
+                $monthsSinceStart = $timeSinceSent->m;
+                $daysSinceStart = $timeSinceSent->d;
+                $hoursSinceStart = $timeSinceSent->h;
+                $minutesSinceStart = $timeSinceSent->i;
+                $secondsSinceStart = $timeSinceSent->s;
+
+                //if the datetime is not set
+                if ($messageRow['Time'] == NULL)
+                    $formatedTime = " at: unknown...";
+
+                //if its been more than a year
+                else if ($yearsSinceStart >= 1)
+                    $formatedTime = " at: " . date_format($time, "H:i:s d/m/Y");
+
+                //if its been more than a month
+                else if ($monthsSinceStart >= 1)
+                    if ($monthsSinceStart == 1)
+                        $formatedTime = ": " . $monthsSinceStart . " month ago";
+                    else
+                        $formatedTime = ": " . $monthsSinceStart . " months ago";
+
+                //if its been more than a day
+                else if ($daysSinceStart >= 1)
+                    if ($daysSinceStart == 1)
+                        $formatedTime = ": " . $daysSinceStart . " day ago";
+                    else
+                        $formatedTime = ": " . $daysSinceStart . " days ago";
+
+                //if its been more than an hour
+                else if ($hoursSinceStart >= 1)
+                    if ($hoursSinceStart == 1)
+                        $formatedTime = ": " . $hoursSinceStart . " hour ago";
+                    else
+                        $formatedTime = ": " . $hoursSinceStart . " hours ago";
+
+                //if its been more than a min
+                else if ($minutesSinceStart >= 1)
+                    if ($minutesSinceStart == 1)
+                        $formatedTime = ": " . $minutesSinceStart . " minute ago";
+                    else
+                        $formatedTime = ": " . $minutesSinceStart . " minutes ago";
+
+                //if its been less than a min
+                else
+                    $formatedTime = ": " . $secondsSinceStart . " seconds ago";
+
 
                 //checks if the current message was yours
                 if ($senderID == $_SESSION['userID']) {
@@ -93,7 +147,7 @@ if (isset($_POST['ChatroomID'])) {
                     echo "<div class='SentMessage Message'>";
 
                     echo "<p>" .  $message . "</p>";
-                    echo "<h3 class='WhiteHeader'> Sent by you</h3>";
+                    echo "<h3 class='WhiteHeader'>Sent by you" .  $formatedTime  . "</h3>";
 
                     echo "</div>";
                 } else {
@@ -121,7 +175,7 @@ if (isset($_POST['ChatroomID'])) {
                     echo "<div class='RecievedMessage Message'>";
 
                     echo "<p>" .  $message . "</p>";
-                    echo "<h3 class='WhiteHeader'>Sent by " . $senderName . "</h3>";
+                    echo "<h3 class='WhiteHeader'>Sent by " . $senderName .  $formatedTime  . "</h3>";
 
                     echo "</div>";
                 }

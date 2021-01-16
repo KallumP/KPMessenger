@@ -1,26 +1,27 @@
 CREATE TABLE _user (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    	PassHash text,
-    	UserName text
+    PassHash text,
+    UserName text
 );
 
 CREATE TABLE chatroom (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	Name text,
-    	LastMessageTime datetime
+    LastMessageTime datetime
 );
 
 CREATE TABLE message (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    	SenderID int(5),
-    	ChatroomID int(5),
-	Content text
+    SenderID int(5),
+    ChatroomID int(5),
+	Content text,
+	TimeSent datetime
 );
 
 CREATE TABLE connector (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    	UserID int(5),
-    	ChatroomID int(5),
+    UserID int(5),
+    ChatroomID int(5),
 	Active tinyint(1),
 	Connected tinyint(1),
 	_Read tinyint(1),
@@ -29,14 +30,14 @@ CREATE TABLE connector (
 
 CREATE TABLE friend (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    	SenderID int(5),
-    	RecipientID int(5)
+    SenderID int(5),
+    RecipientID int(5)
 );
 
 CREATE TABLE friendrequest (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    	SenderID int(5),
-    	RecipientID int(5)
+    SenderID int(5),
+    RecipientID int(5)
 );
 
 ALTER TABLE `connector` 
@@ -86,3 +87,12 @@ ADD CONSTRAINT `MessageToChat`
 FOREIGN KEY (`ChatroomID`) 
 REFERENCES `chatroom`(`ID`) 
 ON DELETE CASCADE ON UPDATE RESTRICT;
+
+
+
+
+
+Post 13th Jan 2021
+ALTER TABLE `message` 
+ADD `TimeSent` DATETIME NULL DEFAULT NULL 
+AFTER `Content`;
