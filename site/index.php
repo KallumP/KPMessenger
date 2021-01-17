@@ -176,7 +176,7 @@ if (!isset($_SESSION['userID']))
 
           //if the user has access to this chat (the query returned a connector)
           if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector))) {
-            echo "<input class='messageEntry BorderInputs' type='text' name='messageEntry' placeholder='Type your message here' rows='1' autofocus></textarea>";
+            echo "<input class='messageEntry BorderInputs' type='text' name='messageEntry' placeholder='Type your message here' rows='1' autofocus></input>";
             echo "<button class='messageSend BorderInputs' type='submit' name='messageSend'> Send </button>";
             echo "</form>";
           }

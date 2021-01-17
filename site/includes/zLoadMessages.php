@@ -24,6 +24,39 @@ if (isset($_POST['ChatroomID'])) {
     //if the user has access to this chat (the query returned a connector)
     if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector))) {
 
+        //check if there is a password required
+        $sqlCheckPassword =
+            "SELECT
+                chatroom.PassHash AS 'PassHash'
+            FROM
+                chatroom
+            WHERE
+                chatroom.ID = '$ChatroomID' AND
+                NOT chatroom.Password = NULL";
+
+        $CheckPasswordResult = mysqli_query($conn, $sqlCheckPassword);
+
+        //checks if there was a result (a password is required for this chat)
+        if (mysqli_num_rows($CheckPasswordResult) > 0) {
+
+            //check if there is wasn't a password session variable for this chat (user has not entered a password)
+            if (!isset($_SESSION['ChatroomID_' . $ChatroomID])) {
+
+                if (isset($_GET['chatPass']))
+                    if ($_GET['chatPass'] == "wrong")
+                        echo "<h3>That password was wrong";
+
+                echo "<form action='../zValidateChatPassword.php'  method='POST' autocomplete='off'>";
+                echo "<input class='passwordEntry BorderInputs' type='text' name='passwordEntry' placeholder='Enter password' rows='1' autofocus></input>";
+                echo "<button class='passwordSubmit BorderInputs' type='submit' name='passwordSend'> Unlock </button>";
+                echo "</form>";
+
+                //stops the user from seeing anything else (I think)
+                exit();
+            }
+        }
+
+
         //query to set this user's read status to true
         $sqlUpdateConnectorReadStatus =
             "UPDATE

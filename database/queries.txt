@@ -7,7 +7,8 @@ CREATE TABLE _user (
 CREATE TABLE chatroom (
 	ID int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	Name text,
-    LastMessageTime datetime
+    LastMessageTime datetime DEFAULT NULL,
+	PassHash text
 );
 
 CREATE TABLE message (
@@ -15,7 +16,7 @@ CREATE TABLE message (
     SenderID int(5),
     ChatroomID int(5),
 	Content text,
-	TimeSent datetime
+	TimeSent datetime DEFAULT NULL 
 );
 
 CREATE TABLE connector (
@@ -96,3 +97,8 @@ Post 13th Jan 2021
 ALTER TABLE `message` 
 ADD `TimeSent` DATETIME NULL DEFAULT NULL 
 AFTER `Content`;
+
+Post 17th Jan 2021
+ALTER TABLE `chatroom`
+ADD `PassHash` TEXT NOT NULL
+AFTER `LastMessageTime`;
