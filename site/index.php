@@ -93,9 +93,10 @@ if (!isset($_SESSION['userID']))
 
       SetChatBoxHeight();
 
-      GetMessages();
       GetRecentMessages();
       GetNotes();
+      GetMessages();
+
 
       let scroll = document.getElementById('Messages');
       scroll.scrollTop = scroll.scrollHeight;
@@ -106,9 +107,38 @@ if (!isset($_SESSION['userID']))
     //the timer to pull new messages (short polling every 4 seconds)
     setInterval(function() {
 
-      GetMessages();
       GetRecentMessages();
       GetNotes();
+
+      let noPass = true;
+
+      <?php
+      if (isset($_GET['ChatroomID'])) {
+
+        $ChatroomID = $_GET['ChatroomID'];
+        //check if there is a password required
+        $sqlCheckPassword =
+          "SELECT
+            chatroom.PassHash AS 'PassHash'
+          FROM
+            chatroom
+          WHERE
+            chatroom.ID = '$ChatroomID' AND
+            NOT chatroom.PassHash = ''";
+
+        $CheckPasswordResult = mysqli_query($conn, $sqlCheckPassword);
+
+        //checks if there was a required password, and a session password is not set
+        if (mysqli_num_rows($CheckPasswordResult) > 0 && !isset($_SESSION['ChatroomID_' . $ChatroomID])) {
+          echo "noPass = false;";
+        }
+      }
+      ?>
+
+      if (noPass)
+        GetMessages();
+
+
 
       let scroll = document.getElementById('Messages');
       scroll.scrollTop = scroll.scrollHeight;
@@ -156,29 +186,55 @@ if (!isset($_SESSION['userID']))
         <?php
         if (isset($_GET['ChatroomID'])) {
 
-          //generates the url to send the message with
-          $SendMessageTo = "includes/zSendMessage.php?ChatroomID=" . $_GET['ChatroomID'];
-          echo "<form action='$SendMessageTo'  method='POST' autocomplete='off'>";
-
-
           $ChatroomID = $_GET['ChatroomID'];
           $UserID = $_SESSION['userID'];
+
+          $chatAccess = false;
+          $passAccess = true;
 
           //check if the user has access to this Chatroom
           $sqlUserConnector =
             "SELECT 
-                  connector.ID
+                connector.ID
               FROM  
-                  connector
+                connector
               WHERE
-                  connector.UserID = '$UserID' AND 
-                  connector.ChatroomID = '$ChatroomID';";
+                connector.UserID = '$UserID' AND 
+                connector.ChatroomID = '$ChatroomID';";
 
           //if the user has access to this chat (the query returned a connector)
-          if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector))) {
+          if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector)) > 0)
+            $chatAccess = true;
+
+
+          //check if there is a password required
+          $sqlCheckPassword =
+            "SELECT
+              chatroom.PassHash AS 'PassHash'
+            FROM
+              chatroom
+            WHERE
+              chatroom.ID = '$ChatroomID' AND
+              NOT chatroom.PassHash = ''";
+
+          $CheckPasswordResult = mysqli_query($conn, $sqlCheckPassword);
+
+          //checks if there was a required password, and a session password is not set
+          if (mysqli_num_rows($CheckPasswordResult) > 0 && !isset($_SESSION['ChatroomID_' . $ChatroomID]))
+            $passAccess = false;
+
+
+          if ($chatAccess && $passAccess) {
+
+            //generates the url to send the message with
+            $SendMessageTo = "includes/zSendMessage.php?ChatroomID=" . $_GET['ChatroomID'];
+
+            echo "<form action='$SendMessageTo'  method='POST' autocomplete='off'>";
             echo "<input class='messageEntry BorderInputs' type='text' name='messageEntry' placeholder='Type your message here' rows='1' autofocus></input>";
             echo "<button class='messageSend BorderInputs' type='submit' name='messageSend'> Send </button>";
             echo "</form>";
+          } else {
+            echo $chatAccess . $passAccess;
           }
         }
         ?>

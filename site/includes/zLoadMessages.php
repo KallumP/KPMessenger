@@ -32,7 +32,7 @@ if (isset($_POST['ChatroomID'])) {
                 chatroom
             WHERE
                 chatroom.ID = '$ChatroomID' AND
-                NOT chatroom.Password = NULL";
+                NOT chatroom.PassHash = ''";
 
         $CheckPasswordResult = mysqli_query($conn, $sqlCheckPassword);
 
@@ -46,12 +46,13 @@ if (isset($_POST['ChatroomID'])) {
                     if ($_GET['chatPass'] == "wrong")
                         echo "<h3>That password was wrong";
 
-                echo "<form action='../zValidateChatPassword.php'  method='POST' autocomplete='off'>";
+                echo "<div class='ChatPassword'>";
+                echo "<form action='includes/zValidateChatPassword.php?ChatroomID=" . $ChatroomID . "'  method='POST' autocomplete='off'>";
                 echo "<input class='passwordEntry BorderInputs' type='text' name='passwordEntry' placeholder='Enter password' rows='1' autofocus></input>";
                 echo "<button class='passwordSubmit BorderInputs' type='submit' name='passwordSend'> Unlock </button>";
                 echo "</form>";
+                echo "</div>";
 
-                //stops the user from seeing anything else (I think)
                 exit();
             }
         }
