@@ -219,10 +219,22 @@ if (!isset($_SESSION['userID']))
 
           $CheckPasswordResult = mysqli_query($conn, $sqlCheckPassword);
 
-          //checks if there was a required password, and a session password is not set
-          if (mysqli_num_rows($CheckPasswordResult) > 0 && !isset($_SESSION['ChatroomID_' . $ChatroomID]))
-            $passAccess = false;
+          //checks if there was a required password
+          if (mysqli_num_rows($CheckPasswordResult) > 0) {
 
+            //gets the database hashed password and hashes the locally stored password
+            $passHashRow = mysqli_fetch_assoc($CheckPasswordResult);
+            $dbPassHash = $passHashRow['PassHash'];
+            $localPassHash = strtoupper(hash('sha256', $_SESSION['ChatroomID_' . $ChatroomID]));
+
+
+            //session password for this chat is not set
+            if (!isset($_SESSION['ChatroomID_' . $ChatroomID]))
+              $passAccess = false;
+            else if ($localPassHash != $dbPassHash) {
+              $passAccess = false;
+            }
+          }
 
           if ($chatAccess && $passAccess) {
 
@@ -233,8 +245,6 @@ if (!isset($_SESSION['userID']))
             echo "<input class='messageEntry BorderInputs' type='text' name='messageEntry' placeholder='Type your message here' rows='1' autofocus></input>";
             echo "<button class='messageSend BorderInputs' type='submit' name='messageSend'> Send </button>";
             echo "</form>";
-          } else {
-            echo $chatAccess . $passAccess;
           }
         }
         ?>

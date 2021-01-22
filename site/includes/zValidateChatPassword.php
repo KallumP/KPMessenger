@@ -20,14 +20,14 @@ if (isset($_POST['passwordSend'])) {
         chatroom.ID = '$ChatroomID' AND
         chatroom.PassHash = '$hashedInput';";
 
-
-
-
     //checks if that hashed passsword was found
-    if (mysqli_num_rows(mysqli_query($conn, $sqlCheckHashedPass)))
+    if (mysqli_num_rows(mysqli_query($conn, $sqlCheckHashedPass))) {
 
         //sets the session variable for this chat
-        $_SESSION['ChatroomID_' . $ChatroomID] = $hashedInput;
+        $_SESSION['ChatroomID_' . $ChatroomID] = $inputPassword;
 
-    header("Location: ../index.php?ChatroomID=" . $ChatroomID);
+        header("Location: ../index.php?ChatroomID=" . $ChatroomID);
+    } else {
+        header("Location: ../index.php?ChatroomID=" . $ChatroomID . "&Note=wrong");
+    }
 }
