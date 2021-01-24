@@ -42,9 +42,12 @@ if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
 
             mysqli_query($conn, $sqlAddPassHash);
 
+            //saves the password
+            $_SESSION['ChatroomID_' . $ChatroomID] = $inputPassword;
+
             //encrypt all messages
 
-            header("Location: ../chatSettings.php?Note=success");
+            header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=PassSuccess");
         } else
             //return to chat settings saying you can't have an empty password
             header("Location: ../chatSettings.php?Note=EmptyPass");
