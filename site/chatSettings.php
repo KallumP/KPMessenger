@@ -189,6 +189,8 @@ if (!isset($_SESSION['userID']))
                                         echo "<h3>User added successfully</h3>";
                                     else if ($note == "UserRemoved")
                                         echo "<h3>User removed successfully</h3>";
+                                    else if ($note == "PassSuccess")
+                                        echo "<h3>Password added successfully (all messages has been encrypted)</h3>";
                                     else if ($note == "NotAMember")
                                         echo "<h3>That user is not a member of this chat</h3>";
                                     else if ($note == "AlreadyAMember")
@@ -217,6 +219,7 @@ if (!isset($_SESSION['userID']))
                                 }
 
                                 if ($adminStatus == 1) {
+
                                     //the input to add new members
                                     echo "<form action='includes/zAddMember.php?ChatroomID=" . $ChatroomID . "' method='POST' id='AddMemberForm' class='ChatName'>";
                                     echo "<label class='WhiteHeader' for='UserToAdd'>Add new members to this chat (use their unique code (found after the #)):</label><br>";
@@ -226,13 +229,10 @@ if (!isset($_SESSION['userID']))
                                     echo "<br><br><br>";
                                 }
 
-
                                 if ($adminStatus == 1) {
-
-                                    //if there was no chat password 
                                     if ($passHash == "") {
 
-                                        //the input to add new members
+                                        //the input to add a password
                                         echo "<form action='includes/zAddPassword.php?ChatroomID=" . $ChatroomID . "' method='POST' id='AddMemberForm' class='ChatName'>";
                                         echo "<label class='WhiteHeader' for='PasswordToAdd'>Add a password to this chat (Password strength is all up to you):</label><br>";
                                         echo "<input id='PasswordToAdd' class='BorderInputs' type='text' name='PasswordToAdd'> </input>";
@@ -244,10 +244,7 @@ if (!isset($_SESSION['userID']))
                                         echo "</div>";
                                     }
                                 }
-
-
                                 echo "<br><br><br>";
-
 
 
                                 //all the members of the chat
@@ -263,7 +260,6 @@ if (!isset($_SESSION['userID']))
                         } else header("Location: index.php");
                     } else header("Location: index.php");
                 } else header("Location: index.php");
-
                 ?>
             </div>
         </div>

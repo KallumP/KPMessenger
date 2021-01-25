@@ -45,7 +45,52 @@ if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
             //saves the password
             $_SESSION['ChatroomID_' . $ChatroomID] = $inputPassword;
 
-            //encrypt all messages
+
+
+            //query to get all messages from this chat
+            $sqlGetMessages =
+                "SELECT
+                    message.ID AS 'messageID',
+                    message.Content AS 'messageContent'
+                FROM
+                    message
+                WHERE 
+                    message.ChatroomID = '$ChatroomID';";
+
+            //calls the query
+            $AllMessagesResult = mysqli_query($conn, $sqlGetMessages);
+
+            //checks if there were any results
+            if (mysqli_num_rows($AllMessagesResult) > 0) {
+
+                //gets the next row of data returned by the query
+                while ($messageRow = mysqli_fetch_assoc($AllMessagesResult)) {
+
+                    //update the message using the new message encrypt and message id
+
+                    $oldMessage = $messageRow['messageContent'];
+                    $messageID = $messageRow['messageID'];
+
+                    // Store the cipher method 
+                    $ciphering = "AES-128-CBC";
+                    $IV = openssl_random_pseudo_bytes(openssl_cipher_iv_length($ciphering));
+
+
+                    // Use openssl_encrypt() function to encrypt the data 
+                    $encryptedMessage = openssl_encrypt($oldMessage, $ciphering, $encryption_key, '0', $iv);
+
+                    $sqlSaveEncryptedMessage =
+                        "UPDATE
+                            message
+                        SET
+                            message.Content = '$encryptedMessage'
+                        WHERE
+                            message.ID = '$messageID';";
+                    mysqli_query($conn, $sqlSaveEncryptedMessage);
+
+                    // echo "Old: " . $oldMessage . " - New: " . $encryptedMessage . "<br>";
+                }
+            }
 
             header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=PassSuccess");
         } else
