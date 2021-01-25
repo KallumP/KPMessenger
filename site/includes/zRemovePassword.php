@@ -31,6 +31,49 @@ if (isset($_GET['ChatroomID'])) {
         //checks if there was a connector found
         if (mysqli_num_rows(mysqli_query($conn, $sqlVerifyChatroomConnector)) > 0) {
 
+
+            //query to get all messages from this chat
+            $sqlGetMessages =
+                "SELECT
+                    message.ID AS 'messageID',
+                    message.Content AS 'messageContent'
+                FROM
+                    message
+                WHERE 
+                    message.ChatroomID = '$ChatroomID';";
+
+            //calls the query
+            $AllMessagesResult = mysqli_query($conn, $sqlGetMessages);
+
+            //checks if there were any results
+            if (mysqli_num_rows($AllMessagesResult) > 0) {
+
+                //gets the next row of data returned by the query
+                while ($messageRow = mysqli_fetch_assoc($AllMessagesResult)) {
+
+                    $decryptionKey = $_SESSION['ChatroomID_' . $ChatroomID];
+                    $encryptedMessage = $messageRow['messageContent'];
+                    $messageID = $messageRow['messageID'];
+
+                    $cipher = "AES-128-CTR";
+                    $options = 0;
+                    $decryption_iv = '1234567891011121';
+
+                    $decryptedMessage = openssl_decrypt($encryptedMessage, $cipher, $decryptionKey, $options, $decryption_iv);
+
+                    $sqlSaveDecryptedMessage =
+                        "UPDATE
+                            message
+                        SET
+                            message.Content = '$decryptedMessage'
+                        WHERE
+                            message.ID = '$messageID';";
+                    mysqli_query($conn, $sqlSaveDecryptedMessage);
+
+                    // echo "Encrypted: " . $encryptedMessage . " - Decrypted: " . $decryptedMessage . "<br>";
+                }
+            }
+
             //query to reset the password
             $sqlRemovePassword =
                 "UPDATE
@@ -43,10 +86,12 @@ if (isset($_GET['ChatroomID'])) {
             //calls the query
             mysqli_query($conn, $sqlRemovePassword);
 
+            unset($_SESSION['ChatroomID_' . $ChatroomID]);
+
             header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID);
-        }
-    }
-}
-
-
-//remove password
+        } else
+            header("Location: ../index.php");
+    } else
+        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "Notes=BadFileAccess");
+} else
+    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "Notes=BadFileAccess");

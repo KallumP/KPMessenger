@@ -10,7 +10,7 @@ if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
 
     $UserID = $_SESSION['userID'];
     $ChatroomID = $_GET['ChatroomID'];
-    $ToAdd = $_POST['PasswordToAdd'];
+    $inputPassword = $_POST['PasswordToAdd'];
 
     //statement to get the connector between this user and the Chatroom the new user is being added to (only if the user is admin)
     $sqlVerifyChatroomConnector =
@@ -27,9 +27,9 @@ if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
     if (mysqli_num_rows(mysqli_query($conn, $sqlVerifyChatroomConnector)) > 0) {
 
         //checks if the input was not emtpy
-        if ($ToAdd != "") {
+        if ($inputPassword != "") {
 
-            $hashedPasswordInput = strtoupper(hash('sha256', $ToAdd));
+            $hashedPasswordInput = strtoupper(hash('sha256', $inputPassword));
 
             //add passhash to the database
             $sqlAddPassHash =
@@ -66,18 +66,15 @@ if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
                 //gets the next row of data returned by the query
                 while ($messageRow = mysqli_fetch_assoc($AllMessagesResult)) {
 
-                    //update the message using the new message encrypt and message id
-
+                    $encryptionKey = $_SESSION['ChatroomID_' . $ChatroomID];
                     $oldMessage = $messageRow['messageContent'];
                     $messageID = $messageRow['messageID'];
 
-                    // Store the cipher method 
-                    $ciphering = "AES-128-CBC";
-                    $IV = openssl_random_pseudo_bytes(openssl_cipher_iv_length($ciphering));
+                    $cipher = "AES-128-CTR";
+                    $options = 0;
+                    $encryption_iv = '1234567891011121';
 
-
-                    // Use openssl_encrypt() function to encrypt the data 
-                    $encryptedMessage = openssl_encrypt($oldMessage, $ciphering, $encryption_key, '0', $iv);
+                    $encryptedMessage = openssl_encrypt($oldMessage, $cipher, $encryptionKey, $options, $encryption_iv);
 
                     $sqlSaveEncryptedMessage =
                         "UPDATE
@@ -95,10 +92,10 @@ if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
             header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=PassSuccess");
         } else
             //return to chat settings saying you can't have an empty password
-            header("Location: ../chatSettings.php?Note=EmptyPass");
+            header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=EmptyPass");
     } else
         //don't have (admin) access to the chat
-        header("Location: ../chatSettings.php?Note=NoChatAccess");
+        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=NoChatAccess");
 } else
     //opened the file wrong
-    header("Location: ../chatSettings.php?Note=BadFileAccess");
+    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=BadFileAccess");
