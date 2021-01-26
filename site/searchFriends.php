@@ -114,14 +114,14 @@ if (!isset($_SESSION['userID']))
                     //pulls the user's friend's ids
                     $sqlAllFriends =
                         "SELECT
-                   friend.RecipientID AS 'friendID',
-                   _user.UserName as 'friendName'
-                FROM
-                    friend
-                LEFT JOIN
-                    _user ON friend.RecipientID = _user.ID
-                WHERE
-                    friend.SenderID = '$userID';";
+                            friend.RecipientID AS 'friendID',
+                            _user.UserName as 'friendName'
+                        FROM
+                            friend
+                        LEFT JOIN
+                            _user ON friend.RecipientID = _user.ID
+                        WHERE
+                            friend.SenderID = '$userID';";
 
                     $AllFriendsResult = mysqli_query($conn, $sqlAllFriends);
                     $AllFriendsResultCheck = mysqli_num_rows($AllFriendsResult);

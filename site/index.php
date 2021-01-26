@@ -189,56 +189,19 @@ if (!isset($_SESSION['userID']))
           $ChatroomID = $_GET['ChatroomID'];
           $UserID = $_SESSION['userID'];
 
-          $chatAccess = false;
-          $passAccess = true;
-
           //check if the user has access to this Chatroom
           $sqlUserConnector =
             "SELECT 
-                connector.ID
-              FROM  
-                connector
-              WHERE
-                connector.UserID = '$UserID' AND 
-                connector.ChatroomID = '$ChatroomID';";
+              connector.ID
+            FROM 
+              connector
+            WHERE
+              connector.UserID = '$UserID' AND 
+              connector.ChatroomID = '$ChatroomID';";
 
           //if the user has access to this chat (the query returned a connector)
-          if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector)) > 0)
-            $chatAccess = true;
+          if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector)) > 0) {
 
-
-          //check if there is a password required
-          $sqlCheckPassword =
-            "SELECT
-              chatroom.PassHash AS 'PassHash'
-            FROM
-              chatroom
-            WHERE
-              chatroom.ID = '$ChatroomID' AND
-              NOT chatroom.PassHash = ''";
-
-          $CheckPasswordResult = mysqli_query($conn, $sqlCheckPassword);
-
-          //checks if there was a required password
-          if (mysqli_num_rows($CheckPasswordResult) > 0) {
-
-            //gets the database hashed password and hashes the locally stored password
-            $passHashRow = mysqli_fetch_assoc($CheckPasswordResult);
-            $dbPassHash = $passHashRow['PassHash'];
-            $localPassHash = strtoupper(hash('sha256', $_SESSION['ChatroomID_' . $ChatroomID]));
-
-
-            //session password for this chat is not set
-            if (!isset($_SESSION['ChatroomID_' . $ChatroomID]))
-              $passAccess = false;
-            else if ($localPassHash != $dbPassHash) {
-              $passAccess = false;
-            }
-          }
-
-          if ($chatAccess && $passAccess) {
-
-            //generates the url to send the message with
             $SendMessageTo = "includes/zSendMessage.php?ChatroomID=" . $_GET['ChatroomID'];
 
             echo "<form action='$SendMessageTo'  method='POST' autocomplete='off'>";

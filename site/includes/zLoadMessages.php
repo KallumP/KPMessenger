@@ -39,7 +39,9 @@ if (isset($_POST['ChatroomID'])) {
         //checks if there was a result (a password is required for this chat)
         if (mysqli_num_rows($CheckPasswordResult) > 0) {
 
-            //check if there is was a password session variable for this chat (user has not entered a password)
+            $passChange = false;
+
+            //check if there is was a password session variable for this chat (user has already entered a password)
             if (isset($_SESSION['ChatroomID_' . $ChatroomID])) {
 
                 $passHashRow = mysqli_fetch_assoc($CheckPasswordResult);
@@ -51,32 +53,19 @@ if (isset($_POST['ChatroomID'])) {
 
                     //removes the saved password (because it is wrong)
                     unset($_SESSION['ChatroomID_' . $ChatroomID]);
+
+                    $passChange = true;
                 }
             }
 
             //if there isn't a password saved (nothing was entered, or the saved one is no longer valid)
             if (!isset($_SESSION['ChatroomID_' . $ChatroomID])) {
 
-                echo "<div class='ChatPassword'>";
+                $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID;
+                if ($passChange)
+                    $urlToGoTo .= "?Note=changed";
 
-                if (isset($_GET['Note'])) {
-                    $note = $_GET['Note'];
-
-                    echo "<div class='Notes'>";
-                    if ($note  == "wrong")
-                        echo "<h3>That password was wrong</h3>";
-                    else if ($note  == "changed")
-                        echo "<h3>The password for this chat has changed</h3>";
-
-                    echo "</div>";
-                }
-
-                echo "<form action='includes/zValidateChatPassword.php?ChatroomID=" . $ChatroomID . "'  method='POST' autocomplete='off'>";
-                echo "<input class='passwordEntry BorderInputs' type='text' name='passwordEntry' placeholder='Enter password' rows='1' autofocus></input>";
-                echo "<button class='passwordSubmit BorderInputs' type='submit' name='passwordSend'> Unlock </button>";
-                echo "</form>";
-                echo "</div>";
-
+                echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
                 exit();
             }
         }

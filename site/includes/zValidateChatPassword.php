@@ -28,6 +28,6 @@ if (isset($_POST['passwordSend'])) {
 
         header("Location: ../index.php?ChatroomID=" . $ChatroomID);
     } else {
-        header("Location: ../index.php?ChatroomID=" . $ChatroomID . "&Note=wrong");
+        header("Location: ../enterChatPassword.php?ChatroomID=" . $ChatroomID . "&Note=wrong");
     }
 }
