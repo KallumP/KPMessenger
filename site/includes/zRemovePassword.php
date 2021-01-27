@@ -56,13 +56,6 @@ if (isset($_GET['ChatroomID'])) {
                     $encryptedMessage = $messageRow['messageContent'];
                     $messageID = $messageRow['messageID'];
 
-                    // $cipher = "AES-128-CTR";
-                    // $options = 0;
-                    // $decryption_iv = '1234567891011121';
-
-                    // $decryptedMessage = openssl_decrypt($encryptedMessage, $cipher, $decryptionKey, $options, $decryption_iv);
-
-
                     $decryptedMessage = DecryptString($encryptedMessage, $decryptionKey);
 
                     $sqlSaveDecryptedMessage =
@@ -73,8 +66,6 @@ if (isset($_GET['ChatroomID'])) {
                         WHERE
                             message.ID = '$messageID';";
                     mysqli_query($conn, $sqlSaveDecryptedMessage);
-
-                    // echo "Encrypted: " . $encryptedMessage . " - Decrypted: " . $decryptedMessage . "<br>";
                 }
             }
 
