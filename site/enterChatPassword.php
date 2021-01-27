@@ -130,7 +130,7 @@ if (!isset($_SESSION['userID']))
             ?>
 
                 <div class='ChatPassword'>
-                    <form action='includes/zValidateChatPassword.php?ChatroomID=" . $ChatroomID . "' method='POST' autocomplete='off'>
+                    <form action='includes/zValidateChatPassword.php?ChatroomID=<?php echo $ChatroomID; ?>' method="POST" autocomplete="off">
                         <label class='WhiteHeader' for='passwordEntry'>This chat needs a password to enter</label><br>
                         <input class='passwordEntry BorderInputs' type='text' name='passwordEntry' placeholder='Enter password' rows='1' autofocus></input>
                         <button class='passwordSubmit BorderInputs' type='submit' name='passwordSend'> Unlock </button>

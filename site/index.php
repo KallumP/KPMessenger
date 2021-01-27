@@ -42,9 +42,10 @@ if (!isset($_SESSION['userID']))
 
       <?php if (isset($_GET['ChatroomID'])) { ?>
         $('#Messages').load('includes/zLoadMessages.php', {
-          ChatroomID: <?php echo $_GET['ChatroomID'] ?>
+          ChatroomID: <?php echo $_GET['ChatroomID']; ?>
         });
       <?php } ?>
+
     }
 
     let GetRecentMessages = function() {
@@ -109,35 +110,7 @@ if (!isset($_SESSION['userID']))
 
       GetRecentMessages();
       GetNotes();
-
-      let noPass = true;
-
-      <?php
-      if (isset($_GET['ChatroomID'])) {
-
-        $ChatroomID = $_GET['ChatroomID'];
-        //check if there is a password required
-        $sqlCheckPassword =
-          "SELECT
-            chatroom.PassHash AS 'PassHash'
-          FROM
-            chatroom
-          WHERE
-            chatroom.ID = '$ChatroomID' AND
-            NOT chatroom.PassHash = ''";
-
-        $CheckPasswordResult = mysqli_query($conn, $sqlCheckPassword);
-
-        //checks if there was a required password, and a session password is not set
-        if (mysqli_num_rows($CheckPasswordResult) > 0 && !isset($_SESSION['ChatroomID_' . $ChatroomID])) {
-          echo "noPass = false;";
-        }
-      }
-      ?>
-
-      if (noPass)
-        GetMessages();
-
+      GetMessages();
 
 
       let scroll = document.getElementById('Messages');

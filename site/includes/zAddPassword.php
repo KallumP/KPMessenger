@@ -1,5 +1,6 @@
 <?php
 include 'dbh.inc.php';
+require_once 'passwordFunctions.php';
 session_start();
 
 if (!isset($_SESSION['userID']))
@@ -46,7 +47,6 @@ if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
             $_SESSION['ChatroomID_' . $ChatroomID] = $inputPassword;
 
 
-
             //query to get all messages from this chat
             $sqlGetMessages =
                 "SELECT
@@ -70,11 +70,7 @@ if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
                     $oldMessage = $messageRow['messageContent'];
                     $messageID = $messageRow['messageID'];
 
-                    $cipher = "AES-128-CTR";
-                    $options = 0;
-                    $encryption_iv = '1234567891011121';
-
-                    $encryptedMessage = openssl_encrypt($oldMessage, $cipher, $encryptionKey, $options, $encryption_iv);
+                    $encryptedMessage = EncryptString($oldMessage, $encryptionKey);
 
                     $sqlSaveEncryptedMessage =
                         "UPDATE
@@ -84,8 +80,6 @@ if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
                         WHERE
                             message.ID = '$messageID';";
                     mysqli_query($conn, $sqlSaveEncryptedMessage);
-
-                    // echo "Old: " . $oldMessage . " - New: " . $encryptedMessage . "<br>";
                 }
             }
 

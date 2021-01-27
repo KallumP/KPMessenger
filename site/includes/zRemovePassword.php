@@ -1,5 +1,6 @@
 <?php
 include 'dbh.inc.php';
+require_once 'passwordFunctions.php';
 session_start();
 
 //checks if the user has logged in
@@ -55,11 +56,14 @@ if (isset($_GET['ChatroomID'])) {
                     $encryptedMessage = $messageRow['messageContent'];
                     $messageID = $messageRow['messageID'];
 
-                    $cipher = "AES-128-CTR";
-                    $options = 0;
-                    $decryption_iv = '1234567891011121';
+                    // $cipher = "AES-128-CTR";
+                    // $options = 0;
+                    // $decryption_iv = '1234567891011121';
 
-                    $decryptedMessage = openssl_decrypt($encryptedMessage, $cipher, $decryptionKey, $options, $decryption_iv);
+                    // $decryptedMessage = openssl_decrypt($encryptedMessage, $cipher, $decryptionKey, $options, $decryption_iv);
+
+
+                    $decryptedMessage = DecryptString($encryptedMessage, $decryptionKey);
 
                     $sqlSaveDecryptedMessage =
                         "UPDATE

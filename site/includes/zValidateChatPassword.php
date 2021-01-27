@@ -9,7 +9,6 @@ if (isset($_POST['passwordSend'])) {
     $inputPassword = $_POST['passwordEntry'];
     $hashedInput = strtoupper(hash('sha256', $inputPassword));
 
-
     //query to get any result from this chatroom with that that password
     $sqlCheckHashedPass =
         "SELECT
@@ -17,8 +16,8 @@ if (isset($_POST['passwordSend'])) {
         FROM
             chatroom
         WHERE
-        chatroom.ID = '$ChatroomID' AND
-        chatroom.PassHash = '$hashedInput';";
+            chatroom.ID = '$ChatroomID' AND
+            chatroom.PassHash = '$hashedInput';";
 
     //checks if that hashed passsword was found
     if (mysqli_num_rows(mysqli_query($conn, $sqlCheckHashedPass))) {
@@ -28,6 +27,7 @@ if (isset($_POST['passwordSend'])) {
 
         header("Location: ../index.php?ChatroomID=" . $ChatroomID);
     } else {
+
         header("Location: ../enterChatPassword.php?ChatroomID=" . $ChatroomID . "&Note=wrong");
     }
 }
