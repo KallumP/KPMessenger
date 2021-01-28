@@ -1,4 +1,34 @@
 <?php
+include_once 'dbh.inc.php';
+
+function RequirePassword($ChatroomID, $conn)
+{
+
+    //check if there is a password required
+    $sqlCheckPassword =
+        "SELECT
+            chatroom.PassHash AS 'PassHash'
+        FROM
+            chatroom
+        WHERE
+            chatroom.ID = '$ChatroomID' AND
+            NOT chatroom.PassHash = ''";
+
+    $CheckPasswordResult = mysqli_query($conn, $sqlCheckPassword);
+
+    //checks if there was a result (a password is required for this chat)
+    if (mysqli_num_rows($CheckPasswordResult) > 0) {
+
+        $passHashRow = mysqli_fetch_assoc($CheckPasswordResult);
+        $dbPassHash = $passHashRow['PassHash'];
+
+        if (ValidatePassword($dbPassHash, $ChatroomID))
+            return true;
+    } else
+        return false;
+}
+
+
 function ValidatePassword($dbPassHash, $ChatroomID)
 {
     $passChange = false;
@@ -26,7 +56,6 @@ function ValidatePassword($dbPassHash, $ChatroomID)
             $urlToGoTo .= "?Note=changed";
 
         echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
-        exit();
     } else {
         return true;
     }

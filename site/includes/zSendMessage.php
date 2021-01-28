@@ -1,5 +1,6 @@
 <?php
 include_once 'dbh.inc.php';
+require_once 'passwordFunctions.php';
 session_start();
 
 if (!isset($_SESSION['userID']))
@@ -30,6 +31,32 @@ if (isset($_POST['messageSend'])) {
 
         //checks if there was a connector found
         if (mysqli_num_rows(mysqli_query($conn, $sqlVerifyChatroomConnector)) > 0) {
+
+            $passRequired = false;
+            //check if there is a password required
+            $sqlCheckPassword =
+                "SELECT
+                    chatroom.PassHash AS 'PassHash'
+                FROM
+                    chatroom
+                WHERE
+                    chatroom.ID = '$ChatroomID' AND
+                    NOT chatroom.PassHash = ''";
+
+            $CheckPasswordResult = mysqli_query($conn, $sqlCheckPassword);
+
+            //checks if there was a result (a password is required for this chat)
+            if (mysqli_num_rows($CheckPasswordResult) > 0) {
+
+                $passHashRow = mysqli_fetch_assoc($CheckPasswordResult);
+                $dbPassHash = $passHashRow['PassHash'];
+
+                if (ValidatePassword($dbPassHash, $ChatroomID))
+                    $passRequired = true;
+            }
+
+            if ($passRequired)
+                $messageContent = EncryptString($messageContent, $_SESSION['ChatroomID_' . $ChatroomID]);
 
             //gets the time this message was sent
             $sendTime = date("Y-m-d H:i:s");
