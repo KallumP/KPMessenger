@@ -1,5 +1,6 @@
 <?php
 include 'includes/dbh.inc.php';
+require_once 'includes/passwordFunctions.php';
 session_start();
 
 if (!isset($_SESSION['userID']))
@@ -132,8 +133,6 @@ if (!isset($_SESSION['userID']))
                     //checks if the Chatroom was left empty
                     if ($_GET['ChatroomID'] != "") {
 
-                        //check if the current user has access to this chat
-
                         $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
                         $UserID = $_SESSION['userID'];
 
@@ -152,6 +151,28 @@ if (!isset($_SESSION['userID']))
 
                         //if the user has access to this chat (the query returned a connector)
                         if (mysqli_num_rows($userConnectorResult)) {
+
+                            //check if a password is required
+                            $passwordCheck = RequirePassword($ChatroomID, $conn);
+
+                            $noteToAdd = "ChatroomID=" . $ChatroomID . "&";
+
+                            if (isset($_GET['Note'])) {
+                                if ($_GET['Note'] == "PassAlreadySet") {
+                                    $noteToAdd .= "Note=PassAlreadySet";
+                                }
+                            } else if ($passwordCheck == "WrongSavedPassword") {
+                                $noteToAdd .= "Note=changed&";
+                            }
+
+
+                            //deal with the validation response
+                            if ($passwordCheck == "WrongSavedPassword" || $passwordCheck == "NoSavedPassword") {
+
+                                $urlToGoTo = "enterChatPassword.php?" . $noteToAdd;
+                                echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+                                exit();
+                            }
 
                             //gets the admin status from the array of results
                             $adminStatus = mysqli_fetch_assoc($userConnectorResult)['AdminStatus'];

@@ -32,30 +32,21 @@ if (isset($_POST['messageSend'])) {
         //checks if there was a connector found
         if (mysqli_num_rows(mysqli_query($conn, $sqlVerifyChatroomConnector)) > 0) {
 
-            $passRequired = false;
-            //check if there is a password required
-            $sqlCheckPassword =
-                "SELECT
-                    chatroom.PassHash AS 'PassHash'
-                FROM
-                    chatroom
-                WHERE
-                    chatroom.ID = '$ChatroomID' AND
-                    NOT chatroom.PassHash = ''";
+            //check if a password is required
+            $passwordCheck = RequirePassword($ChatroomID, $conn);
 
-            $CheckPasswordResult = mysqli_query($conn, $sqlCheckPassword);
+            //deal with the validation response
+            if ($passwordCheck == "WrongSavedPassword") {
 
-            //checks if there was a result (a password is required for this chat)
-            if (mysqli_num_rows($CheckPasswordResult) > 0) {
+                $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "?Note=changed";
+                echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+                exit();
+            } else if ($passwordCheck == "NoSavedPassword") {
 
-                $passHashRow = mysqli_fetch_assoc($CheckPasswordResult);
-                $dbPassHash = $passHashRow['PassHash'];
-
-                if (ValidatePassword($dbPassHash, $ChatroomID))
-                    $passRequired = true;
-            }
-
-            if ($passRequired)
+                $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID;
+                echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+                exit();
+            } else if ($passwordCheck == "RightSavedPassword")
                 $messageContent = EncryptString($messageContent, $_SESSION['ChatroomID_' . $ChatroomID]);
 
             //gets the time this message was sent

@@ -22,10 +22,9 @@ function RequirePassword($ChatroomID, $conn)
         $passHashRow = mysqli_fetch_assoc($CheckPasswordResult);
         $dbPassHash = $passHashRow['PassHash'];
 
-        if (ValidatePassword($dbPassHash, $ChatroomID))
-            return true;
+        return (ValidatePassword($dbPassHash, $ChatroomID));
     } else
-        return false;
+        return "NotRequired";
 }
 
 
@@ -51,13 +50,12 @@ function ValidatePassword($dbPassHash, $ChatroomID)
     //if there isn't a password saved (nothing was entered, or the saved one is no longer valid)
     if (!isset($_SESSION['ChatroomID_' . $ChatroomID])) {
 
-        $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID;
         if ($passChange)
-            $urlToGoTo .= "?Note=changed";
-
-        echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+            return "WrongSavedPassword";
+        else
+            return "NoSavedPassword";
     } else {
-        return true;
+        return "RightSavedPassword";
     }
 }
 

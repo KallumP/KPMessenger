@@ -1,5 +1,6 @@
 <?php
 include 'dbh.inc.php';
+require_once 'passwordFunctions.php';
 session_start();
 
 if (!isset($_SESSION['userID']))
@@ -13,6 +14,7 @@ $UserID = $_SESSION['userID'];
 //checks if this page was opened properly
 if (isset($_POST['ChatroomID'])) {
 
+  $ChatroomID = $_POST['ChatroomID'];
 
   //gets all the Chatroom id's and names that the user is a part of
   $sqlGetRecentMessages =
@@ -35,7 +37,8 @@ if (isset($_POST['ChatroomID'])) {
     //loops through each recent message
     while ($recentMessageRow = mysqli_fetch_assoc($RecentMessagesResult)) {
 
-      $currentChat = $recentMessageRow['ChatroomID'];
+      $currentChatroomID = $recentMessageRow['ChatroomID'];
+      $currentChatroomName = $recentMessageRow['ChatName'];
       $lastMessageID = "";
       $lastMessage = "";
       $messagePreview = "";
@@ -47,7 +50,7 @@ if (isset($_POST['ChatroomID'])) {
         FROM
           message
         WHERE
-          message.ChatroomID = '$currentChat';";
+          message.ChatroomID = '$currentChatroomID';";
 
       $lastMessageIDResult = mysqli_query($conn, $sqlGetLastMessageID);
 
@@ -76,6 +79,14 @@ if (isset($_POST['ChatroomID'])) {
           $lastMessageRow = mysqli_fetch_assoc($lastMessageResult);
           $lastMessage = $lastMessageRow['Content'];
 
+          //check if a password is required
+          $passwordCheck = RequirePassword($currentChatroomID, $conn);
+
+          //deals with if there was a password required (regardless of if the saved pass was right)
+          if ($passwordCheck == "WrongSavedPassword" || $passwordCheck == "NoSavedPassword" || $passwordCheck == "RightSavedPassword")
+            $lastMessage  = "Encrypted message";
+
+
           //checks if there 
           if ($lastMessage != "") {
 
@@ -90,8 +101,6 @@ if (isset($_POST['ChatroomID'])) {
         }
       }
 
-      $ChatroomID = $recentMessageRow['ChatroomID'];
-
 
       //gets the read status of the chat
       $sqlReadStatus =
@@ -101,7 +110,7 @@ if (isset($_POST['ChatroomID'])) {
           connector
         WHERE
           connector.UserID = '$UserID' AND
-          connector.ChatroomID = '$ChatroomID';";
+          connector.ChatroomID = '$currentChatroomID';";
 
       $readStatusResult = mysqli_query($conn, $sqlReadStatus);
 
@@ -115,12 +124,12 @@ if (isset($_POST['ChatroomID'])) {
           echo "<div class='MessagePrev Unread'>";
 
           //checks if this recent chat is the same as the currently opened chat
-          if ($_POST['ChatroomID'] ==  $recentMessageRow['ChatroomID'])
-            echo "<a class='Current' href=index.php?ChatroomID=" . $recentMessageRow['ChatroomID'] . ">";
+          if ($ChatroomID ==  $currentChatroomID)
+            echo "<a class='Current' href=index.php?ChatroomID=" . $currentChatroomID . ">";
           else
-            echo "<a href=index.php?ChatroomID=" . $recentMessageRow['ChatroomID'] . ">";
+            echo "<a href=index.php?ChatroomID=" . $currentChatroomID . ">";
 
-          echo "<h2 class='WhiteHeader'>" . $recentMessageRow['ChatName'] . "</h2>";
+          echo "<h2 class='WhiteHeader'>" . $currentChatroomName . "</h2>";
           echo "<p>" . $messagePreview . "</p>";
           echo "</a>";
           echo "</div>";
@@ -130,12 +139,12 @@ if (isset($_POST['ChatroomID'])) {
           echo "<div class='MessagePrev'>";
 
           //checks if this recent chat is the same as the currently opened chat
-          if ($_POST['ChatroomID'] ==  $recentMessageRow['ChatroomID'])
+          if ($ChatroomID ==  $currentChatroomID)
             echo "<a class='Current'>";
           else
-            echo "<a href=index.php?ChatroomID=" . $recentMessageRow['ChatroomID'] . ">";
+            echo "<a href=index.php?ChatroomID=" . $currentChatroomID . ">";
 
-          echo "<h2 class='WhiteHeader'>" . $recentMessageRow['ChatName'] . "</h2>";
+          echo "<h2 class='WhiteHeader'>" . $currentChatroomName . "</h2>";
           echo "<p>" . $messagePreview . "</p>";
           echo "</a>";
           echo "</div>";

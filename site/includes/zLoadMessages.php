@@ -25,28 +25,25 @@ if (isset($_POST['ChatroomID'])) {
     //if the user has access to this chat (the query returned a connector)
     if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector))) {
 
-        $passRequired = false;
-        //check if there is a password required
-        $sqlCheckPassword =
-            "SELECT
-                chatroom.PassHash AS 'PassHash'
-            FROM
-                chatroom
-            WHERE
-                chatroom.ID = '$ChatroomID' AND
-                NOT chatroom.PassHash = ''";
+        //check if a password is required
+        $passwordCheck = RequirePassword($ChatroomID, $conn);
 
-        $CheckPasswordResult = mysqli_query($conn, $sqlCheckPassword);
+        //deal with the validation response
+        if ($passwordCheck == "WrongSavedPassword") {
 
-        //checks if there was a result (a password is required for this chat)
-        if (mysqli_num_rows($CheckPasswordResult) > 0) {
+            $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "?Note=changed";
+            echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+            exit();
+        } else if ($passwordCheck == "NoSavedPassword") {
 
-            $passHashRow = mysqli_fetch_assoc($CheckPasswordResult);
-            $dbPassHash = $passHashRow['PassHash'];
+            $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID;
+            echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+            exit();
+        } else if ($passwordCheck == "RightSavedPassword")
+            $passRequired = true;
+        else if ($passRequired == "NotRequired")
+            $passRequired = false;
 
-            if (ValidatePassword($dbPassHash, $ChatroomID))
-                $passRequired = true;
-        }
 
 
         //query to set this user's read status to true

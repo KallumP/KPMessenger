@@ -123,40 +123,47 @@ if (!isset($_SESSION['userID']))
         </div>
 
         <div class="Content">
-            <?php
-            if (isset($_GET['ChatroomID'])) {
+            <div class='ChatPassword'>
+                <?php
+                if (isset($_GET['ChatroomID'])) {
 
-                $ChatroomID = $_GET['ChatroomID'];
-            ?>
+                    if (isset($_GET['Note'])) {
+                        $note = $_GET['Note'];
 
-                <div class='ChatPassword'>
+                        echo "<div class='Notes'>";
+                        if ($note == "wrong")
+                            echo "<h3>That password was wrong</h3>";
+                        else if ($note == "changed")
+                            echo "<h3>The password for this chat has changed</h3>";
+                        else if ($note == "PassAlreadySet")
+                            echo "<h3>The password was already set <br> (maybe just before you tried to set it)</h3>";
+                        echo "</div>";
+
+                        echo "<br><br><br>";
+                    }
+
+                    $ChatroomID = $_GET['ChatroomID'];
+                ?>
+
+
                     <form action='includes/zValidateChatPassword.php?ChatroomID=<?php echo $ChatroomID; ?>' method="POST" autocomplete="off">
                         <label class='WhiteHeader' for='passwordEntry'>This chat needs a password to enter</label><br>
                         <input class='passwordEntry BorderInputs' type='text' name='passwordEntry' placeholder='Enter password' rows='1' autofocus></input>
                         <button class='passwordSubmit BorderInputs' type='submit' name='passwordSend'> Unlock </button>
                     </form>
-                </div>
+            </div>
 
-            <?php
+        <?php
 
-                if (isset($_GET['Note'])) {
-                    $note = $_GET['Note'];
 
-                    echo "<div class='Notes'>";
-                    if ($note == "wrong")
-                        echo "<h3>That password was wrong</h3>";
-                    else if ($note == "changed")
-                        echo "<h3>The password for this chat has changed</h3>";
-                    echo "</div>";
+                } else {
+
+                    header("Location: index.php");
+                    ob_end_flush();
+                    exit();
                 }
-            } else {
 
-                header("Location: index.php");
-                ob_end_flush();
-                exit();
-            }
-
-            ?>
+        ?>
         </div>
     </div>
 </body>

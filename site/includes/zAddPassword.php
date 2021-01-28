@@ -30,60 +30,74 @@ if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
         //checks if the input was not emtpy
         if ($inputPassword != "") {
 
-            $hashedPasswordInput = strtoupper(hash('sha256', $inputPassword));
-
-            //add passhash to the database
-            $sqlAddPassHash =
-                "UPDATE
-                    chatroom
-                SET
-                    chatroom.PassHash = '$hashedPasswordInput'
-                WHERE    
-                    chatroom.ID = '$ChatroomID';";
-
-            mysqli_query($conn, $sqlAddPassHash);
-
-            //saves the password
-            $_SESSION['ChatroomID_' . $ChatroomID] = $inputPassword;
-
-
-            //query to get all messages from this chat
-            $sqlGetMessages =
+            $sqlCheckPasswordEmptyness =
                 "SELECT
-                    message.ID AS 'messageID',
-                    message.Content AS 'messageContent'
-                FROM
-                    message
-                WHERE 
-                    message.ChatroomID = '$ChatroomID';";
+                chatroom.ID
+            FROM
+                chatroom
+            WHERE
+                chatroom.ID = '$ChatroomID' AND
+                chatroom.PassHash = '';";
 
-            //calls the query
-            $AllMessagesResult = mysqli_query($conn, $sqlGetMessages);
+            //checks if the password for this chat is empty
+            if (mysqli_num_rows(mysqli_query($conn, $sqlCheckPasswordEmptyness)) > 0) {
 
-            //checks if there were any results
-            if (mysqli_num_rows($AllMessagesResult) > 0) {
+                $hashedPasswordInput = strtoupper(hash('sha256', $inputPassword));
 
-                //gets the next row of data returned by the query
-                while ($messageRow = mysqli_fetch_assoc($AllMessagesResult)) {
+                //add passhash to the database
+                $sqlAddPassHash =
+                    "UPDATE
+                        chatroom
+                    SET
+                        chatroom.PassHash = '$hashedPasswordInput'
+                    WHERE    
+                        chatroom.ID = '$ChatroomID';";
 
-                    $encryptionKey = $_SESSION['ChatroomID_' . $ChatroomID];
-                    $oldMessage = $messageRow['messageContent'];
-                    $messageID = $messageRow['messageID'];
+                mysqli_query($conn, $sqlAddPassHash);
 
-                    $encryptedMessage = EncryptString($oldMessage, $encryptionKey);
+                //saves the password
+                $_SESSION['ChatroomID_' . $ChatroomID] = $inputPassword;
 
-                    $sqlSaveEncryptedMessage =
-                        "UPDATE
-                            message
-                        SET
-                            message.Content = '$encryptedMessage'
-                        WHERE
-                            message.ID = '$messageID';";
-                    mysqli_query($conn, $sqlSaveEncryptedMessage);
+
+                //query to get all messages from this chat
+                $sqlGetMessages =
+                    "SELECT
+                        message.ID AS 'messageID',
+                        message.Content AS 'messageContent'
+                    FROM
+                        message
+                    WHERE 
+                        message.ChatroomID = '$ChatroomID';";
+
+                //calls the query
+                $AllMessagesResult = mysqli_query($conn, $sqlGetMessages);
+
+                //checks if there were any results
+                if (mysqli_num_rows($AllMessagesResult) > 0) {
+
+                    //gets the next row of data returned by the query
+                    while ($messageRow = mysqli_fetch_assoc($AllMessagesResult)) {
+
+                        $encryptionKey = $_SESSION['ChatroomID_' . $ChatroomID];
+                        $oldMessage = $messageRow['messageContent'];
+                        $messageID = $messageRow['messageID'];
+
+                        $encryptedMessage = EncryptString($oldMessage, $encryptionKey);
+
+                        $sqlSaveEncryptedMessage =
+                            "UPDATE
+                                message
+                            SET
+                                message.Content = '$encryptedMessage'
+                            WHERE
+                                message.ID = '$messageID';";
+                        mysqli_query($conn, $sqlSaveEncryptedMessage);
+                    }
                 }
-            }
 
-            header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=PassSuccess");
+                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=PassSuccess");
+            } else
+                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=PassAlreadySet");
         } else
             //return to chat settings saying you can't have an empty password
             header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=EmptyPass");
