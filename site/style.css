@@ -516,3 +516,22 @@ header {
 .Notifications .FriendRequests .Request a:hover p {
   color: var(--linkHoverColor);
 }
+
+.ChatPassword {
+  padding-top: 200px;
+  padding-bottom: 100px;
+  width: 40%;
+  margin: auto;
+}
+
+.ChatPassword input {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 65%;
+}
+
+.ChatPassword button {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 25%;
+}

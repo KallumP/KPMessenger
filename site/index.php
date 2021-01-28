@@ -42,9 +42,10 @@ if (!isset($_SESSION['userID']))
 
       <?php if (isset($_GET['ChatroomID'])) { ?>
         $('#Messages').load('includes/zLoadMessages.php', {
-          ChatroomID: <?php echo $_GET['ChatroomID'] ?>
+          ChatroomID: <?php echo $_GET['ChatroomID']; ?>
         });
       <?php } ?>
+
     }
 
     let GetRecentMessages = function() {
@@ -93,9 +94,10 @@ if (!isset($_SESSION['userID']))
 
       SetChatBoxHeight();
 
-      GetMessages();
       GetRecentMessages();
       GetNotes();
+      GetMessages();
+
 
       let scroll = document.getElementById('Messages');
       scroll.scrollTop = scroll.scrollHeight;
@@ -106,9 +108,10 @@ if (!isset($_SESSION['userID']))
     //the timer to pull new messages (short polling every 4 seconds)
     setInterval(function() {
 
-      GetMessages();
       GetRecentMessages();
       GetNotes();
+      GetMessages();
+
 
       let scroll = document.getElementById('Messages');
       scroll.scrollTop = scroll.scrollHeight;
@@ -156,27 +159,26 @@ if (!isset($_SESSION['userID']))
         <?php
         if (isset($_GET['ChatroomID'])) {
 
-          //generates the url to send the message with
-          $SendMessageTo = "includes/zSendMessage.php?ChatroomID=" . $_GET['ChatroomID'];
-          echo "<form action='$SendMessageTo'  method='POST' autocomplete='off'>";
-
-
           $ChatroomID = $_GET['ChatroomID'];
           $UserID = $_SESSION['userID'];
 
           //check if the user has access to this Chatroom
           $sqlUserConnector =
             "SELECT 
-                  connector.ID
-              FROM  
-                  connector
-              WHERE
-                  connector.UserID = '$UserID' AND 
-                  connector.ChatroomID = '$ChatroomID';";
+              connector.ID
+            FROM 
+              connector
+            WHERE
+              connector.UserID = '$UserID' AND 
+              connector.ChatroomID = '$ChatroomID';";
 
           //if the user has access to this chat (the query returned a connector)
-          if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector))) {
-            echo "<input class='messageEntry BorderInputs' type='text' name='messageEntry' placeholder='Type your message here' rows='1' autofocus></textarea>";
+          if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector)) > 0) {
+
+            $SendMessageTo = "includes/zSendMessage.php?ChatroomID=" . $_GET['ChatroomID'];
+
+            echo "<form action='$SendMessageTo'  method='POST' autocomplete='off'>";
+            echo "<input class='messageEntry BorderInputs' type='text' name='messageEntry' placeholder='Type your message here' rows='1' autofocus></input>";
             echo "<button class='messageSend BorderInputs' type='submit' name='messageSend'> Send </button>";
             echo "</form>";
           }

@@ -1,5 +1,6 @@
 <?php
 include 'dbh.inc.php';
+require_once 'passwordFunctions.php';
 session_start();
 
 if (!isset($_SESSION['userID']))
@@ -23,6 +24,27 @@ if (isset($_POST['ChatroomID'])) {
 
     //if the user has access to this chat (the query returned a connector)
     if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector))) {
+
+        //check if a password is required
+        $passwordCheck = RequirePassword($ChatroomID, $conn);
+
+        //deal with the validation response
+        if ($passwordCheck == "WrongSavedPassword") {
+
+            $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "?Note=changed";
+            echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+            exit();
+        } else if ($passwordCheck == "NoSavedPassword") {
+
+            $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID;
+            echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+            exit();
+        } else if ($passwordCheck == "RightSavedPassword")
+            $passRequired = true;
+        else if ($passRequired == "NotRequired")
+            $passRequired = false;
+
+
 
         //query to set this user's read status to true
         $sqlUpdateConnectorReadStatus =
@@ -85,7 +107,10 @@ if (isset($_POST['ChatroomID'])) {
 
 
                 $senderID = $messageRow['SenderID'];
-                $message = wordwrap($messageRow['MessageContent'], 70, "<br>");
+                if ($passRequired)
+                    $message = wordwrap(DecryptString($messageRow['MessageContent'], $_SESSION['ChatroomID_' . $ChatroomID]), 70, "<br>");
+                else
+                    $message = wordwrap($messageRow['MessageContent'], 70, "<br>");
                 $time = date_create($messageRow['Time']);
                 $timeNow = new DateTime('now');
 
