@@ -76,12 +76,29 @@ CheckLoggedIn($conn, false);
 
         }
 
+        let CheckIfPassStillRequired = function() {
+            //gets the chat id from the url, and assigns it -1 if there wasn't one
+            let URLChatroomID;
+
+            <?php if (isset($_GET['ChatroomID'])) { ?>
+                URLChatroomID = <?php echo $_GET['ChatroomID'] ?>;
+            <?php } else { ?>
+                URLChatroomID = -1;
+            <?php } ?>
+
+            $("#Redirect").load("includes/zCheckIfPassRequired.php", {
+
+                ChatroomID: URLChatroomID
+            });
+        }
+
         //calls the initial ajax (to load up the dynamic parts of the page)
         $(document).ready(function() {
 
             GetNotes();
             GetRecentMessages();
             SetChatBoxHeight();
+            CheckIfPassStillRequired();
 
         });
 
@@ -91,6 +108,7 @@ CheckLoggedIn($conn, false);
 
             GetNotes();
             GetRecentMessages();
+            CheckIfPassStillRequired();
 
         }, 4000);
 
@@ -148,14 +166,15 @@ CheckLoggedIn($conn, false);
 
                     <form action='includes/zValidateChatPassword.php?ChatroomID=<?php echo $ChatroomID; ?>' method="POST" autocomplete="off">
                         <label class='WhiteHeader' for='passwordEntry'>This chat needs a password to enter</label><br>
-                        <input class='passwordEntry BorderInputs' type='text' name='passwordEntry' placeholder='Enter password' rows='1' autofocus></input>
+                        <input class='passwordEntry BorderInputs' type="password" name='passwordEntry' placeholder='Enter password' rows='1' autofocus></input>
                         <button class='passwordSubmit BorderInputs' type='submit' name='passwordSend'> Unlock </button>
                     </form>
             </div>
 
+            <div id="Redirect">
+            </div>
+
         <?php
-
-
                 } else {
 
                     header("Location: index.php");
