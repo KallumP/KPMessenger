@@ -41,7 +41,7 @@ if (isset($_POST['ChatroomID'])) {
             exit();
         } else if ($passwordCheck == "RightSavedPassword")
             $passRequired = true;
-        else if ($passRequired == "NotRequired")
+        else if ($passwordCheck == "NotRequired")
             $passRequired = false;
 
 
