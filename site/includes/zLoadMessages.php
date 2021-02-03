@@ -1,10 +1,10 @@
 <?php
 include 'dbh.inc.php';
 require_once 'passwordFunctions.php';
+require_once 'functions.php';
 session_start();
 
-if (!isset($_SESSION['userID']))
-    header("Location: login.php");
+CheckLoggedIn($conn, false);
 
 //checks if there was a Chatroom posted from the ajax
 if (isset($_POST['ChatroomID'])) {

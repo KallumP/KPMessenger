@@ -1,10 +1,10 @@
 <?php
 include 'dbh.inc.php';
 require_once 'passwordFunctions.php';
+require_once 'functions.php';
 session_start();
 
-if (!isset($_SESSION['userID']))
-    header("Location: ../login.php");
+CheckLoggedIn($conn, true);
 
 //checks if the page is loaded correctly
 if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {

@@ -1,10 +1,9 @@
 <?php
 include 'dbh.inc.php';
+include 'functions.php';
 session_start();
 
-//checks if the user has logged in
-if (!isset($_SESSION['userID']))
-    header("Location: login.php");
+CheckLoggedIn($conn, true);
 
 //checks if the page is loaded correctly
 if (isset($_GET['ChatroomID'])) {

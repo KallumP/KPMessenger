@@ -1,7 +1,7 @@
 <?php
+require_once 'functions.php';
 
-if (!isset($_SESSION['userID']))
-    header("Location: login.php");
+CheckLoggedIn($conn, false);
 
 if (isset($_GET['ChatroomID'])) {
 
