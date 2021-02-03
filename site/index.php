@@ -1,5 +1,6 @@
 <?php
 include 'includes/dbh.inc.php';
+require_once 'includes/passwordFunctions.php';
 include 'includes/functions.php';
 session_start();
 
@@ -175,12 +176,29 @@ CheckLoggedIn($conn, false);
           //if the user has access to this chat (the query returned a connector)
           if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector)) > 0) {
 
-            $SendMessageTo = "includes/zSendMessage.php?ChatroomID=" . $_GET['ChatroomID'];
 
-            echo "<form action='$SendMessageTo'  method='POST' autocomplete='off'>";
-            echo "<input class='messageEntry BorderInputs' type='text' name='messageEntry' placeholder='Type your message here' rows='1' autofocus></input>";
-            echo "<button class='messageSend BorderInputs' type='submit' name='messageSend'> Send </button>";
-            echo "</form>";
+            $passwordCheck = RequirePassword($ChatroomID, $conn);
+
+            //deal with the validation response
+            if ($passwordCheck == "WrongSavedPassword") {
+
+              $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "?Note=changed";
+              echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+              exit();
+            } else if ($passwordCheck == "NoSavedPassword") {
+
+              $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID;
+              echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+              exit();
+            } else {
+
+              $SendMessageTo = "includes/zSendMessage.php?ChatroomID=" . $_GET['ChatroomID'];
+
+              echo "<form action='$SendMessageTo'  method='POST' autocomplete='off'>";
+              echo "<input class='messageEntry BorderInputs' type='text' name='messageEntry' placeholder='Type your message here' rows='1' autofocus></input>";
+              echo "<button class='messageSend BorderInputs' type='submit' name='messageSend'> Send </button>";
+              echo "</form>";
+            }
           }
         }
         ?>
