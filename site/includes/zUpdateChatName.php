@@ -1,10 +1,9 @@
 <?php
 include_once 'dbh.inc.php';
+require_once 'functions.php';
 session_start();
 
-//checks if the user has logged in
-if (!isset($_SESSION['userID']))
-    header("Location: login.php");
+CheckLoggedIn($conn, true);
 
 //checks if send was pressed
 if (isset($_POST['submit'])) {

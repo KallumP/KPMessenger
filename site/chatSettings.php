@@ -1,10 +1,10 @@
 <?php
 include 'includes/dbh.inc.php';
 require_once 'includes/passwordFunctions.php';
+include 'includes/functions.php';
 session_start();
 
-if (!isset($_SESSION['userID']))
-    header("Location: login.php");
+CheckLoggedIn($conn, false);
 ?>
 
 <!DOCTYPE html>

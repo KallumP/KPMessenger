@@ -1,10 +1,9 @@
 <?php
 include_once 'dbh.inc.php';
+require_once 'functions.php';
 session_start();
 
-//checks if the user has logged in
-if (!isset($_SESSION['userID']))
-    header("Location: login.php");
+CheckLoggedIn($conn, true);
 
 //checks if a friend request id was in the url
 if (isset($_GET['requestID'])) {

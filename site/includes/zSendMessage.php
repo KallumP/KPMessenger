@@ -1,10 +1,10 @@
 <?php
 include_once 'dbh.inc.php';
 require_once 'passwordFunctions.php';
+require_once 'functions.php';
 session_start();
 
-if (!isset($_SESSION['userID']))
-    header("Location: login.php");
+CheckLoggedIn($conn, true);
 
 //checks if the send message was pressed
 if (isset($_POST['messageSend'])) {

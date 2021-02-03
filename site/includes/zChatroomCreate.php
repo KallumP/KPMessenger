@@ -1,10 +1,9 @@
 <?php
 include_once 'dbh.inc.php';
+require_once 'functions.php';
 session_start();
 
-//checks if the user has logged in
-if (!isset($_SESSION['userID']))
-  header("Location: login.php");
+CheckLoggedIn($conn, true);
 
 //checks if the recipientID was in the url (the id of the user who will be include in this chat)
 if (isset($_GET['recipientID'])) {
