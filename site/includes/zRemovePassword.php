@@ -12,7 +12,7 @@ if (isset($_GET['ChatroomID'])) {
 
 
     $UserID = $_SESSION['userID'];
-    $ChatroomID = $_GET['ChatroomID'];
+    $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
 
     //checks if the input  and Chatroomid was not emtpy
     if ($ChatroomID != "") {

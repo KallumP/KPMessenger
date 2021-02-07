@@ -31,7 +31,7 @@ $numberOfNotifications += mysqli_num_rows($getFriendRequestsResult);
     //gets the current page (incase its one of the banner items)
     $currentPage = "other";
     if (isset($_POST["CurrentPage"]))
-        $currentPage = $_POST["CurrentPage"];
+        $currentPage = mysqli_real_escape_string($conn, $_POST["CurrentPage"]);
 
     //if there were any notifications
     if ($numberOfNotifications > 0) {

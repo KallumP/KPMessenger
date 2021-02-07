@@ -11,8 +11,8 @@ if (isset($_GET['ChatroomID'])) {
     if (isset($_GET['UserToRemoveID'])) {
 
         $UserID = $_SESSION['userID'];
-        $ChatroomID = $_GET['ChatroomID'];
-        $ToRemove = $_GET['UserToRemoveID'];
+        $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
+        $ToRemove = mysqli_real_escape_string($conn, $_GET['UserToRemoveID']);
 
         //checks if the input  and Chatroomid was not emtpy
         if ($ToRemove != "" && $ChatroomID != "") {

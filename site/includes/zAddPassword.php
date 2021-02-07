@@ -10,8 +10,8 @@ CheckLoggedIn($conn, true);
 if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
 
     $UserID = $_SESSION['userID'];
-    $ChatroomID = $_GET['ChatroomID'];
-    $inputPassword = $_POST['PasswordToAdd'];
+    $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
+    $inputPassword = mysqli_real_escape_string($conn, $_POST['PasswordToAdd']);
 
     //statement to get the connector between this user and the Chatroom the new user is being added to (only if the user is admin)
     $sqlVerifyChatroomConnector =

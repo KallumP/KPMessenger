@@ -21,7 +21,7 @@ session_start();
             <?php
             if (isset($_GET['note'])) {
 
-                $note = mysqli_real_escape_string($conn, $_GET['note']);
+                $note = $_GET['note'];
 
                 if ($note == "passwordsNotSame")
                     echo "<h3>The password fields were not the same</h3>";

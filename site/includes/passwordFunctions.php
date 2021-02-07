@@ -1,8 +1,10 @@
 <?php
 include_once 'dbh.inc.php';
 
-function RequirePassword($ChatroomID, $conn)
+function RequirePassword($ChatroomIDPre, $conn)
 {
+
+    $ChatroomID = mysqli_real_escape_string($conn, $ChatroomIDPre);
 
     //check if there is a password required
     $sqlCheckPassword =
@@ -30,6 +32,7 @@ function RequirePassword($ChatroomID, $conn)
 
 function ValidatePassword($dbPassHash, $ChatroomID)
 {
+
     $passChange = false;
 
     //check if there is was a password session variable for this chat (user has already entered a password)
