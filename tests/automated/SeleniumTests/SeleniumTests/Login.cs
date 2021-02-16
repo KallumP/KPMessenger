@@ -1,26 +1,27 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 
 namespace SeleniumTests {
-    public class Tests {
+    static class Login {
 
-        IWebDriver browser;
+        static IWebDriver browser;
 
-        [SetUp]
-        public void Setup() {
+        public static void Setup() {
 
             var options = new ChromeOptions();
 
             options.AcceptInsecureCertificates = true;
+            options.AddArgument("--headless");
 
             browser = new ChromeDriver(options);
         }
 
         [Test]
-        public void LoginCorrectCredentials() {
+        public static void LoginCorrectCredentials() {
+            Setup();
 
             browser.Navigate().GoToUrl("https://localhost");
             new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
@@ -29,19 +30,20 @@ namespace SeleniumTests {
             Console.WriteLine("Correct Username Entered");
             TestHelper.SetText(browser, "css", ".password_txt", "test");
             Console.WriteLine("Correct Password Entered");
-            TestHelper.ClickButton(browser, "css", ".login_btn");
+            TestHelper.ClickElement(browser, "css", ".login_btn");
             Console.WriteLine("Login button clicked");
 
             string redirectedURL = browser.Url;
             string expectedRedirect = "https://localhost/KPMessenger/site/index.php";
 
-            Assert.IsTrue(redirectedURL == expectedRedirect);
+            TestHelper.Assert(redirectedURL, expectedRedirect);
 
             browser.Close();
         }
 
         [Test]
-        public void LoginBadUsername() {
+        public static void LoginBadUsername() {
+            Setup();
 
             browser.Navigate().GoToUrl("https://localhost");
             new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
@@ -50,19 +52,20 @@ namespace SeleniumTests {
             Console.WriteLine("Bad username Entered");
             TestHelper.SetText(browser, "css", ".password_txt", "Wrong password");
             Console.WriteLine("Bad password entered");
-            TestHelper.ClickButton(browser, "css", ".login_btn");
+            TestHelper.ClickElement(browser, "css", ".login_btn");
             Console.WriteLine("Login button clicked");
 
             string errorMessage = TestHelper.GetInterText(browser, "css", "h3");
             string expectedMessage = "That username was wrong";
 
-            Assert.IsTrue(errorMessage == expectedMessage);
+            TestHelper.Assert(errorMessage, expectedMessage);
 
             browser.Close();
-        } 
-        
+        }
+
         [Test]
-        public void LoginBadPassword() {
+        public static void LoginBadPassword() {
+            Setup();
 
             browser.Navigate().GoToUrl("https://localhost");
             new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
@@ -71,19 +74,20 @@ namespace SeleniumTests {
             Console.WriteLine("Correct username Entered");
             TestHelper.SetText(browser, "css", ".password_txt", "Wrong password");
             Console.WriteLine("Bad password entered");
-            TestHelper.ClickButton(browser, "css", ".login_btn");
+            TestHelper.ClickElement(browser, "css", ".login_btn");
             Console.WriteLine("Login button clicked");
 
             string errorMessage = TestHelper.GetInterText(browser, "css", "h3");
             string expectedMessage = "That password was wrong";
 
-            Assert.IsTrue(errorMessage == expectedMessage);
+            TestHelper.Assert(errorMessage, expectedMessage);
 
             browser.Close();
         }
 
         [Test]
-        public void LoginCorrectUsernameDifferentUsersPassword() {
+        public static void LoginCorrectUsernameDifferentUsersPassword() {
+            Setup();
 
             browser.Navigate().GoToUrl("https://localhost");
             new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
@@ -92,70 +96,75 @@ namespace SeleniumTests {
             Console.WriteLine("Correct username Entered");
             TestHelper.SetText(browser, "css", ".password_txt", "admin");
             Console.WriteLine("Password for user Test 2 entered");
-            TestHelper.ClickButton(browser, "css", ".login_btn");
+            TestHelper.ClickElement(browser, "css", ".login_btn");
             Console.WriteLine("Login button clicked");
 
             string errorMessage = TestHelper.GetInterText(browser, "css", "h3");
             string expectedMessage = "That password was wrong";
 
-            Assert.IsTrue(errorMessage == expectedMessage);
+            TestHelper.Assert(errorMessage, expectedMessage);
 
             browser.Close();
         }
 
         [Test]
-        public void LoginNoUsername() {
+        public static void LoginNoUsername() {
+            Setup();
 
             browser.Navigate().GoToUrl("https://localhost");
             new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
 
             TestHelper.SetText(browser, "css", ".password_txt", "admin");
             Console.WriteLine("Password for user Test 2 entered");
-            TestHelper.ClickButton(browser, "css", ".login_btn");
+            TestHelper.ClickElement(browser, "css", ".login_btn");
             Console.WriteLine("Login button clicked");
 
             string errorMessage = TestHelper.GetInterText(browser, "css", "h3");
             string expectedMessage = "Please fill out both text boxes";
 
-            Assert.IsTrue(errorMessage == expectedMessage);
+            TestHelper.Assert(errorMessage, expectedMessage);
 
             browser.Close();
         }
 
         [Test]
-        public void LoginNoPassword() {
+        public static void LoginNoPassword() {
+            Setup();
 
             browser.Navigate().GoToUrl("https://localhost");
             new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
 
             TestHelper.SetText(browser, "css", ".username_txt", "Test 1");
             Console.WriteLine("Correct username Entered");
-            TestHelper.ClickButton(browser, "css", ".login_btn");
+            TestHelper.ClickElement(browser, "css", ".login_btn");
             Console.WriteLine("Login button clicked");
 
             string errorMessage = TestHelper.GetInterText(browser, "css", "h3");
             string expectedMessage = "Please fill out both text boxes";
 
-            Assert.IsTrue(errorMessage == expectedMessage);
+            TestHelper.Assert(errorMessage, expectedMessage);
+
 
             browser.Close();
         }
 
         [Test]
-        public void LoginNoInputs
-            () {
+        public static void LoginNoInputs() {
+            Setup();
+
             browser.Navigate().GoToUrl("https://localhost");
             new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
 
-            TestHelper.ClickButton(browser, "css", ".login_btn");
+            TestHelper.ClickElement(browser, "css", ".login_btn");
             Console.WriteLine("Login button clicked");
 
             string errorMessage = TestHelper.GetInterText(browser, "css", "h3");
             string expectedMessage = "Please fill out both text boxes";
 
-            Assert.IsTrue(errorMessage == expectedMessage);
+            TestHelper.Assert(errorMessage, expectedMessage);
 
             browser.Close();
         }
+
     }
 }
