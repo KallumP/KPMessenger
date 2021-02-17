@@ -110,6 +110,30 @@ header {
   color: var(--headerFont);
 }
 
+/* width */
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #ffffff;
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
+
 .Actions {
   float: left;
 }

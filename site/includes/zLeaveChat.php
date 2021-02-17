@@ -8,7 +8,7 @@ CheckLoggedIn($conn, true);
 if (isset($_GET['ChatroomID'])) {
 
     $UserID = $_SESSION['userID'];
-    $ChatroomID = $_GET['ChatroomID'];
+    $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
 
     //query to delete this user from the specified Chatroom
     $sqlDeleteMemberConnector =

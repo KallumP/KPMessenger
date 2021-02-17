@@ -15,28 +15,6 @@ CheckLoggedIn($conn, false);
     <title>KPMessenger</title>
     <link href="style.css" rel="stylesheet" />
 
-    <style>
-        /* width */
-        ::-webkit-scrollbar {
-            width: 2px;
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-            background: #000000;
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            background: #ffffff;
-        }
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555555;
-        }
-    </style>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script>
         let GetNotes = function() {
@@ -144,7 +122,6 @@ CheckLoggedIn($conn, false);
             <div class='ChatPassword'>
                 <?php
                 if (isset($_GET['ChatroomID'])) {
-
                     if (isset($_GET['Note'])) {
                         $note = $_GET['Note'];
 
@@ -159,8 +136,7 @@ CheckLoggedIn($conn, false);
 
                         echo "<br><br><br>";
                     }
-
-                    $ChatroomID = $_GET['ChatroomID'];
+                    $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
                 ?>
 
 

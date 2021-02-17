@@ -8,7 +8,7 @@ CheckLoggedIn($conn, true);
 //checks if the page is loaded correctly
 if (isset($_POST['ChatroomID'])) {
 
-    $ChatroomID = $_POST['ChatroomID'];
+    $ChatroomID = mysqli_real_escape_string($conn, $_POST['ChatroomID']);
 
     //check if there is a password is not required
     $sqlCheckPassword =

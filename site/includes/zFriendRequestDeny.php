@@ -8,7 +8,7 @@ CheckLoggedIn($conn, true);
 //checks if a friend request id was in the url
 if (isset($_GET['requestID'])) {
 
-    $requestID = $_GET['requestID'];
+    $requestID = mysqli_real_escape_string($conn, $_GET['requestID']);
     $userID = $_SESSION['userID'];
 
     //query to delete the friend request that was passed in that was for this user

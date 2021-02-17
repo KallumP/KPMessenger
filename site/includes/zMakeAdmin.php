@@ -9,8 +9,8 @@ CheckLoggedIn($conn, true);
 if (isset($_GET['ChatroomID']) && isset($_GET['UserToMakeAdmin'])) {
 
     $UserID = $_SESSION['userID'];
-    $ChatroomID = $_GET['ChatroomID'];
-    $ToAdmin = $_GET['UserToMakeAdmin'];
+    $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
+    $ToAdmin = mysqli_real_escape_string($conn, $_GET['UserToMakeAdmin']);
 
     //statement to get the connector between this user and the Chatroom the new user is being added to
     $sqlVerifyChatroomConnector =
