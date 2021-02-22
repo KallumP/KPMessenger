@@ -9,7 +9,7 @@ if (isset($_GET['recipientID'])) {
 
   //gets the data required for the request
   $senderID = $_SESSION['userID'];
-  $recipientID = $_GET['recipientID'];
+  $recipientID = mysqli_real_escape_string($conn, $_GET['recipientID']);
 
   //query to send the friend request
   $sqlSendFriendRequest =

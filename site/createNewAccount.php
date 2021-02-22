@@ -21,12 +21,12 @@ session_start();
             <?php
             if (isset($_GET['note'])) {
 
-                $note = mysqli_real_escape_string($conn, $_GET['note']);
+                $note = $_GET['note'];
 
                 if ($note == "passwordsNotSame")
                     echo "<h3>The password fields were not the same</h3>";
                 else if ($note == "notUniqueUsername")
-                    echo "<h3>that username was already taken</h3>";
+                    echo "<h3>That username was already taken</h3>";
                 else if ($note == "emptyFields")
                     echo "<h3>Please fill out all the fields</h3>";
                 else if ($note == "noPost")

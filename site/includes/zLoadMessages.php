@@ -9,7 +9,7 @@ CheckLoggedIn($conn, false);
 //checks if there was a Chatroom posted from the ajax
 if (isset($_POST['ChatroomID'])) {
 
-    $ChatroomID = $_POST['ChatroomID'];
+    $ChatroomID = mysqli_real_escape_string($conn, $_POST['ChatroomID']);
     $UserID = $_SESSION['userID'];
 
     //check if the user has access to this Chatroom

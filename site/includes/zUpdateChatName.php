@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
     //checks if there was an admin connector found (the user has access to the chat)
     if (mysqli_num_rows(mysqli_query($conn, $sqlVerifyChatroomConnector)) > 0) {
 
-        $newName = $_POST['ChatName'];
+        $newName = mysqli_real_escape_string($conn, $_POST['ChatName']);
 
         //checks if the name was empty
         if ($newName != "") {

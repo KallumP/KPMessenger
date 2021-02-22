@@ -11,8 +11,8 @@ if (isset($_GET['ChatroomID'])) {
     if (isset($_POST['UserToAdd'])) {
 
         $UserID = $_SESSION['userID'];
-        $ChatroomID = $_GET['ChatroomID'];
-        $ToAdd = $_POST['UserToAdd'];
+        $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
+        $ToAdd = mysqli_real_escape_string($conn, $_POST['UserToAdd']);
 
         //statement to get the connector between this user and the Chatroom the new user is being added to (only if the user is admin)
         $sqlVerifyChatroomConnector =

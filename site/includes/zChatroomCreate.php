@@ -22,7 +22,7 @@ if (isset($_GET['recipientID'])) {
     $ChatroomID = $conn->insert_id;
 
   $userID = $_SESSION['userID'];
-  $recipientID = $_GET['recipientID'];
+  $recipientID = mysqli_real_escape_string($conn, $_GET['recipientID']);
 
 
   //creates the connector for this user (adnim)

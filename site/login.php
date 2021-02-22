@@ -31,7 +31,7 @@ session_start();
                 //gets and displays the error message
                 if (isset($_GET['note'])) {
 
-                    $note = mysqli_real_escape_string($conn, $_GET['note']);
+                    $note = $_GET['note'];
 
                     if ($note == "badCredentials")
                         echo "<h3>Either your username or password was incorrect</h3>";

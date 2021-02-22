@@ -8,8 +8,8 @@ CheckLoggedIn($conn, true);
 //checks if this script was opened properly
 if (isset($_POST['passwordSend'])) {
 
-    $ChatroomID = $_GET['ChatroomID'];
-    $inputPassword = $_POST['passwordEntry'];
+    $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
+    $inputPassword = mysqli_real_escape_string($conn, $_POST['passwordEntry']);
     $hashedInput = strtoupper(hash('sha256', $inputPassword));
 
     //query to get any result from this chatroom with that that password

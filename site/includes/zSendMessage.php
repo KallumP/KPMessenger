@@ -9,14 +9,14 @@ CheckLoggedIn($conn, true);
 //checks if the send message was pressed
 if (isset($_POST['messageSend'])) {
 
-    $messageContent = $_POST['messageEntry'];
+    $messageContent = mysqli_real_escape_string($conn, $_POST['messageEntry']);
 
     //checks if the message was empty
     if ($messageContent != "") {
 
 
         $UserID = $_SESSION['userID'];
-        $ChatroomID = $_GET['ChatroomID'];
+        $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
 
         //statement to get the connector between this user and the Chatroom the message is being sent to
         $sqlVerifyChatroomConnector =
