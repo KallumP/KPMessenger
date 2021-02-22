@@ -7,22 +7,22 @@ using System.Text;
 namespace SeleniumTests {
     static class DatabaseHelper {
 
-        static string dbConnectionString = "server=localhost;userid=root;database=dbname";
+        static string dbConnectionString = "server=localhost;userid=root;database=kpmessengerdb";
         static MySqlConnection mysqlconnection;
 
         public static void RemoveFriendConnection(int user1ID, int user2ID) {
 
-            string removeFriendRequest1 = "DELETE FROM friend WHERE SenderID = " + user1ID + " AND RecipientID = " + user2ID + ";";
+            string removeFriendRequest1 = "DELETE FROM friend WHERE SenderID = '" + user1ID + "' AND RecipientID = '" + user2ID + "';";
             CallQuery(removeFriendRequest1);
 
-            string removeFriendRequest2 = "DELETE FROM friend WHERE SenderID = " + user2ID + " AND RecipientID = " + user1ID + ";";
+            string removeFriendRequest2 = "DELETE FROM friend WHERE SenderID = '" + user2ID + "' AND RecipientID = '" + user1ID + "';";
             CallQuery(removeFriendRequest2);
         }
 
         public static void  RemoveUser(string userName) {
             //not doing this this way anymore, it should be done through the gui
-            //string removeUser = "DELETE FROM _user WHERE user.UserName = " + userName + ";";
-            //CallQuery(removeUser);
+            string removeUser = "DELETE FROM _user WHERE _user.UserName = '" + userName + "';";
+            CallQuery(removeUser);
 
         }
 

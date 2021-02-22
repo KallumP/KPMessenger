@@ -49,15 +49,31 @@ namespace SeleniumTests {
                 NUnit.Framework.Assert.IsTrue(actual == expected);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Pass");
+                
             } catch {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Failed");
+
+                Fail("Found text is not the same as the expected text. Expected: '" + expected + "' actual: '" + actual + "'");
             } finally {
+
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
         }
 
-        public static void Fail() {
+        public static bool CheckFail(string actual, string expected) {
+            try {
+
+                NUnit.Framework.Assert.IsTrue(actual == expected);
+                return true;
+            } catch {
+
+                Fail("Found text is not the same as the expected text. Expected: " + expected + " but actual: " + actual);
+                return false;
+            }
+        }
+
+        public static void Fail(string message) {
+
+            Console.WriteLine(message);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Failed");
             Console.ForegroundColor = ConsoleColor.Gray;

@@ -17,14 +17,15 @@ namespace SeleniumTests {
             options.AddArgument("--headless");
 
             browser = new ChromeDriver(options);
+
+            browser.Navigate().GoToUrl("https://localhost");
+            new WebDriverWait(browser, TimeSpan.FromSeconds(10)).Until(c => c.FindElement(By.CssSelector(".Login")));
         }
 
         [Test]
-        public static void LoginCorrectCredentials() {
+        public static void zCorrectCredentials() {
+            
             Setup();
-
-            browser.Navigate().GoToUrl("https://localhost");
-            new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
 
             TestHelper.SetText(browser, "css", ".username_txt", "Test 1");
             Console.WriteLine("Correct Username Entered");
@@ -42,11 +43,9 @@ namespace SeleniumTests {
         }
 
         [Test]
-        public static void LoginBadUsername() {
-            Setup();
+        public static void BadUsername() {
 
-            browser.Navigate().GoToUrl("https://localhost");
-            new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
+            Setup();
 
             TestHelper.SetText(browser, "css", ".username_txt", "NotAUserName");
             Console.WriteLine("Bad username Entered");
@@ -64,11 +63,9 @@ namespace SeleniumTests {
         }
 
         [Test]
-        public static void LoginBadPassword() {
-            Setup();
+        public static void BadPassword() {
 
-            browser.Navigate().GoToUrl("https://localhost");
-            new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
+            Setup();
 
             TestHelper.SetText(browser, "css", ".username_txt", "Test 1");
             Console.WriteLine("Correct username Entered");
@@ -86,11 +83,9 @@ namespace SeleniumTests {
         }
 
         [Test]
-        public static void LoginCorrectUsernameDifferentUsersPassword() {
-            Setup();
+        public static void CorrectUsernameDifferentUsersPassword() {
 
-            browser.Navigate().GoToUrl("https://localhost");
-            new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
+            Setup();
 
             TestHelper.SetText(browser, "css", ".username_txt", "Test 1");
             Console.WriteLine("Correct username Entered");
@@ -108,11 +103,9 @@ namespace SeleniumTests {
         }
 
         [Test]
-        public static void LoginNoUsername() {
-            Setup();
+        public static void NoUsername() {
 
-            browser.Navigate().GoToUrl("https://localhost");
-            new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
+            Setup();
 
             TestHelper.SetText(browser, "css", ".password_txt", "admin");
             Console.WriteLine("Password for user Test 2 entered");
@@ -128,11 +121,9 @@ namespace SeleniumTests {
         }
 
         [Test]
-        public static void LoginNoPassword() {
-            Setup();
+        public static void NoPassword() {
 
-            browser.Navigate().GoToUrl("https://localhost");
-            new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
+            Setup();
 
             TestHelper.SetText(browser, "css", ".username_txt", "Test 1");
             Console.WriteLine("Correct username Entered");
@@ -144,16 +135,13 @@ namespace SeleniumTests {
 
             TestHelper.Assert(errorMessage, expectedMessage);
 
-
             browser.Close();
         }
 
         [Test]
-        public static void LoginNoInputs() {
+        public static void NoInputs() {
+            
             Setup();
-
-            browser.Navigate().GoToUrl("https://localhost");
-            new WebDriverWait(browser, TimeSpan.FromSeconds(5)).Until(c => c.FindElement(By.CssSelector(".Login")));
 
             TestHelper.ClickElement(browser, "css", ".login_btn");
             Console.WriteLine("Login button clicked");

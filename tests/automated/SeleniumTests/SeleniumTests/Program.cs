@@ -17,25 +17,27 @@ namespace SeleniumTests
 
         static void LoginTests()
         {
-            Login.LoginCorrectCredentials();
+            Login.zCorrectCredentials();
             TestEndDelimeter();
-            Login.LoginBadUsername();
+            Login.BadUsername();
             TestEndDelimeter();
-            Login.LoginBadPassword();
+            Login.BadPassword();
             TestEndDelimeter();
-            Login.LoginCorrectUsernameDifferentUsersPassword();
+            Login.CorrectUsernameDifferentUsersPassword();
             TestEndDelimeter();
-            Login.LoginNoUsername();
+            Login.NoUsername();
             TestEndDelimeter();
-            Login.LoginNoPassword();
+            Login.NoPassword();
             TestEndDelimeter();
-            Login.LoginNoInputs();
+            Login.NoInputs();
             TestEndDelimeter();
         }
 
         static void CreateAccountTests()
         {
             NewAccount.PasswordsDontMatch();
+            TestEndDelimeter();
+            NewAccount.UsernameAlreadyTaken();
             TestEndDelimeter();
         }
 
