@@ -50,7 +50,7 @@ CheckLoggedIn($conn, false);
       });
     }
 
-    let SetChatBoxHeight = function() {
+    let SetDivHeights = function() {
 
       //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
 
@@ -71,7 +71,7 @@ CheckLoggedIn($conn, false);
     //calls the initial ajax (to load up the dynamic parts of the page)
     $(document).ready(function() {
 
-      SetChatBoxHeight();
+      SetDivHeights();
 
       GetRecentMessages();
       GetNotes();
@@ -98,7 +98,7 @@ CheckLoggedIn($conn, false);
     }, 4000);
 
     $(window).resize(function() { // On resize
-      SetChatBoxHeight();
+      SetDivHeights();
     });
   </script>
 </head>

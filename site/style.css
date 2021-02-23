@@ -20,6 +20,7 @@
   --adminIndicator: rgb(91, 226, 86);
   --highRiskLink: rgb(211, 96, 96);
   --headerFont: white;
+  --currentFont: grey;
 }
 
 * {
@@ -149,11 +150,11 @@ header {
 }
 
 .Current {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .Current:hover {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .AccountBanner {
@@ -217,7 +218,7 @@ header {
 .RecentMessages {
   float: left;
   width: 20%;
-  border-right: white solid 1px;
+  border-right: var(--borderColor) solid 1px;
   overflow-y: auto;
 }
 
@@ -247,19 +248,19 @@ header {
 }
 
 .RecentMessages .MessagePrev .Current h2 {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .RecentMessages .MessagePrev .Current p {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .RecentMessages .MessagePrev .Current:hover h2 {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .RecentMessages .MessagePrev .Current:hover p {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .RecentMessages .MessagePrev h2 {
@@ -302,6 +303,7 @@ header {
   float: right;
   width: 78%;
   border: 1px;
+  overflow-y: auto;
 }
 
 .ChatRoom {

@@ -39,16 +39,22 @@ CheckLoggedIn($conn, false);
             });
         }
 
-        let SetChatBoxHeight = function() {
+        let SetDivHeights = function() {
 
             //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
 
             //in px
             let bannerHeight = 210;
+            let heightToSet = ($(window).height() - bannerHeight + 150) + 'px';
 
             $('#RecentMessages').css({
-                'max-height': ($(window).height() - bannerHeight + 150) + 'px',
-                'height': ($(window).height() - bannerHeight + 150) + 'px'
+                'max-height': heightToSet,
+                'height': heightToSet
+            });
+
+            $('#Content').css({
+                'max-height': heightToSet,
+                'height': heightToSet
             });
         }
 
@@ -57,7 +63,7 @@ CheckLoggedIn($conn, false);
 
             GetNotes();
             GetRecentMessages();
-            SetChatBoxHeight();
+            SetDivHeights();
 
         });
 
@@ -71,7 +77,7 @@ CheckLoggedIn($conn, false);
         }, 4000);
 
         $(window).resize(function() { // On resize
-            SetChatBoxHeight();
+            SetDivHeights();
         });
     </script>
 </head>
@@ -101,7 +107,7 @@ CheckLoggedIn($conn, false);
 
         <?php if (isset($_SESSION['userName'])) { ?>
 
-            <div class="Content">
+            <div id="Content" class="Content">
                 <div class="AccountOptions">
 
                     <div class="AccountNameAndID CenterObjects">
