@@ -68,18 +68,27 @@ CheckLoggedIn($conn, false);
 
     }
 
+    let ScrollToBottom = function() {
+      let element = document.getElementById('Messages');
+      element.scrollTop = element.scrollHeight;
+    }
+
+    //found from https://www.javatpoint.com/javascript-sleep
+    let Sleep = delay => {  
+      return new Promise(resolve => setTimeout(resolve, delay));  
+    };  
+
     //calls the initial ajax (to load up the dynamic parts of the page)
     $(document).ready(function() {
 
-      SetDivHeights();
-
+      GetMessages();
       GetRecentMessages();
       GetNotes();
-      GetMessages();
-
-
-      let scroll = document.getElementById('Messages');
-      scroll.scrollTop = scroll.scrollHeight;
+      SetDivHeights();
+      
+      Sleep(35).then(() => {
+        ScrollToBottom();
+      });
     });
 
 
@@ -87,15 +96,12 @@ CheckLoggedIn($conn, false);
     //the timer to pull new messages (short polling every 4 seconds)
     setInterval(function() {
 
+      GetMessages();
       GetRecentMessages();
       GetNotes();
-      GetMessages();
+      ScrollToBottom();
 
-
-      let scroll = document.getElementById('Messages');
-      scroll.scrollTop = scroll.scrollHeight;
-
-    }, 4000);
+    }, 5000);
 
     $(window).resize(function() { // On resize
       SetDivHeights();

@@ -21,6 +21,7 @@
   --highRiskLink: rgb(211, 96, 96);
   --headerFont: white;
   --currentFont: grey;
+  --placeholderFont: grey;
 }
 
 * {
@@ -36,6 +37,11 @@ html {
 input {
   padding-left: 6px;
   outline: none;
+  color: var(--fontColor);
+}
+
+::placeholder {
+  color: var(--placeholderFont);
 }
 
 .Border {
