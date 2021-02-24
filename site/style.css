@@ -501,11 +501,11 @@ header {
 
 .ChatSettings .ChatMembers a {
   float: right;
-  padding-left: 30px;
-  text-decoration: none;
+  margin-left: 30px;
+  text-decoration: underline;
 }
 
-.ChatSettings .AlreadyAdmin {
+.ChatSettings .ChatMembers .AlreadyAdmin {
   color: var(--adminIndicator);
   text-decoration: none;
 }

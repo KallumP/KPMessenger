@@ -224,17 +224,6 @@ CheckLoggedIn($conn, false);
                                 }
 
                                 if ($adminStatus == 1) {
-
-                                    //the input to add new members
-                                    echo "<form action='includes/zAddMember.php?ChatroomID=" . $ChatroomID . "' method='POST' id='AddMemberForm' class='ChatName'>";
-                                    echo "<label class='WhiteHeader' for='UserToAdd'>Add new members to this chat (use their unique code (found after the #)):</label><br>";
-                                    echo "<input id='UserToAdd' class='BorderInputs' type='text' name='UserToAdd'> </input>";
-                                    echo "<button id='AddMember' class='BorderInputs' type='submit' name='submit'> Add </button>";
-                                    echo "</form>";
-                                    echo "<br><br><br>";
-                                }
-
-                                if ($adminStatus == 1) {
                                     if ($passHash == "") {
 
                                         //the input to add a password
@@ -250,14 +239,24 @@ CheckLoggedIn($conn, false);
                                     }
                                 }
                                 echo "<br><br><br>";
+                                echo "<br><br><br>";
 
+                                if ($adminStatus == 1) {
+
+                                    //the input to add new members
+                                    echo "<form action='includes/zAddMember.php?ChatroomID=" . $ChatroomID . "' method='POST' id='AddMemberForm' class='ChatName'>";
+                                    echo "<label class='WhiteHeader' for='UserToAdd'>Add new members to this chat (use their unique code (found after the #)):</label><br>";
+                                    echo "<input id='UserToAdd' class='BorderInputs' type='text' name='UserToAdd'> </input>";
+                                    echo "<button id='AddMember' class='BorderInputs' type='submit' name='submit'> Add </button>";
+                                    echo "</form>";
+                                }
 
                                 //all the members of the chat
                                 echo "<div class='ChatMembers'>";
                                 include("includes/zLoadMembers.php");
                                 echo "</div>";
 
-                                //all the members of the chat
+                                //leave chat button
                                 echo "<div class='LeaveChat CenterObjects'>";
                                 echo "<a class='highRiskLink' href='includes/zLeaveChat.php?ChatroomID=" . $ChatroomID . "'>Leave Chat</a>";
                                 echo "</div>";

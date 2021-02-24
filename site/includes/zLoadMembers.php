@@ -46,7 +46,9 @@ if (isset($_GET['ChatroomID'])) {
 
                 //checks if the user is admin
                 if ($adminStatus == 1)
-                    echo "<p>" . $UserName . "#" . $UserID . "<a class='highRiskLink' href='includes/zRemoveUser.php?UserToRemoveID=" . $UserID . "&ChatroomID=" . $ChatroomID . "'>Remove User</a><a href='includes/zMakeAdmin.php?UserToMakeAdmin=" . $UserID . "&ChatroomID=" . $ChatroomID . "'>Make Admin</a></p>";
+                    echo "<p>" . $UserName . "#" . $UserID . "<a class='highRiskLink' href='includes/zRemoveUser.php?UserToRemoveID=" . $UserID . "&ChatroomID=" . $ChatroomID . "'>Remove User</a><a class='' href='includes/zMakeAdmin.php?UserToMakeAdmin=" . $UserID . "&ChatroomID=" . $ChatroomID . "'>Make Admin</a></p>";
+                    // echo "<p>" . $UserName . "#" . $UserID . "<a class='highRiskLink' href='includes/zRemoveUser.php?UserToRemoveID=" . $UserID . "&ChatroomID=" . $ChatroomID . "'>Remove User</a><a class='' href='includes/zMakeAdmin.php?UserToMakeAdmin=" . $UserID . "&ChatroomID=" . $ChatroomID . "'>Make Admin</a></p>";
+
                 else
                     echo "<p>" . $UserName . "#" . $UserID . "</p>";
             }
