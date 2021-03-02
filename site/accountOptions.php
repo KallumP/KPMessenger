@@ -110,8 +110,24 @@ CheckLoggedIn($conn, false);
             <div id="Content" class="Content">
                 <div class="AccountOptions">
 
-                    <div class="AccountNameAndID CenterObjects">
+                    <div class="CenterObjects">
                         <h1 class='WhiteHeader'>Logged in as: <?php echo $_SESSION['userName']  ?> # ID: <?php echo $_SESSION['userID']  ?></h1>
+                    </div>
+
+                    <?php
+                    //checks if there was an error message
+                    if (isset($_GET['Note'])) {
+                        $note = $_GET['Note'];
+
+                        echo "<div class='Notes'>";
+                        if ($note == "CantMakeChat")
+                            echo "<h3>There was an error making your chat. Try again later</h3>";
+                        echo "</div>";
+                    }
+                    ?>
+
+                    <div class="CenterObjects">
+                        <a href="includes/zChatroomCreatePersonal.php">Create personal chatroom</a>
                     </div>
 
                     <div class="Logout CenterObjects">

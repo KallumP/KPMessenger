@@ -213,10 +213,12 @@ header {
   padding-top: 30px;
 }
 
-.AccountNameAndID {
+.AccountOptions div {
   padding-bottom: 50px;
-  display: flex;
-  justify-content: center;
+}
+
+.AccountOptions a {
+  text-decoration: none;
 }
 
 /* Recent messages */
