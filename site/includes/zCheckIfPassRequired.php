@@ -3,7 +3,7 @@ include 'dbh.inc.php';
 require_once 'functions.php';
 session_start();
 
-CheckLoggedIn($conn, true);
+CheckLoggedIn($conn, false);
 
 //checks if the page is loaded correctly
 if (isset($_POST['ChatroomID'])) {
