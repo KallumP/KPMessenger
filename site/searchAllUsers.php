@@ -125,6 +125,8 @@ CheckLoggedIn($conn, false);
                         //checks if the user id and the username was the same as the input search 
                         if ($searchInput != $_SESSION['userID'] && $searchInput != $_SESSION['userName']) {
 
+                            $userID = $_SESSION['userID'];
+
                             //pulls the users that were searched for
                             $sqlUserSearch =
                                 "SELECT
@@ -138,25 +140,11 @@ CheckLoggedIn($conn, false);
                             $UserSearchResult = mysqli_query($conn, $sqlUserSearch);
                             $UserSearchResultCheck = mysqli_num_rows($UserSearchResult);
 
-                            //checks to see if any users were pulled
-                            if ($UserSearchResultCheck > 0) {
+                            if ($UserSearchResultCheck > 0)
 
-                                //loops through each searched user
-                                while ($UserSearchResultRow = mysqli_fetch_assoc($UserSearchResult)) {
+                                while ($UserSearchResultRow = mysqli_fetch_assoc($UserSearchResult))
 
-                                    //saves the current searched user id
-                                    $currentSearchedUserID = $UserSearchResultRow['userID'];
-
-                                    echo "<div class='UserBox'>";
-                                    echo "<h2 class='WhiteHeader'> Username: " . $UserSearchResultRow['userName'] . "# " . $UserSearchResultRow['userID'] . "</h2>";
-                                    echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Send friend request</p></a>";
-                                    echo "<a href=includes/zChatroomCreate.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Create new chat</p></a>";
-
-                                    include("includes/zLoadCommonChats.php");
-
-                                    echo "</div>";
-                                }
-                            }
+                                    OutputSearchedUser($conn, $UserSearchResultRow['userID'], $UserSearchResultRow['userName'], $userID);
                         }
                     }
                     ?>
