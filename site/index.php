@@ -74,9 +74,9 @@ CheckLoggedIn($conn, false);
     }
 
     //found from https://www.javatpoint.com/javascript-sleep
-    let Sleep = delay => {  
-      return new Promise(resolve => setTimeout(resolve, delay));  
-    };  
+    let Sleep = delay => {
+      return new Promise(resolve => setTimeout(resolve, delay));
+    };
 
     //calls the initial ajax (to load up the dynamic parts of the page)
     $(document).ready(function() {
@@ -85,7 +85,7 @@ CheckLoggedIn($conn, false);
       GetRecentMessages();
       GetNotes();
       SetDivHeights();
-      
+
       Sleep(35).then(() => {
         ScrollToBottom();
       });
