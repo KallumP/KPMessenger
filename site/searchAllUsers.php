@@ -108,6 +108,23 @@ CheckLoggedIn($conn, false);
         <div id="Content" class="Content">
             <div class="SearchContainer">
 
+                <?php
+                if (isset($_GET['Note'])) {
+                    $note = $_GET['Note'];
+
+                    echo "<div class='Notes'>";
+                    if ($note == "friendRemoveSuccess")
+                        echo "<h3>That friend has been removed successfully</h3>";
+                    else if ($note == "friendNotFriend")
+                        echo "<h3>That user was not your friend</h3>";
+                    else if ($note == "userDoesntExist")
+                        echo "<h3>That user does not exist</h3>";
+                    else if ($note == "cantSearchForSelf")
+                        echo "<h3>You can't search for yourself</h3>";
+                    echo "</div>";
+                }
+                ?>
+
                 <h1 class='WhiteHeader'>You can search for new friends here!</h1>
                 <form action="searchAllUsers.php" method="POST">
                     <?php include("includes/search.inc.php"); ?>

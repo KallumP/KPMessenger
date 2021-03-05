@@ -54,7 +54,7 @@ function OutputSearchedUser($conn, $searchedID, $searchedName, $userID)
     if ($UserSearchResultCheck == 0)
         echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $searchedID . "><p>Send friend request</p></a>";
     else
-        echo "<p>You two are already friends</p>";
+        echo "<a href=includes/zRemoveFriend.php?toRemoveID=" . $searchedID . "><p class='highRiskLink'>Remove Friend</p></a>";
 
     echo "<a href=includes/zChatroomCreate.php?recipientID=" . $searchedID . "><p>Create new chat</p></a>";
 
