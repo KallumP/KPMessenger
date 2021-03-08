@@ -46,13 +46,27 @@ function OutputSearchedUser($conn, $searchedID, $searchedName, $userID, $redirec
         WHERE
             friend.SenderID = '$userID' AND
             friend.RecipientID = '$searchedID';";
-    $UserSearchResultCheck = mysqli_num_rows(mysqli_query($conn, $sqlGetFriendConnector));
+    $FriendConnResultCheck = mysqli_num_rows(mysqli_query($conn, $sqlGetFriendConnector));
+
+    //tries to get a friend request from this user
+    $sqlGetFriendRequest =
+        "SELECT
+            friendrequest.ID
+        FROM
+            friendrequest
+        WHERE
+            friendrequest.RecipientID = '$userID' AND
+            friendrequest.SenderID = '$searchedID';";
+    $FriendRequestResultCheck = mysqli_num_rows(mysqli_query($conn, $sqlGetFriendRequest));
 
     echo "<div class='UserBox'>";
     echo "<h2 class='WhiteHeader'> Username: " . $searchedName . "# " . $searchedID . "</h2>";
 
-    if ($UserSearchResultCheck == 0)
-        echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $searchedID . "><p>Send friend request</p></a>";
+    if ($FriendConnResultCheck == 0)
+        if ($FriendRequestResultCheck == 0)
+            echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $searchedID . "><p>Send friend request</p></a>";
+        else
+            echo "<a href='notifications.php'><p>You have a friend request from this user, click here to see it in the notifications page</p></a>";
     else
         echo "<a href=includes/zRemoveFriend.php?toRemoveID=" . $searchedID . "&redir=" . $redirect . "><p class='highRiskLink'>Remove Friend</p></a>";
 
@@ -120,6 +134,6 @@ function OutputCommonChats($conn, $currentSearchedUserID)
             echo "<p>No common chats</p>";
         }
     } else {
-        echo "This user has no chats";
+        echo "<p>This user has no chats</p>";
     }
 }

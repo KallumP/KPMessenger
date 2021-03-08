@@ -176,7 +176,7 @@ CheckLoggedIn($conn, false);
                                     }
                                 }
                             } else {
-                                echo "<p>You Can't search for yourself!</p>";
+                                echo "<p>You can't search for yourself!</p>";
                             }
                         } else {
 

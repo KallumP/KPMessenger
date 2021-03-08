@@ -162,16 +162,12 @@ CheckLoggedIn($conn, false);
                             $UserSearchResultCheck = mysqli_num_rows($UserSearchResult);
 
                             if ($UserSearchResultCheck > 0)
-
                                 while ($UserSearchResultRow = mysqli_fetch_assoc($UserSearchResult))
-
                                     OutputSearchedUser($conn, $UserSearchResultRow['userID'], $UserSearchResultRow['userName'], $userID, "searchAllUsers");
-
                             else
                                 echo "<p>There were no users with that username or ID</p>";
-                        } else {
-                            echo "<p>You Can't search for yourself!</p>";
-                        }
+                        } else
+                            echo "<p>You can't search for yourself!</p>";
                     }
                     ?>
                 </div>
