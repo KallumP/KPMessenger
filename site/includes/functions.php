@@ -34,7 +34,7 @@ function CheckLoggedIn($conn, $includes)
     }
 }
 
-function OutputSearchedUser($conn, $searchedID, $searchedName, $userID)
+function OutputSearchedUser($conn, $searchedID, $searchedName, $userID, $redirect)
 {
 
     //gets the friend connector between this user and the searched user
@@ -54,7 +54,7 @@ function OutputSearchedUser($conn, $searchedID, $searchedName, $userID)
     if ($UserSearchResultCheck == 0)
         echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $searchedID . "><p>Send friend request</p></a>";
     else
-        echo "<a href=includes/zRemoveFriend.php?toRemoveID=" . $searchedID . "><p class='highRiskLink'>Remove Friend</p></a>";
+        echo "<a href=includes/zRemoveFriend.php?toRemoveID=" . $searchedID . "&redir=" . $redirect . "><p class='highRiskLink'>Remove Friend</p></a>";
 
     echo "<a href=includes/zChatroomCreate.php?recipientID=" . $searchedID . "><p>Create new chat</p></a>";
 

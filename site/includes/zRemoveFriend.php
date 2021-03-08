@@ -5,7 +5,8 @@ session_start();
 
 CheckLoggedIn($conn, true);
 
-if (isset($_GET['toRemoveID'])) {
+
+if (isset($_GET['toRemoveID']) && isset($_GET['redir'])) {
 
     $UserID = $_SESSION['userID'];
     $ToRemove = $_GET['toRemoveID'];
@@ -36,13 +37,13 @@ if (isset($_GET['toRemoveID'])) {
 
         mysqli_query($conn, $sqlRemoveFriend);
 
-        header("Location: ../searchFriends.php?Note=friendRemoveSuccess");
+        header("Location: ../" . $_GET['redir'] . ".php?note=friendRemoveSuccess");
         exit();
     } else {
-        header("Location: ../searchFriends.php?Note=friendNotFriend");
+        header("Location: ../" . $_GET['redir'] . ".php?note=friendNotFriend");
         exit();
     }
 } else {
-    header("Location: ../searchFriends.php?Note=userDoesntExist");
+    header("Location: ../searchFriends.php?note=noPost");
     exit();
 }

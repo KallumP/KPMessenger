@@ -21,5 +21,8 @@ if (isset($_GET['recipientID'])) {
   $SendFriendRequestResult = mysqli_query($conn, $sqlSendFriendRequest);
 
   header("Location: ../searchAllUsers.php?note=requestSent");
-} else
+  exit();
+} else {
   header("Location: ../searchAllUsers.php?note=noPost");
+  exit();
+}

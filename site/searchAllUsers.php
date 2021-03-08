@@ -109,8 +109,8 @@ CheckLoggedIn($conn, false);
             <div class="SearchContainer">
 
                 <?php
-                if (isset($_GET['Note'])) {
-                    $note = $_GET['Note'];
+                if (isset($_GET['note'])) {
+                    $note = $_GET['note'];
 
                     echo "<div class='Notes'>";
                     if ($note == "friendRemoveSuccess")
@@ -119,6 +119,10 @@ CheckLoggedIn($conn, false);
                         echo "<h3>That user was not your friend</h3>";
                     else if ($note == "userDoesntExist")
                         echo "<h3>That user does not exist</h3>";
+                    else if ($note == "requestSent")
+                        echo "<h3>Friend request sent</h3>";
+                    else if ($note == "noPost")
+                        echo "<h3>Please make requests using the links below</h3>";
                     else if ($note == "cantSearchForSelf")
                         echo "<h3>You can't search for yourself</h3>";
                     echo "</div>";
@@ -161,7 +165,12 @@ CheckLoggedIn($conn, false);
 
                                 while ($UserSearchResultRow = mysqli_fetch_assoc($UserSearchResult))
 
-                                    OutputSearchedUser($conn, $UserSearchResultRow['userID'], $UserSearchResultRow['userName'], $userID);
+                                    OutputSearchedUser($conn, $UserSearchResultRow['userID'], $UserSearchResultRow['userName'], $userID, "searchAllUsers");
+
+                            else
+                                echo "<p>There were no users with that username or ID</p>";
+                        } else {
+                            echo "<p>You Can't search for yourself!</p>";
                         }
                     }
                     ?>

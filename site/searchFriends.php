@@ -110,8 +110,8 @@ CheckLoggedIn($conn, false);
             <div class="SearchContainer">
 
                 <?php
-                if (isset($_GET['Note'])) {
-                    $note = $_GET['Note'];
+                if (isset($_GET['note'])) {
+                    $note = $_GET['note'];
 
                     echo "<div class='Notes'>";
                     if ($note == "friendRemoveSuccess")
@@ -120,6 +120,10 @@ CheckLoggedIn($conn, false);
                         echo "<h3>That user was not your friend</h3>";
                     else if ($note == "userDoesntExist")
                         echo "<h3>That user does not exist</h3>";
+                    else if ($note == "requestSent")
+                        echo "<h3>Friend request sent</h3>";
+                    else if ($note == "noPost")
+                        echo "<h3>Please make requests using the links below</h3>";
                     else if ($note == "cantSearchForSelf")
                         echo "<h3>You can't search for yourself</h3>";
                     echo "</div>";
@@ -161,22 +165,24 @@ CheckLoggedIn($conn, false);
                             $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
 
                             //checks if the user id or the username was the same as the input search 
-                            if ($searchInput != $_SESSION['userID'] || $searchInput != $_SESSION['userName']) {
+                            if ($searchInput != $_SESSION['userID'] && $searchInput != $_SESSION['userName']) {
 
                                 while ($friendsRow = mysqli_fetch_assoc($AllFriendsResult)) {
 
                                     //checks if the current friend is the one being searched for
                                     if ($friendsRow['friendID'] == $searchInput || $friendsRow['friendName'] == $searchInput) {
 
-                                        OutputSearchedUser($conn, $friendsRow['friendID'], $friendsRow['friendName'], $userID);
+                                        OutputSearchedUser($conn, $friendsRow['friendID'], $friendsRow['friendName'], $userID, "searchFriends");
                                     }
                                 }
+                            } else {
+                                echo "<p>You Can't search for yourself!</p>";
                             }
                         } else {
 
                             while ($friendsRow = mysqli_fetch_assoc($AllFriendsResult)) {
 
-                                OutputSearchedUser($conn, $friendsRow['friendID'], $friendsRow['friendName'], $userID);
+                                OutputSearchedUser($conn, $friendsRow['friendID'], $friendsRow['friendName'], $userID, "searchFriends");
                             }
                         }
                     } else {
