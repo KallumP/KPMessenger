@@ -47,7 +47,7 @@ session_start();
 
             <form action="includes/zLogin.php" method="POST">
 
-                <input class="username_txt BorderInputs " type="text" name="username" placeholder="Enter username"><br><br>
+                <input class="username_txt BorderInputs" type="text" name="username" placeholder="Enter username"><br><br>
                 <input class="password_txt BorderInputs" type="password" name="password" placeholder="Enter password"><br><br>
                 <button class="login_btn BorderInputs" type="submit" name="login"> Login </button>
 

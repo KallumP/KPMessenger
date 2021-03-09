@@ -69,7 +69,6 @@ CheckLoggedIn($conn, false);
 
         });
 
-
         //the timer to pull new messages (short polling every 4 seconds)
         setInterval(function() {
 
@@ -123,12 +122,12 @@ CheckLoggedIn($conn, false);
                         //check if the user has access to this Chatroom and gets the admin status at the same time
                         $sqlUserConnector =
                             "SELECT 
-                            connector.Admin as 'AdminStatus'
-                        FROM  
-                            connector
-                        WHERE
-                            connector.UserID = '$UserID' AND 
-                            connector.ChatroomID = '$ChatroomID';";
+                                connector.Admin as 'AdminStatus'
+                            FROM  
+                                connector
+                            WHERE
+                                connector.UserID = '$UserID' AND 
+                                connector.ChatroomID = '$ChatroomID';";
 
                         //turns result into an array of results
                         $userConnectorResult = mysqli_query($conn, $sqlUserConnector);
@@ -141,12 +140,12 @@ CheckLoggedIn($conn, false);
 
                             $noteToAdd = "ChatroomID=" . $ChatroomID . "&";
 
-                            if (isset($_GET['Note'])) {
-                                if ($_GET['Note'] == "PassAlreadySet") {
-                                    $noteToAdd .= "Note=PassAlreadySet";
+                            if (isset($_GET['note'])) {
+                                if ($_GET['note'] == "PassAlreadySet") {
+                                    $noteToAdd .= "note=PassAlreadySet";
                                 }
                             } else if ($passwordCheck == "WrongSavedPassword") {
-                                $noteToAdd .= "Note=changed&";
+                                $noteToAdd .= "note=changed&";
                             }
 
 
@@ -186,8 +185,8 @@ CheckLoggedIn($conn, false);
                                 echo "<h1 class='WhiteHeader'>Settings for " . $chatName  . " </h1>";
 
                                 //checks if there was an error message
-                                if (isset($_GET['Note'])) {
-                                    $note = $_GET['Note'];
+                                if (isset($_GET['note'])) {
+                                    $note = $_GET['note'];
 
                                     echo "<div class='Notes'>";
                                     if ($note == "UserAdded")
@@ -234,7 +233,7 @@ CheckLoggedIn($conn, false);
                                         echo "</form>";
                                     } else {
                                         echo "<div class='CenterObjects'>";
-                                        echo "<a class='highRiskLink' href=includes/zRemovePassword.php?ChatroomID=" . $ChatroomID . ">Remove password</a>";
+                                        echo "<a class='highRiskLink' href='includes/zRemovePassword.php?ChatroomID=" . $ChatroomID . "'>Remove password</a>";
                                         echo "</div>";
                                     }
                                 }
@@ -261,9 +260,9 @@ CheckLoggedIn($conn, false);
                                 echo "<a class='highRiskLink' href='includes/zLeaveChat.php?ChatroomID=" . $ChatroomID . "'>Leave Chat</a>";
                                 echo "</div>";
                             }
-                        } else header("Location: index.php");
-                    } else header("Location: index.php");
-                } else header("Location: index.php");
+                        } else echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+                    } else echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+                } else echo "<meta http-equiv='refresh' content='0;url=index.php'>";
                 ?>
             </div>
         </div>

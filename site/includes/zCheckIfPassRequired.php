@@ -19,7 +19,9 @@ if (isset($_POST['ChatroomID'])) {
         WHERE
             chatroom.ID = '$ChatroomID' AND
             chatroom.PassHash = ''";
-    if (mysqli_num_rows(mysqli_query($conn, $sqlCheckPassword)) > 0)
+    if (mysqli_num_rows(mysqli_query($conn, $sqlCheckPassword)) > 0) {
 
         echo "<meta http-equiv='refresh' content='0;url=index.php?ChatroomID=" . $ChatroomID . "'>";
+        exit();
+    }
 }

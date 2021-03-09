@@ -7,7 +7,6 @@ if (isset($_GET['ChatroomID'])) {
 
     echo "<h2 class='WhiteHeader'>Members of this chat: </h2>";
 
-
     $ChatroomID = mysqli_real_escape_string($conn, $_GET['ChatroomID']);
 
     //gets all the Chatroom id's and names that the user is a part of

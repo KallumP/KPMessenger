@@ -68,7 +68,6 @@ CheckLoggedIn($conn, false);
 
         });
 
-
         //the timer to pull new messages (short polling every 4 seconds)
         setInterval(function() {
 
@@ -134,8 +133,6 @@ CheckLoggedIn($conn, false);
                     //If there were friendrequests
                     if (mysqli_num_rows($getFriendRequestsResult) > 0) {
 
-                        //echo friend requests title
-
                         //loops through each friend request
                         while ($friendRequestsRow = mysqli_fetch_assoc($getFriendRequestsResult)) {
 
@@ -164,7 +161,7 @@ CheckLoggedIn($conn, false);
                             echo "</div>";
                         }
                     } else {
-                        echo "<p>:( You don't have any friend requests... Just like real life eh?</p>";
+                        echo "<p>:( You don't have any friend requests...</p>";
                     }
                     ?>
                 </div>

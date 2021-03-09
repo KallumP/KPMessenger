@@ -22,4 +22,5 @@ if (isset($_GET['requestID'])) {
     mysqli_query($conn, $sqlDeleteFriendRequest);
 
     header("Location: ../notifications.php");
+    exit();
 }

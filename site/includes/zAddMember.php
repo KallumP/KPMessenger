@@ -66,16 +66,29 @@ if (isset($_GET['ChatroomID'])) {
                         //adds the member
                         mysqli_query($conn, $sqlAddMember);
 
-                        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=UserAdded");
-                    } else
-                        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=AlreadyAMember");
-                } else
-                    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=NotAUser");
-            } else
-                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=EmptyInput");
-        } else
-            header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=NoChatAccess");
-    } else
-        header("Location: ../chatSettings.php?Note=BadFileAccess&ChatroomID=" . $ChatroomID);
-} else
-    header("Location: ../chatSettings.php?Note=BadFileAccess&ChatroomID=" . $ChatroomID);
+                        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=UserAdded");
+                        exit();
+                    } else {
+                        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=AlreadyAMember");
+                        exit();
+                    }
+                } else {
+                    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=NotAUser");
+                    exit();
+                }
+            } else {
+                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=EmptyInput");
+                exit();
+            }
+        } else {
+            header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=NoChatAccess");
+            exit();
+        }
+    } else {
+        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=BadFileAccess");
+        exit();
+    }
+} else {
+    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=BadFileAccess");
+    exit();
+}

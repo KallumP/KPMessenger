@@ -1,5 +1,4 @@
 <?php
-ob_start();
 include 'includes/dbh.inc.php';
 include 'includes/functions.php';
 session_start();
@@ -86,7 +85,6 @@ CheckLoggedIn($conn, false);
 
         });
 
-
         //the timer to pull new messages (short polling every 4 seconds)
         setInterval(function() {
 
@@ -128,8 +126,8 @@ CheckLoggedIn($conn, false);
             <div class='ChatPassword'>
                 <?php
                 if (isset($_GET['ChatroomID'])) {
-                    if (isset($_GET['Note'])) {
-                        $note = $_GET['Note'];
+                    if (isset($_GET['note'])) {
+                        $note = $_GET['note'];
 
                         echo "<div class='Notes'>";
                         if ($note == "wrong")
@@ -159,11 +157,9 @@ CheckLoggedIn($conn, false);
         <?php
                 } else {
 
-                    header("Location: index.php");
-                    ob_end_flush();
+                    echo "<meta http-equiv='refresh' content='0;url=index.php'>";
                     exit();
                 }
-
         ?>
         </div>
     </div>

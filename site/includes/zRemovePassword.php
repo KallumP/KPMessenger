@@ -83,9 +83,16 @@ if (isset($_GET['ChatroomID'])) {
             unset($_SESSION['ChatroomID_' . $ChatroomID]);
 
             header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID);
-        } else
+            exit();
+        } else {
             header("Location: ../index.php");
-    } else
-        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "Notes=BadFileAccess");
-} else
-    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "Notes=BadFileAccess");
+            exit();
+        }
+    } else {
+        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "note=BadFileAccess");
+        exit();
+    }
+} else {
+    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "note=BadFileAccess");
+    exit();
+}

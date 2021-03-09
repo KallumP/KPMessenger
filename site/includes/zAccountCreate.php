@@ -51,11 +51,20 @@ if (isset($_POST['login'])) {
                 $_SESSION['userID'] = $userID;
 
                 header("Location: ../index.php");
-            } else
+                exit();
+            } else {
                 header("Location: ../createNewAccount.php?note=passwordsNotSame");
-        } else
+                exit();
+            }
+        } else {
             header("Location: ../createNewAccount.php?note=notUniqueUsername");
-    } else
+            exit();
+        }
+    } else {
         header("Location: ../createNewAccount.php?note=emptyFields");
-} else
+        exit();
+    }
+} else {
     header("Location: ../createNewAccount.php?note=noPost");
+    exit();
+}

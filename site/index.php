@@ -91,8 +91,6 @@ CheckLoggedIn($conn, false);
       });
     });
 
-
-
     //the timer to pull new messages (short polling every 4 seconds)
     setInterval(function() {
 
@@ -160,13 +158,12 @@ CheckLoggedIn($conn, false);
           //if the user has access to this chat (the query returned a connector)
           if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector)) > 0) {
 
-
             $passwordCheck = RequirePassword($ChatroomID, $conn);
 
             //deal with the validation response
             if ($passwordCheck == "WrongSavedPassword") {
 
-              $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "?Note=changed";
+              $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "?note=changed";
               echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
               exit();
             } else if ($passwordCheck == "NoSavedPassword") {

@@ -42,12 +42,21 @@ if (isset($_GET['ChatroomID'])) {
                 //removes the member
                 mysqli_query($conn, $sqlRemoveMember);
 
-                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=UserRemoved");
-            } else
-                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=NoChatAccess");
-        } else
-            header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=EmptyInput");
-    } else
-        header("Location: ../chatSettings.php?Note=BadFileAccess&ChatroomID=" . $ChatroomID);
-} else
-    header("Location: ../chatSettings.php?Note=BadFileAccess&ChatroomID=" . $ChatroomID);
+                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=UserRemoved");
+                exit();
+            } else {
+                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=NoChatAccess");
+                exit();
+            }
+        } else {
+            header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=EmptyInput");
+            exit();
+        }
+    } else {
+        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=BadFileAccess");
+        exit();
+    }
+} else {
+    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=BadFileAccess");
+    exit();
+}

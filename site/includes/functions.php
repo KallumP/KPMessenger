@@ -12,6 +12,7 @@ function CheckLoggedIn($conn, $includes)
     if (!isset($_SESSION['userID'])) {
 
         echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+        exit();
     } else {
 
         $userID = $_SESSION['userID'];
@@ -30,6 +31,7 @@ function CheckLoggedIn($conn, $includes)
         //checks if the logged in variables didn't correlate to a user in the database
         if (mysqli_num_rows(mysqli_query($conn, $sqlGetThisUser)) == 0) {
             echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
+            exit();
         }
     }
 }
@@ -52,11 +54,11 @@ function OutputSearchedUser($conn, $searchedID, $searchedName, $userID, $redirec
     echo "<h2 class='WhiteHeader'> Username: " . $searchedName . "# " . $searchedID . "</h2>";
 
     if ($UserSearchResultCheck == 0)
-        echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $searchedID . "><p>Send friend request</p></a>";
+        echo "<a href='includes/zFriendRequestSend.php?recipientID=" . $searchedID . "'><p>Send friend request</p></a>";
     else
-        echo "<a href=includes/zRemoveFriend.php?toRemoveID=" . $searchedID . "&redir=" . $redirect . "><p class='highRiskLink'>Remove Friend</p></a>";
+        echo "<a href='includes/zRemoveFriend.php?toRemoveID=" . $searchedID . "&redir=" . $redirect . "'><p class='highRiskLink'>Remove Friend</p></a>";
 
-    echo "<a href=includes/zChatroomCreate.php?recipientID=" . $searchedID . "><p>Create new chat</p></a>";
+    echo "<a href='includes/zChatroomCreate.php?recipientID=" . $searchedID . "'><p>Create new chat</p></a>";
 
     OutputCommonChats($conn, $searchedID);
 
@@ -111,7 +113,7 @@ function OutputCommonChats($conn, $currentSearchedUserID)
                 //loops through each common chat
                 while ($CommonChatResultRow = mysqli_fetch_assoc($CommonChatResult)) {
                     $commonchat = true;
-                    echo "<a href=index.php?ChatroomID=" . $CommonChatResultRow['ChatroomID'] . "><p>Open chat: " . $CommonChatResultRow['chatName'] . "</p></a>";
+                    echo "<a href='index.php?ChatroomID=" . $CommonChatResultRow['ChatroomID'] . "'><p>Open chat: " . $CommonChatResultRow['chatName'] . "</p></a>";
                 }
             }
         }
@@ -120,6 +122,6 @@ function OutputCommonChats($conn, $currentSearchedUserID)
             echo "<p>No common chats</p>";
         }
     } else {
-        echo "This user has no chats";
+        echo "<p>This user has no chats</p>";
     }
 }

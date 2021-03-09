@@ -22,7 +22,6 @@ if (isset($_GET['ChatroomID'])) {
     mysqli_query($conn, $sqlDeleteMemberConnector);
 
 
-
     //query to get all members from the Chatroom
     $sqlGetAllChatMembers =
         "SELECT
@@ -83,3 +82,4 @@ if (isset($_GET['ChatroomID'])) {
 }
 
 header("Location: ../index.php");
+exit();

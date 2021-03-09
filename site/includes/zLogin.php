@@ -55,6 +55,7 @@ if (isset($_POST['login'])) {
                 $_SESSION['userID'] = $pulledData['userID'];
 
                 header("Location: ../index.php");
+                exit();
             } else {
 
                 header("Location: ../login.php?note=badPass");
@@ -66,7 +67,6 @@ if (isset($_POST['login'])) {
         }
     }
 } else {
-
     header("Location: ../index.php");
     exit();
 }

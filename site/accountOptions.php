@@ -67,7 +67,6 @@ CheckLoggedIn($conn, false);
 
         });
 
-
         //the timer to pull new messages (short polling every 4 seconds)
         setInterval(function() {
 
@@ -116,8 +115,8 @@ CheckLoggedIn($conn, false);
 
                     <?php
                     //checks if there was an error message
-                    if (isset($_GET['Note'])) {
-                        $note = $_GET['Note'];
+                    if (isset($_GET['note'])) {
+                        $note = $_GET['note'];
 
                         echo "<div class='Notes'>";
                         if ($note == "CantMakeChat")
@@ -137,9 +136,6 @@ CheckLoggedIn($conn, false);
             </div>
 
         <?php } ?>
-
-
-
     </div>
 </body>
 
