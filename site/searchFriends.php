@@ -159,10 +159,14 @@ CheckLoggedIn($conn, false);
                     //checks if there were any friends
                     if ($AllFriendsResultCheck > 0) {
 
-                        //checks that the user searched something
-                        if (isset($_POST['searchSubmit'])) {
+                        //checks if the user has searched something
+                        if (isset($_POST['searchSubmit']) || isset($_GET['search'])) {
 
-                            $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
+                            //gets the user search input from either the post or get variables
+                            if (isset($_POST['searchSubmit']))
+                                $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
+                            else
+                                $searchInput = mysqli_real_escape_string($conn, $_GET['search']);
 
                             //checks if the user id or the username was the same as the input search 
                             if ($searchInput != $_SESSION['userID'] && $searchInput != $_SESSION['userName']) {

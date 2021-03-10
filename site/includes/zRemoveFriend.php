@@ -37,10 +37,10 @@ if (isset($_GET['toRemoveID']) && isset($_GET['redir'])) {
 
         mysqli_query($conn, $sqlRemoveFriend);
 
-        header("Location: ../" . $_GET['redir'] . ".php?note=friendRemoveSuccess");
+        header("Location: ../" . $_GET['redir'] . ".php?search=" . $ToRemove . "&note=friendRemoveSuccess");
         exit();
     } else {
-        header("Location: ../" . $_GET['redir'] . ".php?note=friendNotFriend");
+        header("Location: ../" . $_GET['redir'] . ".php?search=" . $ToRemove . "&note=friendNotFriend");
         exit();
     }
 } else {

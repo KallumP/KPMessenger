@@ -20,9 +20,9 @@ if (isset($_GET['recipientID'])) {
 
   $SendFriendRequestResult = mysqli_query($conn, $sqlSendFriendRequest);
 
-  header("Location: ../searchAllUsers.php?note=requestSent");
+  header("Location: ../searchAllUsers.php?search=" . $recipientID . "&note=requestSent");
   exit();
 } else {
-  header("Location: ../searchAllUsers.php?note=noPost");
+  header("Location: ../searchAllUsers.php?search=" . $recipientID . "&note=noPost");
   exit();
 }

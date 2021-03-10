@@ -121,6 +121,8 @@ CheckLoggedIn($conn, false);
                         echo "<h3>That user does not exist</h3>";
                     else if ($note == "requestSent")
                         echo "<h3>Friend request sent</h3>";
+                    else if ($note == "requestCancel")
+                        echo "<h3>Friend request canceled</h3>";
                     else if ($note == "noPost")
                         echo "<h3>Please make requests using the links below</h3>";
                     else if ($note == "cantSearchForSelf")
@@ -138,10 +140,13 @@ CheckLoggedIn($conn, false);
                     <?php
 
                     //checks if the user has searched something
-                    if (isset($_POST['searchSubmit'])) {
+                    if (isset($_POST['searchSubmit']) || isset($_GET['search'])) {
 
-                        //gets the user search input
-                        $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
+                        //gets the user search input from either the post or get variables
+                        if (isset($_POST['searchSubmit']))
+                            $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
+                        else
+                            $searchInput = mysqli_real_escape_string($conn, $_GET['search']);
 
                         //checks if the user id and the username was the same as the input search 
                         if ($searchInput != $_SESSION['userID'] && $searchInput != $_SESSION['userName']) {

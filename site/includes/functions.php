@@ -51,7 +51,7 @@ function OutputSearchedUser($conn, $searchedID, $searchedName, $userID, $redirec
     $FriendConnResultCheck = mysqli_num_rows(mysqli_query($conn, $sqlGetFriendConnector));
 
     //tries to get a friend request from this user
-    $sqlGetFriendRequest =
+    $sqlGetIncomingFriendRequest =
         "SELECT
             friendrequest.ID
         FROM
@@ -59,17 +59,34 @@ function OutputSearchedUser($conn, $searchedID, $searchedName, $userID, $redirec
         WHERE
             friendrequest.RecipientID = '$userID' AND
             friendrequest.SenderID = '$searchedID';";
-    $FriendRequestResultCheck = mysqli_num_rows(mysqli_query($conn, $sqlGetFriendRequest));
+    $IncomingFriendRequestResultCheck = mysqli_num_rows(mysqli_query($conn, $sqlGetIncomingFriendRequest));
+
+    //tries to get a friend request from this user
+    $sqlGetOutgoingFriendRequest =
+        "SELECT
+            friendrequest.ID
+        FROM
+            friendrequest
+        WHERE
+            friendrequest.RecipientID = '$searchedID' AND
+            friendrequest.SenderID = '$userID';";
+    $OutGoingFriendRequestResultCheck = mysqli_num_rows(mysqli_query($conn, $sqlGetOutgoingFriendRequest));
 
     echo "<div class='UserBox'>";
     echo "<h2 class='WhiteHeader'> Username: " . $searchedName . "# " . $searchedID . "</h2>";
 
-    if ($FriendConnResultCheck == 0)
-        if ($FriendRequestResultCheck == 0)
-            echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $searchedID . "><p>Send friend request</p></a>";
-        else
-            echo "<a href='notifications.php'><p>You have a friend request from this user, click here to see it in the notifications page</p></a>";
-    else
+    if ($FriendConnResultCheck == 0) {
+
+
+        if ($IncomingFriendRequestResultCheck == 0 && $OutGoingFriendRequestResultCheck == 0)
+            echo "<a href='includes/zFriendRequestSend.php?recipientID=" . $searchedID . "'><p>Send friend request</p></a>";
+
+        else if ($OutGoingFriendRequestResultCheck != 0)
+            echo "<a href='includes/zFriendRequestCancel.php?recipientID=" . $searchedID . "'><p>Cancel sent friend request</p></a>";
+
+        else if ($IncomingFriendRequestResultCheck != 0)
+            echo "<a href='notifications.php'><p>Incoming friend request, click here to see it</p></a>";
+    } else
         echo "<a href='includes/zRemoveFriend.php?toRemoveID=" . $searchedID . "&redir=" . $redirect . "'><p class='highRiskLink'>Remove Friend</p></a>";
 
     echo "<a href='includes/zChatroomCreate.php?recipientID=" . $searchedID . "'><p>Create new chat</p></a>";
