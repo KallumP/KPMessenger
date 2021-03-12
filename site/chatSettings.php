@@ -252,7 +252,7 @@ CheckLoggedIn($conn, false);
 
                                 //all the members of the chat
                                 echo "<div class='ChatMembers'>";
-                                include("includes/zLoadMembers.php");
+                                OutputMembers($conn, $ChatroomID, $adminStatus);
                                 echo "</div>";
 
                                 //leave chat button
