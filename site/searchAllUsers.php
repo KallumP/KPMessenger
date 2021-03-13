@@ -119,6 +119,8 @@ CheckLoggedIn($conn, false);
                         echo "<h3>That user was not your friend</h3>";
                     else if ($note == "userDoesntExist")
                         echo "<h3>That user does not exist</h3>";
+                    else if ($note == "cantSendRequest")
+                        echo "<h3>A friend request could not be sent to that user</h3>";
                     else if ($note == "requestSent")
                         echo "<h3>Friend request sent</h3>";
                     else if ($note == "requestCancel")

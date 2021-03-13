@@ -77,7 +77,6 @@ function OutputSearchedUser($conn, $searchedID, $searchedName, $userID, $redirec
 
     if ($FriendConnResultCheck == 0) {
 
-
         if ($IncomingFriendRequestResultCheck == 0 && $OutGoingFriendRequestResultCheck == 0)
             echo "<a href='includes/zFriendRequestSend.php?recipientID=" . $searchedID . "'><p>Send friend request</p></a>";
 
