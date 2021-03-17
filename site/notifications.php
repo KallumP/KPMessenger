@@ -110,6 +110,24 @@ CheckLoggedIn($conn, false);
 
                 <h1 class='WhiteHeader title'>Notifications </h1>
 
+                <?php
+                if (isset($_GET['note'])) {
+                    $note = $_GET['note'];
+
+                    echo "<div class='Notes'>";
+                    if ($note == "requestAccept")
+                        echo "<h3>Friend request accepted</h3>";
+                    else if ($note == "requestDenied")
+                        echo "<h3>Friend request denied</h3>";
+                    else if ($note == "noRequest")
+                        echo "<h3>That friend request did not exist, please use the links here to accept/deny</h3>";
+                    else if ($note == "noPost")
+                        echo "<h3>Please make requests using the links below</h3>";
+
+                    echo "</div>";
+                }
+                ?>
+
                 <div class='FriendRequests'>
                     <h2 class='WhiteHeader'>Friend Requests </h2>
 

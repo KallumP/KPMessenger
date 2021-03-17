@@ -41,11 +41,12 @@ if (isset($_GET['recipientID'])) {
     //query to send the friend request
     $sqlSendFriendRequest =
       "INSERT INTO 
-      friendrequest (SenderID, RecipientID)
-    VALUES
-      ('$senderID', '$recipientID');";
+        friendrequest (SenderID, RecipientID)
+      VALUES
+        ('$userID', '$recipientID');";
 
-    $SendFriendRequestResult = mysqli_query($conn, $sqlSendFriendRequest);
+    mysqli_query($conn, $sqlSendFriendRequest);
+
 
     header("Location: ../searchAllUsers.php?search=" . $recipientID . "&note=requestSent");
     exit();

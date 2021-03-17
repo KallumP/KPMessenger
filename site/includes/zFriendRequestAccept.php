@@ -11,8 +11,7 @@ if (isset($_GET['requestID'])) {
   $requestID = mysqli_real_escape_string($conn, $_GET['requestID']);
   $userID = $_SESSION['userID'];
 
-  //query to get the senderid
-  //(makes sure that the current user is who is request was sent to)
+  //query to get the senderid (which makes sure that the current user is who is request was sent to)
   $sqlFriendRequest =
     "SELECT
       friendrequest.SenderID AS 'senderID'
@@ -115,10 +114,13 @@ if (isset($_GET['requestID'])) {
         friendrequest.ID='$requestID';";
     mysqli_query($conn, $sqlDeleteFriendRequest);
 
-    header("Location: ../index.php");
+    header("Location: ../notifications.php?note=requestAccept");
     exit();
   } else {
-    header("Location: ../index.php");
+    header("Location: ../notifications.php?note=noRequest");
     exit();
   }
+} else {
+  header("Location: ../notifications.php?note=noPost");
+  exit();
 }
