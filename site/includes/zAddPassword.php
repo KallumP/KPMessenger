@@ -95,15 +95,28 @@ if (isset($_GET['ChatroomID']) && isset($_POST['PasswordToAdd'])) {
                     }
                 }
 
-                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=PassSuccess");
-            } else
-                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=PassAlreadySet");
-        } else
+                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=PassSuccess");
+                exit();
+            } else {
+
+                header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=PassAlreadySet");
+                exit();
+            }
+        } else {
+
             //return to chat settings saying you can't have an empty password
-            header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=EmptyPass");
-    } else
+            header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=EmptyPass");
+            exit();
+        }
+    } else {
+
         //don't have (admin) access to the chat
-        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=NoChatAccess");
-} else
+        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=NoChatAccess");
+        exit();
+    }
+} else {
+
     //opened the file wrong
-    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&Note=BadFileAccess");
+    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=BadFileAccess");
+    exit();
+}

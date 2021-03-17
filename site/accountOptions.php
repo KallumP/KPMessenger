@@ -39,16 +39,22 @@ CheckLoggedIn($conn, false);
             });
         }
 
-        let SetChatBoxHeight = function() {
+        let SetDivHeights = function() {
 
             //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
 
             //in px
             let bannerHeight = 210;
+            let heightToSet = ($(window).height() - bannerHeight + 150) + 'px';
 
             $('#RecentMessages').css({
-                'max-height': ($(window).height() - bannerHeight + 150) + 'px',
-                'height': ($(window).height() - bannerHeight + 150) + 'px'
+                'max-height': heightToSet,
+                'height': heightToSet
+            });
+
+            $('#Content').css({
+                'max-height': heightToSet,
+                'height': heightToSet
             });
         }
 
@@ -57,10 +63,9 @@ CheckLoggedIn($conn, false);
 
             GetNotes();
             GetRecentMessages();
-            SetChatBoxHeight();
+            SetDivHeights();
 
         });
-
 
         //the timer to pull new messages (short polling every 4 seconds)
         setInterval(function() {
@@ -71,7 +76,7 @@ CheckLoggedIn($conn, false);
         }, 4000);
 
         $(window).resize(function() { // On resize
-            SetChatBoxHeight();
+            SetDivHeights();
         });
     </script>
 </head>
@@ -101,11 +106,27 @@ CheckLoggedIn($conn, false);
 
         <?php if (isset($_SESSION['userName'])) { ?>
 
-            <div class="Content">
+            <div id="Content" class="Content">
                 <div class="AccountOptions">
 
-                    <div class="AccountNameAndID CenterObjects">
+                    <div class="CenterObjects">
                         <h1 class='WhiteHeader'>Logged in as: <?php echo $_SESSION['userName']  ?> # ID: <?php echo $_SESSION['userID']  ?></h1>
+                    </div>
+
+                    <?php
+                    //checks if there was an error message
+                    if (isset($_GET['note'])) {
+                        $note = $_GET['note'];
+
+                        echo "<div class='Notes'>";
+                        if ($note == "CantMakeChat")
+                            echo "<h3>There was an error making your chat. Try again later</h3>";
+                        echo "</div>";
+                    }
+                    ?>
+
+                    <div class="CenterObjects">
+                        <a href="includes/zChatroomCreatePersonal.php">Create personal chatroom</a>
                     </div>
 
                     <div class="Logout CenterObjects">
@@ -115,9 +136,6 @@ CheckLoggedIn($conn, false);
             </div>
 
         <?php } ?>
-
-
-
     </div>
 </body>
 

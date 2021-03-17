@@ -111,9 +111,9 @@ if (isset($_POST['ChatroomID'])) {
 
           //checks if this recent chat is the same as the currently opened chat
           if ($ChatroomID ==  $currentChatroomID)
-            echo "<a class='Current' href=index.php?ChatroomID=" . $currentChatroomID . ">";
+            echo "<a class='Current' href='index.php?ChatroomID=" . $currentChatroomID . "'>";
           else
-            echo "<a href=index.php?ChatroomID=" . $currentChatroomID . ">";
+            echo "<a href='index.php?ChatroomID=" . $currentChatroomID . "'>";
 
           echo "<h2 class='WhiteHeader'>" . $currentChatroomName . "</h2>";
           echo "<p>" . $messagePreview . "</p>";
@@ -128,7 +128,7 @@ if (isset($_POST['ChatroomID'])) {
           if ($ChatroomID ==  $currentChatroomID)
             echo "<a class='Current'>";
           else
-            echo "<a href=index.php?ChatroomID=" . $currentChatroomID . ">";
+            echo "<a href='index.php?ChatroomID=" . $currentChatroomID . "'>";
 
           echo "<h2 class='WhiteHeader'>" . $currentChatroomName . "</h2>";
           echo "<p>" . $messagePreview . "</p>";

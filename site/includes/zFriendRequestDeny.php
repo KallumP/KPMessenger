@@ -21,5 +21,10 @@ if (isset($_GET['requestID'])) {
 
     mysqli_query($conn, $sqlDeleteFriendRequest);
 
-    header("Location: ../notifications.php");
+    header("Location: ../notifications.php?note=requestDenied");
+    exit();
+} else {
+
+    header("Location: ../notifications.php?note=noPost");
+    exit();
 }

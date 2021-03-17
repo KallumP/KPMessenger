@@ -28,7 +28,6 @@ if (isset($_POST['messageSend'])) {
                 connector.UserID = '$UserID' AND 
                 connector.ChatroomID = '$ChatroomID';";
 
-
         //checks if there was a connector found
         if (mysqli_num_rows(mysqli_query($conn, $sqlVerifyChatroomConnector)) > 0) {
 
@@ -38,7 +37,7 @@ if (isset($_POST['messageSend'])) {
             //deal with the validation response
             if ($passwordCheck == "WrongSavedPassword") {
 
-                $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "?Note=changed";
+                $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "?note=changed";
                 echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
                 exit();
             } else if ($passwordCheck == "NoSavedPassword") {
@@ -60,7 +59,6 @@ if (isset($_POST['messageSend'])) {
                     ('$UserID', '$ChatroomID', '$messageContent', '$sendTime');";
 
             mysqli_query($conn, $sqlInsertMessage);
-
 
 
             //updates the Chatroom with the message send time
@@ -92,3 +90,4 @@ if (isset($_POST['messageSend'])) {
 }
 
 header("Location: ../index.php");
+exit();

@@ -40,16 +40,22 @@ CheckLoggedIn($conn, false);
             });
         }
 
-        let SetChatBoxHeight = function() {
+        let SetDivHeights = function() {
 
             //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
 
             //in px
             let bannerHeight = 210;
+            let heightToSet = ($(window).height() - bannerHeight + 150) + 'px';
 
             $('#RecentMessages').css({
-                'max-height': ($(window).height() - bannerHeight + 150) + 'px',
-                'height': ($(window).height() - bannerHeight + 150) + 'px'
+                'max-height': heightToSet,
+                'height': heightToSet
+            });
+
+            $('#Content').css({
+                'max-height': heightToSet,
+                'height': heightToSet
             });
 
         }
@@ -59,10 +65,9 @@ CheckLoggedIn($conn, false);
 
             GetNotes();
             GetRecentMessages();
-            SetChatBoxHeight();
+            SetDivHeights();
 
         });
-
 
         //the timer to pull new messages (short polling every 4 seconds)
         setInterval(function() {
@@ -73,7 +78,7 @@ CheckLoggedIn($conn, false);
         }, 4000);
 
         $(window).resize(function() { // On resize
-            SetChatBoxHeight();
+            SetDivHeights();
         });
     </script>
 </head>
@@ -100,7 +105,7 @@ CheckLoggedIn($conn, false);
 
         </div>
 
-        <div class="Content">
+        <div id="Content" class="Content">
             <div class="ChatSettings">
 
                 <?php
@@ -117,12 +122,12 @@ CheckLoggedIn($conn, false);
                         //check if the user has access to this Chatroom and gets the admin status at the same time
                         $sqlUserConnector =
                             "SELECT 
-                            connector.Admin as 'AdminStatus'
-                        FROM  
-                            connector
-                        WHERE
-                            connector.UserID = '$UserID' AND 
-                            connector.ChatroomID = '$ChatroomID';";
+                                connector.Admin as 'AdminStatus'
+                            FROM  
+                                connector
+                            WHERE
+                                connector.UserID = '$UserID' AND 
+                                connector.ChatroomID = '$ChatroomID';";
 
                         //turns result into an array of results
                         $userConnectorResult = mysqli_query($conn, $sqlUserConnector);
@@ -135,12 +140,12 @@ CheckLoggedIn($conn, false);
 
                             $noteToAdd = "ChatroomID=" . $ChatroomID . "&";
 
-                            if (isset($_GET['Note'])) {
-                                if ($_GET['Note'] == "PassAlreadySet") {
-                                    $noteToAdd .= "Note=PassAlreadySet";
+                            if (isset($_GET['note'])) {
+                                if ($_GET['note'] == "PassAlreadySet") {
+                                    $noteToAdd .= "note=PassAlreadySet";
                                 }
                             } else if ($passwordCheck == "WrongSavedPassword") {
-                                $noteToAdd .= "Note=changed&";
+                                $noteToAdd .= "note=changed&";
                             }
 
 
@@ -180,8 +185,8 @@ CheckLoggedIn($conn, false);
                                 echo "<h1 class='WhiteHeader'>Settings for " . $chatName  . " </h1>";
 
                                 //checks if there was an error message
-                                if (isset($_GET['Note'])) {
-                                    $note = $_GET['Note'];
+                                if (isset($_GET['note'])) {
+                                    $note = $_GET['note'];
 
                                     echo "<div class='Notes'>";
                                     if ($note == "UserAdded")
@@ -218,17 +223,6 @@ CheckLoggedIn($conn, false);
                                 }
 
                                 if ($adminStatus == 1) {
-
-                                    //the input to add new members
-                                    echo "<form action='includes/zAddMember.php?ChatroomID=" . $ChatroomID . "' method='POST' id='AddMemberForm' class='ChatName'>";
-                                    echo "<label class='WhiteHeader' for='UserToAdd'>Add new members to this chat (use their unique code (found after the #)):</label><br>";
-                                    echo "<input id='UserToAdd' class='BorderInputs' type='text' name='UserToAdd'> </input>";
-                                    echo "<button id='AddMember' class='BorderInputs' type='submit' name='submit'> Add </button>";
-                                    echo "</form>";
-                                    echo "<br><br><br>";
-                                }
-
-                                if ($adminStatus == 1) {
                                     if ($passHash == "") {
 
                                         //the input to add a password
@@ -239,26 +233,36 @@ CheckLoggedIn($conn, false);
                                         echo "</form>";
                                     } else {
                                         echo "<div class='CenterObjects'>";
-                                        echo "<a class='highRiskLink' href=includes/zRemovePassword.php?ChatroomID=" . $ChatroomID . ">Remove password</a>";
+                                        echo "<a class='highRiskLink' href='includes/zRemovePassword.php?ChatroomID=" . $ChatroomID . "'>Remove password</a>";
                                         echo "</div>";
                                     }
                                 }
                                 echo "<br><br><br>";
+                                echo "<br><br><br>";
 
+                                if ($adminStatus == 1) {
+
+                                    //the input to add new members
+                                    echo "<form action='includes/zAddMember.php?ChatroomID=" . $ChatroomID . "' method='POST' id='AddMemberForm' class='ChatName'>";
+                                    echo "<label class='WhiteHeader' for='UserToAdd'>Add new members to this chat (use their unique code (found after the #)):</label><br>";
+                                    echo "<input id='UserToAdd' class='BorderInputs' type='text' name='UserToAdd'> </input>";
+                                    echo "<button id='AddMember' class='BorderInputs' type='submit' name='submit'> Add </button>";
+                                    echo "</form>";
+                                }
 
                                 //all the members of the chat
                                 echo "<div class='ChatMembers'>";
-                                include("includes/zLoadMembers.php");
+                                OutputMembers($conn, $ChatroomID, $adminStatus);
                                 echo "</div>";
 
-                                //all the members of the chat
+                                //leave chat button
                                 echo "<div class='LeaveChat CenterObjects'>";
                                 echo "<a class='highRiskLink' href='includes/zLeaveChat.php?ChatroomID=" . $ChatroomID . "'>Leave Chat</a>";
                                 echo "</div>";
                             }
-                        } else header("Location: index.php");
-                    } else header("Location: index.php");
-                } else header("Location: index.php");
+                        } else echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+                    } else echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+                } else echo "<meta http-equiv='refresh' content='0;url=index.php'>";
                 ?>
             </div>
         </div>

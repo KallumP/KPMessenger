@@ -20,6 +20,8 @@
   --adminIndicator: rgb(91, 226, 86);
   --highRiskLink: rgb(211, 96, 96);
   --headerFont: white;
+  --currentFont: grey;
+  --placeholderFont: grey;
 }
 
 * {
@@ -35,6 +37,11 @@ html {
 input {
   padding-left: 6px;
   outline: none;
+  color: var(--fontColor);
+}
+
+::placeholder {
+  color: var(--placeholderFont);
 }
 
 .Border {
@@ -149,11 +156,11 @@ header {
 }
 
 .Current {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .Current:hover {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .AccountBanner {
@@ -206,10 +213,12 @@ header {
   padding-top: 30px;
 }
 
-.AccountNameAndID {
+.AccountOptions div {
   padding-bottom: 50px;
-  display: flex;
-  justify-content: center;
+}
+
+.AccountOptions a {
+  text-decoration: none;
 }
 
 /* Recent messages */
@@ -217,7 +226,7 @@ header {
 .RecentMessages {
   float: left;
   width: 20%;
-  border-right: white solid 1px;
+  border-right: var(--borderColor) solid 1px;
   overflow-y: auto;
 }
 
@@ -247,19 +256,19 @@ header {
 }
 
 .RecentMessages .MessagePrev .Current h2 {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .RecentMessages .MessagePrev .Current p {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .RecentMessages .MessagePrev .Current:hover h2 {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .RecentMessages .MessagePrev .Current:hover p {
-  color: gray;
+  color: var(--currentFont);
 }
 
 .RecentMessages .MessagePrev h2 {
@@ -302,6 +311,7 @@ header {
   float: right;
   width: 78%;
   border: 1px;
+  overflow-y: auto;
 }
 
 .ChatRoom {
@@ -400,7 +410,7 @@ header {
   margin: auto;
 }
 
-.SearchContainer h1 {
+.SearchContainer h1, .SearchContainer p {
   text-align: center;
 }
 
@@ -493,11 +503,11 @@ header {
 
 .ChatSettings .ChatMembers a {
   float: right;
-  padding-left: 30px;
-  text-decoration: none;
+  margin-left: 30px;
+  text-decoration: underline;
 }
 
-.ChatSettings .AlreadyAdmin {
+.ChatSettings .ChatMembers .AlreadyAdmin {
   color: var(--adminIndicator);
   text-decoration: none;
 }

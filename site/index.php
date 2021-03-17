@@ -50,7 +50,7 @@ CheckLoggedIn($conn, false);
       });
     }
 
-    let SetChatBoxHeight = function() {
+    let SetDivHeights = function() {
 
       //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
 
@@ -68,37 +68,41 @@ CheckLoggedIn($conn, false);
 
     }
 
+    let ScrollToBottom = function() {
+      let element = document.getElementById('Messages');
+      element.scrollTop = element.scrollHeight;
+    }
+
+    //found from https://www.javatpoint.com/javascript-sleep
+    let Sleep = delay => {
+      return new Promise(resolve => setTimeout(resolve, delay));
+    };
+
     //calls the initial ajax (to load up the dynamic parts of the page)
     $(document).ready(function() {
 
-      SetChatBoxHeight();
-
+      GetMessages();
       GetRecentMessages();
       GetNotes();
-      GetMessages();
+      SetDivHeights();
 
-
-      let scroll = document.getElementById('Messages');
-      scroll.scrollTop = scroll.scrollHeight;
+      Sleep(35).then(() => {
+        ScrollToBottom();
+      });
     });
-
-
 
     //the timer to pull new messages (short polling every 4 seconds)
     setInterval(function() {
 
+      GetMessages();
       GetRecentMessages();
       GetNotes();
-      GetMessages();
+      ScrollToBottom();
 
-
-      let scroll = document.getElementById('Messages');
-      scroll.scrollTop = scroll.scrollHeight;
-
-    }, 4000);
+    }, 5000);
 
     $(window).resize(function() { // On resize
-      SetChatBoxHeight();
+      SetDivHeights();
     });
   </script>
 </head>
@@ -154,13 +158,12 @@ CheckLoggedIn($conn, false);
           //if the user has access to this chat (the query returned a connector)
           if (mysqli_num_rows(mysqli_query($conn, $sqlUserConnector)) > 0) {
 
-
             $passwordCheck = RequirePassword($ChatroomID, $conn);
 
             //deal with the validation response
             if ($passwordCheck == "WrongSavedPassword") {
 
-              $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "?Note=changed";
+              $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "?note=changed";
               echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
               exit();
             } else if ($passwordCheck == "NoSavedPassword") {

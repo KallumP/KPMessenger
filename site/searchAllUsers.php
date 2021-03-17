@@ -40,16 +40,22 @@ CheckLoggedIn($conn, false);
             });
         }
 
-        let SetChatBoxHeight = function() {
+        let SetDivHeights = function() {
 
             //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
 
             //in px
             let bannerHeight = 210;
+            let heightToSet = ($(window).height() - bannerHeight + 150) + 'px';
 
             $('#RecentMessages').css({
-                'max-height': ($(window).height() - bannerHeight + 150) + 'px',
-                'height': ($(window).height() - bannerHeight + 150) + 'px'
+                'max-height': heightToSet,
+                'height': heightToSet
+            });
+
+            $('#Content').css({
+                'max-height': heightToSet,
+                'height': heightToSet
             });
 
         }
@@ -59,6 +65,7 @@ CheckLoggedIn($conn, false);
 
             GetNotes();
             GetRecentMessages();
+            SetDivHeights();
 
         });
 
@@ -71,7 +78,7 @@ CheckLoggedIn($conn, false);
         }, 4000);
 
         $(window).resize(function() { // On resize
-            SetChatBoxHeight();
+            SetDivHeights();
         });
     </script>
 </head>
@@ -98,8 +105,33 @@ CheckLoggedIn($conn, false);
 
         </div>
 
-        <div class="Content">
+        <div id="Content" class="Content">
             <div class="SearchContainer">
+
+                <?php
+                if (isset($_GET['note'])) {
+                    $note = $_GET['note'];
+
+                    echo "<div class='Notes'>";
+                    if ($note == "friendRemoveSuccess")
+                        echo "<h3>That friend has been removed successfully</h3>";
+                    else if ($note == "friendNotFriend")
+                        echo "<h3>That user was not your friend</h3>";
+                    else if ($note == "userDoesntExist")
+                        echo "<h3>That user does not exist</h3>";
+                    else if ($note == "cantSendRequest")
+                        echo "<h3>A friend request could not be sent to that user</h3>";
+                    else if ($note == "requestSent")
+                        echo "<h3>Friend request sent</h3>";
+                    else if ($note == "requestCancel")
+                        echo "<h3>Friend request canceled</h3>";
+                    else if ($note == "noPost")
+                        echo "<h3>Please make requests using the links below</h3>";
+                    else if ($note == "cantSearchForSelf")
+                        echo "<h3>You can't search for yourself</h3>";
+                    echo "</div>";
+                }
+                ?>
 
                 <h1 class='WhiteHeader'>You can search for new friends here!</h1>
                 <form action="searchAllUsers.php" method="POST">
@@ -110,13 +142,18 @@ CheckLoggedIn($conn, false);
                     <?php
 
                     //checks if the user has searched something
-                    if (isset($_POST['searchSubmit'])) {
+                    if (isset($_POST['searchSubmit']) || isset($_GET['search'])) {
 
-                        //gets the user search input
-                        $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
+                        //gets the user search input from either the post or get variables
+                        if (isset($_POST['searchSubmit']))
+                            $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
+                        else
+                            $searchInput = mysqli_real_escape_string($conn, $_GET['search']);
 
                         //checks if the user id and the username was the same as the input search 
                         if ($searchInput != $_SESSION['userID'] && $searchInput != $_SESSION['userName']) {
+
+                            $userID = $_SESSION['userID'];
 
                             //pulls the users that were searched for
                             $sqlUserSearch =
@@ -131,26 +168,13 @@ CheckLoggedIn($conn, false);
                             $UserSearchResult = mysqli_query($conn, $sqlUserSearch);
                             $UserSearchResultCheck = mysqli_num_rows($UserSearchResult);
 
-                            //checks to see if any users were pulled
-                            if ($UserSearchResultCheck > 0) {
-
-                                //loops through each searched user
-                                while ($UserSearchResultRow = mysqli_fetch_assoc($UserSearchResult)) {
-
-                                    //saves the current searched user id
-                                    $currentSearchedUserID = $UserSearchResultRow['userID'];
-
-                                    echo "<div class='UserBox'>";
-                                    echo "<h2 class='WhiteHeader'> Username: " . $UserSearchResultRow['userName'] . "# " . $UserSearchResultRow['userID'] . "</h2>";
-                                    echo "<a href=includes/zFriendRequestSend.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Send friend request</p></a>";
-                                    echo "<a href=includes/zChatroomCreate.php?recipientID=" . $UserSearchResultRow['userID'] . "><p>Create new chat</p></a>";
-
-                                    include("includes/zLoadCommonChats.php");
-
-                                    echo "</div>";
-                                }
-                            }
-                        }
+                            if ($UserSearchResultCheck > 0)
+                                while ($UserSearchResultRow = mysqli_fetch_assoc($UserSearchResult))
+                                    OutputSearchedUser($conn, $UserSearchResultRow['userID'], $UserSearchResultRow['userName'], $userID, "searchAllUsers");
+                            else
+                                echo "<p>There were no users with that username or ID</p>";
+                        } else
+                            echo "<p>You can't search for yourself!</p>";
                     }
                     ?>
                 </div>

@@ -40,16 +40,22 @@ CheckLoggedIn($conn, false);
             });
         }
 
-        let SetChatBoxHeight = function() {
+        let SetDivHeights = function() {
 
             //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
 
             //in px
             let bannerHeight = 210;
+            let heightToSet = ($(window).height() - bannerHeight + 150) + 'px';
 
             $('#RecentMessages').css({
-                'max-height': ($(window).height() - bannerHeight + 150) + 'px',
-                'height': ($(window).height() - bannerHeight + 150) + 'px'
+                'max-height': heightToSet,
+                'height': heightToSet
+            });
+
+            $('#Content').css({
+                'max-height': heightToSet,
+                'height': heightToSet
             });
 
         }
@@ -59,6 +65,7 @@ CheckLoggedIn($conn, false);
 
             GetNotes();
             GetRecentMessages();
+            SetDivHeights();
 
         });
 
@@ -70,8 +77,9 @@ CheckLoggedIn($conn, false);
 
         }, 4000);
 
-        $(window).resize(function() { // On resize
-            SetChatBoxHeight();
+        // On resize
+        $(window).resize(function() {
+            SetDivHeights();
         });
     </script>
 </head>
@@ -97,8 +105,30 @@ CheckLoggedIn($conn, false);
         <div id="RecentMessages" class="RecentMessages">
 
         </div>
-        <div class="Content">
+
+        <div id="Content" class="Content Border">
             <div class="SearchContainer">
+
+                <?php
+                if (isset($_GET['note'])) {
+                    $note = $_GET['note'];
+
+                    echo "<div class='Notes'>";
+                    if ($note == "friendRemoveSuccess")
+                        echo "<h3>That friend has been removed successfully</h3>";
+                    else if ($note == "friendNotFriend")
+                        echo "<h3>That user was not your friend</h3>";
+                    else if ($note == "userDoesntExist")
+                        echo "<h3>That user does not exist</h3>";
+                    else if ($note == "requestSent")
+                        echo "<h3>Friend request sent</h3>";
+                    else if ($note == "noPost")
+                        echo "<h3>Please make requests using the links below</h3>";
+                    else if ($note == "cantSearchForSelf")
+                        echo "<h3>You can't search for yourself</h3>";
+                    echo "</div>";
+                }
+                ?>
 
                 <h1 class='WhiteHeader'>You can search for your friends here!</h1>
 
@@ -109,7 +139,6 @@ CheckLoggedIn($conn, false);
                 <div class="SearchResults">
 
                     <?php
-
                     $userID = $_SESSION['userID'];
 
                     //pulls the user's friend's ids
@@ -130,54 +159,40 @@ CheckLoggedIn($conn, false);
                     //checks if there were any friends
                     if ($AllFriendsResultCheck > 0) {
 
-                        if (isset($_POST['searchSubmit'])) {
+                        //checks if the user has searched something
+                        if (isset($_POST['searchSubmit']) || isset($_GET['search'])) {
 
-                            //gets the user search input
-                            $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
+                            //gets the user search input from either the post or get variables
+                            if (isset($_POST['searchSubmit']))
+                                $searchInput = mysqli_real_escape_string($conn, $_POST['search']);
+                            else
+                                $searchInput = mysqli_real_escape_string($conn, $_GET['search']);
 
                             //checks if the user id or the username was the same as the input search 
-                            if ($searchInput != $_SESSION['userID'] || $searchInput != $_SESSION['userName']) {
+                            if ($searchInput != $_SESSION['userID'] && $searchInput != $_SESSION['userName']) {
 
                                 while ($friendsRow = mysqli_fetch_assoc($AllFriendsResult)) {
 
-                                    $friendID = $friendsRow['friendID'];
-                                    $friendName = $friendsRow['friendName'];
+                                    //checks if the current friend is the one being searched for
+                                    if ($friendsRow['friendID'] == $searchInput || $friendsRow['friendName'] == $searchInput) {
 
-                                    $currentSearchedUserID = $friendID;
-
-                                    echo "<div class='UserBox'>";
-                                    echo "<h2 class='WhiteHeader'> Username: " . $friendName . "# " . $friendID . "</h2>";
-                                    echo "<a href=includes/zChatroomCreate.php?recipientID=" . $friendID . "><p>Create new chat</p></a><br>";
-
-                                    include("includes/zLoadCommonChats.php");
-
-                                    echo "</div>";
+                                        OutputSearchedUser($conn, $friendsRow['friendID'], $friendsRow['friendName'], $userID, "searchFriends");
+                                    }
                                 }
+                            } else {
+                                echo "<p>You can't search for yourself!</p>";
                             }
                         } else {
 
-                            //loops through each of the pulled friends
                             while ($friendsRow = mysqli_fetch_assoc($AllFriendsResult)) {
 
-                                $friendID = $friendsRow['friendID'];
-                                $friendName = $friendsRow['friendName'];
-
-                                $currentSearchedUserID = $friendID;
-
-                                echo "<div class='UserBox'>";
-                                echo "<h2 class='WhiteHeader'> Username: " . $friendsRow['friendName'] . "# " . $friendsRow['friendID'] . "</h2>";
-                                echo "<a href=includes/zChatroomCreate.php?recipientID=" . $friendsRow['friendID'] . "><p>Create new chat</p></a>";
-
-                                include("includes/zLoadCommonChats.php");
-
-                                echo "</div>";
+                                OutputSearchedUser($conn, $friendsRow['friendID'], $friendsRow['friendName'], $userID, "searchFriends");
                             }
                         }
                     } else {
 
                         echo "<p>You don't have any friends yet...</p>";
                     }
-
                     ?>
                 </div>
             </div>

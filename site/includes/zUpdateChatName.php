@@ -42,6 +42,7 @@ if (isset($_POST['submit'])) {
             mysqli_query($conn, $sqlUpdateName);
 
             header("Location: ../index.php?ChatroomID=" . $ChatroomID);
+            exit();
         }
     }
 }

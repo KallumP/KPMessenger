@@ -31,7 +31,7 @@ if (isset($_POST['ChatroomID'])) {
         //deal with the validation response
         if ($passwordCheck == "WrongSavedPassword") {
 
-            $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "&Note=changed";
+            $urlToGoTo = "enterChatPassword.php?ChatroomID=" . $ChatroomID . "&note=changed";
             echo "<meta http-equiv='refresh' content='0;url=" . $urlToGoTo . "'>";
             exit();
         } else if ($passwordCheck == "NoSavedPassword") {
@@ -43,7 +43,6 @@ if (isset($_POST['ChatroomID'])) {
             $passRequired = true;
         else if ($passwordCheck == "NotRequired")
             $passRequired = false;
-
 
 
         //query to set this user's read status to true

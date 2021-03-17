@@ -39,16 +39,22 @@ CheckLoggedIn($conn, false);
             });
         }
 
-        let SetChatBoxHeight = function() {
+        let SetDivHeights = function() {
 
             //http://tutorialshares.com/dynamically-change-div-height-browser-window-resize/
 
             //in px
             let bannerHeight = 210;
+            let heightToSet = ($(window).height() - bannerHeight + 150) + 'px';
 
             $('#RecentMessages').css({
-                'max-height': ($(window).height() - bannerHeight + 150) + 'px',
-                'height': ($(window).height() - bannerHeight + 150) + 'px'
+                'max-height': heightToSet,
+                'height': heightToSet
+            });
+
+            $('#Content').css({
+                'max-height': heightToSet,
+                'height': heightToSet
             });
 
         }
@@ -58,10 +64,9 @@ CheckLoggedIn($conn, false);
 
             GetNotes();
             GetRecentMessages();
-            SetChatBoxHeight();
+            SetDivHeights();
 
         });
-
 
         //the timer to pull new messages (short polling every 4 seconds)
         setInterval(function() {
@@ -72,7 +77,7 @@ CheckLoggedIn($conn, false);
         }, 4000);
 
         $(window).resize(function() { // On resize
-            SetChatBoxHeight();
+            SetDivHeights();
         });
     </script>
 </head>
@@ -99,11 +104,29 @@ CheckLoggedIn($conn, false);
 
         </div>
 
-        <div class="Content">
+        <div id="Content" class="Content">
 
             <div class="Notifications">
 
                 <h1 class='WhiteHeader title'>Notifications </h1>
+
+                <?php
+                if (isset($_GET['note'])) {
+                    $note = $_GET['note'];
+
+                    echo "<div class='Notes'>";
+                    if ($note == "requestAccept")
+                        echo "<h3>Friend request accepted</h3>";
+                    else if ($note == "requestDenied")
+                        echo "<h3>Friend request denied</h3>";
+                    else if ($note == "noRequest")
+                        echo "<h3>That friend request did not exist, please use the links here to accept/deny</h3>";
+                    else if ($note == "noPost")
+                        echo "<h3>Please make requests using the links below</h3>";
+
+                    echo "</div>";
+                }
+                ?>
 
                 <div class='FriendRequests'>
                     <h2 class='WhiteHeader'>Friend Requests </h2>
@@ -127,8 +150,6 @@ CheckLoggedIn($conn, false);
 
                     //If there were friendrequests
                     if (mysqli_num_rows($getFriendRequestsResult) > 0) {
-
-                        //echo friend requests title
 
                         //loops through each friend request
                         while ($friendRequestsRow = mysqli_fetch_assoc($getFriendRequestsResult)) {
@@ -158,7 +179,7 @@ CheckLoggedIn($conn, false);
                             echo "</div>";
                         }
                     } else {
-                        echo "<p>:( You don't have any friend requests... Just like real life eh?</p>";
+                        echo "<p>:( You don't have any friend requests...</p>";
                     }
                     ?>
                 </div>

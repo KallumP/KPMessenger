@@ -29,8 +29,10 @@ if (isset($_POST['passwordSend'])) {
         $_SESSION['ChatroomID_' . $ChatroomID] = $inputPassword;
 
         header("Location: ../index.php?ChatroomID=" . $ChatroomID);
+        exit();
     } else {
 
-        header("Location: ../enterChatPassword.php?ChatroomID=" . $ChatroomID . "&Note=wrong");
+        header("Location: ../enterChatPassword.php?ChatroomID=" . $ChatroomID . "&note=wrong");
+        exit();
     }
 }
