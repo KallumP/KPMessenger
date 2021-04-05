@@ -31,30 +31,31 @@ if (isset($_GET['ChatroomID'])) {
             //checks if the input was not emtpy
             if ($ToAdd != "") {
 
-                //statement to pull the user
-                $sqlCheckUserExists =
+                //statement to pull the new users connection (to check if there was one)
+                $sqlCheckExistingMember =
                     "SELECT
-                        _user.ID
+                        connector.ID
                     FROM
-                        _user
+                        connector
                     WHERE
-                        _user.ID = '$ToAdd';";
+                        connector.UserID = '$ToAdd' AND 
+                        connector.ChatroomID = '$ChatroomID';";
 
-                //checks if there was a user found
-                if (mysqli_num_rows(mysqli_query($conn, $sqlCheckUserExists)) > 0) {
+                //checks if there was no connection found
+                if (mysqli_num_rows(mysqli_query($conn, $sqlCheckExistingMember)) == 0) {
 
-                    //statement to pull the new users connection (to check if there was one)
-                    $sqlCheckExistingMember =
+                    //statement to pull the friend connection
+                    $sqlCheckUserExists =
                         "SELECT
-                            connector.ID
+                            friend.ID
                         FROM
-                            connector
+                            friend
                         WHERE
-                            connector.UserID = '$ToAdd' AND 
-                            connector.ChatroomID = '$ChatroomID';";
+                            friend.SenderID = '$ToAdd' AND
+                            friend.RecipientID = '$UserID';";
 
-                    //checks if there was a connection found
-                    if (mysqli_num_rows(mysqli_query($conn, $sqlCheckExistingMember)) == 0) {
+                    //checks if there was a user found
+                    if (mysqli_num_rows(mysqli_query($conn, $sqlCheckUserExists)) > 0) {
 
                         //statement to add the memeber
                         $sqlAddMember =
@@ -69,11 +70,11 @@ if (isset($_GET['ChatroomID'])) {
                         header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=UserAdded");
                         exit();
                     } else {
-                        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=AlreadyAMember");
+                        header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=NotAFriend");
                         exit();
                     }
                 } else {
-                    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=NotAUser");
+                    header("Location: ../chatSettings.php?ChatroomID=" . $ChatroomID . "&note=AlreadyAMember");
                     exit();
                 }
             } else {

@@ -201,6 +201,8 @@ CheckLoggedIn($conn, false);
                                         echo "<h3>That user was already a member of this chat</h3>";
                                     else if ($note == "NotAUser")
                                         echo "<h3>No users in our database had that id</h3>";
+                                    else if ($note == "NotAFriend")
+                                        echo "<h3>That user is not currently your friend</h3>";
                                     else if ($note == "EmptyInput")
                                         echo "<h3>Your input was empty</h3>";
                                     else if ($note == "NoChatAccess")
